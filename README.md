@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/code4maine/beehve.png?label=ready&title=Ready)](https://waffle.io/code4maine/beehve)
 Beehve
 ======
 

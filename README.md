@@ -1,36 +1,29 @@
-Django Outline
-==============
+Beehve
+======
 
 [![Build
-Status](https://travis-ci.org/powellc/beehve.svg?branch=master)](https://travis-ci.org/powellc/beehve)
+Status](https://travis-ci.org/powellc/beehve.svg?branch=master)](https://travis-ci.org/Code4Maine/beehve)
 
-In the spirit of [playdoh](https://github.com/mozilla/playdoh), this project
-aims to provide a base Django app full of best-practices and pre-installed
-applications.
+Inspired and heavily copied from
+[laddr](http://github.com/CfABrigadePhiladelphia/laddr), Beehve aims to be a
+one-stop-shop for what's going in our Code for America Bridage in Maine: Code 4
+Maine. 
 
-It also includes a rudimentary makefile that helps get things started and
-also plays nice with setuptools. That means you can actually use the 
-standard python setup method of installation, giving you a command line
-tool to run the server.
+Features include:
 
-All production settings should be handled via the environment, which
-means you can leave the app installed in your python library and just
-use the cli tool. More exmaples of this to follow.
+  * Project tracking
+  * Members directory
+  * Github integration
+  * Project buzz
+  * Big screen for public events
 
-Start your engines, err projects!
----------------------------------
+Not all of these work yet, but we're on way to a 1.0.
 
-Your first order of business is to rename some things. Unless your project
-is also called beehve, you'll likely want to rename things. The easiest way
-to get started is:
 
-make name="<myproject_name>" rename
+Deployment
+----------
 
-That should do all the important replacements. The final step will be removing
-the .git folder and initializing your own repository and lastly tweaking the
-setup.py file, else you're likely to give me credit for your project and to 
-provide a pretty terribly confusing description to PyPI if your project ever
-lands there.
+Need some instructions for deploying this baby here.
 
 Easy bootstrapping!
 -------------------

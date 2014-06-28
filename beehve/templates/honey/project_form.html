@@ -10,7 +10,7 @@
 
 {% block content %}
 
-<h2>Add a Project</h2>
+<h2>{% if not object %}Add a Project{% else %}Edit {{object}}{% endif %}</h2>
 
 <div class="row project-card">
     <div class="small-12">

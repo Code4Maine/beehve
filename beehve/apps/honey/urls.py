@@ -1,10 +1,9 @@
 from django.conf.urls import patterns, url
-from .views import (ProjectListView, ProjectDetailView,
-                    ProjectCreateView, #ProjectUpdateView,
-                    ProjectListJSONView, #ProjectListCSVView,
-                    TechnologyDetailView, TechnologyListView,
-                    TopicDetailView, TopicListView,
-                    EventDetailView, EventListView)
+from .views import (ProjectListView, ProjectDetailView, ProjectCreateView, 
+                    ProjectUpdateView, ProjectListJSONView, ProjectJoinView,
+                    ProjectLeaveView, EventListView, #ProjectListCSVView,
+                    TechnologyDetailView, TechnologyListView, TopicDetailView,
+                    TopicListView, EventDetailView)
 
 
 # custom views
@@ -14,9 +13,17 @@ urlpatterns = patterns(
         view=ProjectCreateView.as_view(),
         name="project-create"),
 
-    #url(r'^projects/edit/',
-    #    view=ProjectUpdateView.as_view(),
-    #    name="project-update"),
+    url(r'^projects/(?P<slug>[-\w]+)/edit/',
+        view=ProjectUpdateView.as_view(),
+        name="project-update"),
+
+    url(r'^projects/(?P<slug>[-\w]+)/join/',
+        view=ProjectJoinView.as_view(),
+        name="project-join"),
+
+    url(r'^projects/(?P<slug>[-\w]+)/leave/',
+        view=ProjectLeaveView.as_view(),
+        name="project-leave"),
 
     url(r'^projects.json',
         view=ProjectListJSONView.as_view(),
@@ -25,8 +32,6 @@ urlpatterns = patterns(
     url(r'^projects/(?P<slug>[-\w]+)/',
         view=ProjectDetailView.as_view(),
         name="project-detail"),
-
-
     #url(r'^projects.csv',
     #    view=ProjectListCSVView.as_view(),
     #    name="project-list-csv"),

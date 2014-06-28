@@ -1,5 +1,9 @@
 {% extends "base.html" %}
-{% load avatar_tags %}
+{% load static %}
+
+{% block body_js %}
+<script src="{% static 'js/eldarion-ajax.min.js' %}"></script>
+{% endblock %}
 
 {% block content %}
 
@@ -13,17 +17,20 @@
             </div>
             <div class="small-6  columns members">
                 <h5>Members</h5>
-                {% for member in project.members.all %}
-                <div class="th" ><a href="{% url 'worker-detail' member.username %}">{% avatar member 65 %}</a></div>
-                {% endfor %}
+                {% with project.members.all as members %}
+                {% include 'honey/_member_list.html' %}
+                {% endwith %}
                 <hr />
-                <p><a href="" class="tiny button radius"><i class="fa fa-plus"></i> Add a new member</a></p>
+                {% if request.user.is_authenticated %}
+                {% if request.user in project.members.all %}<p class="leave-button" ><a href="{% url 'project-leave' project.slug %}" class="tiny button radius ajax alert" data-replace=".leave-button"><i class="fa fa-times"></i> Leave project</a></p>{% endif %}
+                {% if not request.user in project.members.all %}<p class="join-button" ><a href="{% url 'project-join' project.slug %}" class="tiny button radius ajax success" data-replace=".join-button"><i class="fa fa-plus"></i> Join project</a></p>{% endif %}
+                {% endif %}
             </div>
         </div>
         <p class="links">{% if project.public_url %}<a href="{{project.public_url}}"><i class="fa fa-globe"></i></a>{% endif %}{% if project.github_url %} <a href="{{project.github_url}}"><i class="fa fa-github"></i></a>{% endif %}</p>
         {% if project.dev_url %}<p>Development: {{project.dev_url|urlize}}</p>{% endif %}
         <p>Built with: {% for tech in project.technologies.all %}<a href="{{tech.get_absolute_url}}">{{tech}}</a>{% if not forloop.last %}, {% endif %} {% endfor %}</p>
-        {% if user.is_authenticated %}<a href="" class="button tiny radius">Edit project</a>{% endif %}
+        {% if user.is_authenticated %}<a href="{% url 'project-update' project.slug %}" class="button tiny radius">Edit project</a>{% endif %}
         <hr />
     </div>
 </div>

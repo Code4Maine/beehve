@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load avatar_tags %}
+
+{% block content %}
+
+<h2>Bridgade Project Directory</h2>
+
+{% for project in object_list %}
+
+<div class="row project-card">
+    <div class="small-12">
+        <h3><a href="{{project.get_absolute_url }}">{{project.title}}</a></h3>
+        <div class="row">
+            <div class="small-6 columns description">
+                {{project.description|safe}}
+            </div>
+            <div class="small-6  columns members">
+                <h5>Members</h5>
+                {% for member in project.members.all %}
+                <div class="th" >{% avatar member 65 %}</div>
+                {% endfor %}
+            </div>
+        </div>
+        <p class="links">{% if project.public_url %}<a href="{{project.public_url}}"><i class="fa fa-globe"></i></a>{% endif %}{% if project.github_url %} <a href="{{project.github_url}}"><i class="fa fa-github"></i></a>{% endif %}</p>
+        {% if project.dev_url %}<p>Development: {{project.dev_url|urlize}}</p>{% endif %}
+        <p>Built with: {% for tech in project.technologies.all %}<a href="{{tech.get_absolute_url}}">{{tech}}</a>{% if not forloop.last %}, {% endif %} {% endfor %}</p>
+        <hr />
+    </div>
+</div>
+
+{% endfor %}
+
+{% endblock %}

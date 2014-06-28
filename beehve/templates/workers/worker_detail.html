@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load avatar_tags %}
+
+{% block content %}
+
+<h2>{{object.user}}</h2>
+<div class="th" >{% avatar object.user 150 %}</a></div>
+
+
+
+{% endblock %}

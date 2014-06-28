@@ -26,6 +26,7 @@ class WorkerListJSONView(JsonView, ListView):
 
 class WorkerDetailView(DetailView):
     model = Worker
+    slug_field = 'user__username'
 
 
 class WorkerListView(ListView):

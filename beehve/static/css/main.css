@@ -1,0 +1,7 @@
+.links { font-size:24pt; }
+.project-card .description {  }
+
+#header, #footer { padding-top:300px; ;width:100%; max-width:none; background:url('../images/capitol.jpg') no-repeat; }
+#header h1 { color: white;  }
+#header, #footer { width: 100%; margin-left: auto; margin-right: auto; margin-top: 0;
+                   margin-bottom: 0; max-width: 62.5rem; }

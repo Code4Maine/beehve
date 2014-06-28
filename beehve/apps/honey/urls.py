@@ -22,6 +22,11 @@ urlpatterns = patterns(
         view=ProjectListJSONView.as_view(),
         name="project-list-json"),
 
+    url(r'^projects/(?P<slug>[-\w]+)/',
+        view=ProjectDetailView.as_view(),
+        name="project-detail"),
+
+
     #url(r'^projects.csv',
     #    view=ProjectListCSVView.as_view(),
     #    name="project-list-csv"),

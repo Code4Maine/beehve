@@ -22,11 +22,11 @@ urlpatterns = patterns(
     #    view=WorkerListCSVView.as_view(),
     #    name="worker-list-csv"),
 
+    url(r'^workers/(?P<slug>[-\w]+)/',
+        view=WorkerDetailView.as_view(),
+        name="worker-detail"),
+
     url(r'^workers/',
         view=WorkerListView.as_view(),
         name="worker-list"),
-
-    url(r'^workers/(?P<slug>[-\w]+)/',
-        view=WorkerDetailView.as_view(),
-        name="worker-detail")
 )

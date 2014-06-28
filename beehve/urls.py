@@ -8,6 +8,9 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     (r'^accounts/', include('allauth.urls')),
+    (r'^workers/', include('workers.urls')),
+    (r'^avatar/', include('avatar.urls')),
+    (r'^', include('honey.urls')),
     url("^$", 
         TemplateView.as_view(template_name='homepage.html'), 
         name="homepage")

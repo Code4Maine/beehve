@@ -19,9 +19,6 @@ class Common(Configuration):
         ('Admin', 'info@example.com'),
     )
 
-    # You'll likely want to add your own auth model.
-    AUTH_USER_MODEL = 'custom_user.EmailUser'
-
     MANAGERS = ADMINS
 
     # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -53,16 +50,19 @@ class Common(Configuration):
         "django.contrib.sitemaps",
         "django.contrib.staticfiles",
 
-        'custom_user',
         'allauth',
         'allauth.account',
         'allauth.socialaccount',
         'allauth.socialaccount.providers.github',
         'allauth.socialaccount.providers.google',
-        "django_extensions",
+        'south',
+        'django_extensions',
         'foundation',
         'floppyforms',
+        'avatar',
 
+        'honey',
+        'workers',
     )
 
     TEMPLATE_CONTEXT_PROCESSORS = Configuration.TEMPLATE_CONTEXT_PROCESSORS + \
@@ -88,6 +88,7 @@ class Common(Configuration):
 
     AUTHENTICATION_BACKENDS = (
         "django.contrib.auth.backends.ModelBackend",
+        "workers.backends.EmailOrUsernameModelBackend",
         "allauth.account.auth_backends.AuthenticationBackend",)
 
     ROOT_URLCONF = 'beehve.urls'

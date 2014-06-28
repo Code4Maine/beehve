@@ -1,0 +1,4 @@
+include README.md
+recursive-include beehve/static *
+recursive-include beehve/templates *
+recursive-include beehve/apps *

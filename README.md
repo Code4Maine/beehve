@@ -2,7 +2,7 @@ Beehve
 ======
 
 [![Build
-Status](https://travis-ci.org/powellc/beehve.svg?branch=master)](https://travis-ci.org/Code4Maine/beehve)
+Status](https://travis-ci.org/Code4Maine/beehve.svg?branch=master)](https://travis-ci.org/Code4Maine/beehve)
 
 Inspired and heavily copied from
 [laddr](http://github.com/CfABrigadePhiladelphia/laddr), Beehve aims to be a

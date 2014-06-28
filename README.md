@@ -7,7 +7,13 @@ Status](https://travis-ci.org/Code4Maine/beehve.svg?branch=master)](https://trav
 Inspired and heavily copied from
 [laddr](http://github.com/CfABrigadePhiladelphia/laddr), Beehve aims to be a
 one-stop-shop for what's going in our Code for America Bridage in Maine: Code 4
-Maine. 
+Maine. Mostly, as a Django dev in my other life, I couldn't stomach hacking on
+the PHP codebase of laddr. So hopefully we can get this app to a place where it
+will meet our needs and be highly extensible as well.
+
+Of course there are always trade-offs, and, as a Django app, deployment is not
+what it could be. But hopefully I can get it hooked up with Herkou and make it
+pretty easy to get started.
 
 Features include:
 

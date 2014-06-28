@@ -16,6 +16,7 @@
 	        <div class="row">
 	        	<div class="large-3 medium-3 columns">
                     <h3><a href="{% url 'project-list' %}">Projects</a></h3>
+                    <p>{% if user.is_authenticated %}<a data-reveal-id="myModal" data-reveal-ajax="true" href="{% url 'project-create' %}" class="button tiny radius"><i class="fa fa-plus"></i> Add</a>{% endif %}</p>
 	    	</div>
 	        	<div class="large-6 medium-6 columns">
                     <h2><a href="">Latest project activity</a></h2>

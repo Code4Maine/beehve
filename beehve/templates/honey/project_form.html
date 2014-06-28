@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body_js %}
+<link rel="stylesheet" href="{% static 'select2/css/select2.css?v=1' %}"/>
+<link rel="stylesheet" href="{% static 'select2/css/djselect2.css?v=2' %}"/>
+<script src="{% static 'select2/js/select2.js?v=1' %}"></script>
+<script src="{% static 'select2/js/select2.jquery_ready.js?v=2' %}"></script>
+{% endblock %}
+
+
+{% block content %}
+
+<h2>Add a Project</h2>
+
+<div class="row project-card">
+    <div class="small-12">
+        <form method="post" action=".">
+            {% csrf_token %}
+            {{ form.as_p  }}
+            <p><input type="submit" value="Save"></p>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

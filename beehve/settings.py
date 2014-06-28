@@ -60,6 +60,7 @@ class Common(Configuration):
         'foundation',
         'floppyforms',
         'avatar',
+        'select2',
 
         'honey',
         'workers',

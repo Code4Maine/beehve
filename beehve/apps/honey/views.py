@@ -15,6 +15,7 @@ class JsonView(views.CsrfExemptMixin,
 
 class ProjectCreateView(CreateView):
     model = Project
+    form_class = ProjectForm
 
 
 class ProjectDetailView(JsonView, DetailView):

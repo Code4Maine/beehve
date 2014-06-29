@@ -61,6 +61,7 @@ class Common(Configuration):
         'floppyforms',
         'avatar',
         'select2',
+        'markdown_deux',
 
         'honey',
         'workers',

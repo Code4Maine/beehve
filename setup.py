@@ -25,6 +25,10 @@ install_requires = [
     'django-floppyforms==1.1.1',
     'django-zurb-foundation==5.1.1',
     'django-custom-user==0.4',
+    'django-markdown-deux==1.0.4',
+    'django-avatar==2.0',
+    'south==0.8.2',
+    'django-localflavor==1.0.0',
 ]
 
 

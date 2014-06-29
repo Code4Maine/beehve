@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load markdown_deux_tags %}
 
 {% block body_js %}
 <script src="{% static 'js/eldarion-ajax.min.js' %}"></script>
@@ -13,7 +14,8 @@
     <div class="small-12">
         <div class="row">
             <div class="small-6 columns description">
-                {{project.description|safe}}
+                {{project.description|markdown}}
+                <p><i>Founded on {{project.created|date:"r"}} by {{project.founder.username}}</i></p>
             </div>
             <div class="small-6  columns members">
                 <h5>Members</h5>

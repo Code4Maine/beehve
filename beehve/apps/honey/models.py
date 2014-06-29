@@ -77,3 +77,6 @@ class Project(TimeStampedModel, TitleSlugDescriptionModel):
         return ('project-detail', None, {'slug': self.slug})
 
 
+class Buzz(TimeStampedModel, TitleSlugDescriptionModel):
+    author = models.ForeignKey(get_user_model())
+    

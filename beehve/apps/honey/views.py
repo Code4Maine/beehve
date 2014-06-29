@@ -24,6 +24,7 @@ class ProjectCreateView(views.LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         object = form.save(commit=False)
         object.founder = self.request.user
+        object.save()
         object.members.add(self.request.user)
         object.save()
         return super(ProjectCreateView, self).form_valid(form)

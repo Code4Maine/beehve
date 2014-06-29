@@ -62,6 +62,8 @@ class Project(TimeStampedModel, TitleSlugDescriptionModel):
     events = models.ManyToManyField(Event, blank=True, null=True)
     technologies = models.ManyToManyField(Technology, blank=True, null=True)
     members = models.ManyToManyField(get_user_model(), blank=True, null=True)
+    founder = models.ForeignKey(get_user_model(), blank=True, null=True, 
+        related_name="founder")
     status = models.CharField(
         max_length=10, 
         choices=PROJECT_STATUSES, 

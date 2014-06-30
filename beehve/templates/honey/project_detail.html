@@ -30,7 +30,7 @@
             </div>
         </div>
         <p class="links">{% if project.public_url %}<a href="{{project.public_url}}"><i class="fa fa-globe"></i></a>{% endif %}{% if project.github_url %} <a href="{{project.github_url}}"><i class="fa fa-github"></i></a>{% endif %}</p>
-        {% if project.dev_url %}<p>Development: {{project.dev_url|urlize}}</p>{% endif %}
+        <p>{% if project.dev_url %}<a href="{{project.dev_url}}" class="button small radius" style="font-size:16pt;"><i class="fa fa-wrench"></i> Get involved!</a></p>{% endif %}
         <p>Built with: {% for tech in project.technologies.all %}<a href="{{tech.get_absolute_url}}">{{tech}}</a>{% if not forloop.last %}, {% endif %} {% endfor %}</p>
         {% if user.is_authenticated %}<a href="{% url 'project-update' project.slug %}" class="button tiny radius">Edit project</a>{% endif %}
         <hr />

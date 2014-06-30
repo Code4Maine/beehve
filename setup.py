@@ -29,6 +29,7 @@ install_requires = [
     'django-avatar==2.0',
     'south==0.8.2',
     'django-localflavor==1.0.0',
+    'django-select2-forms==1.1.18',
 ]
 
 

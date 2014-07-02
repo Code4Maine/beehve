@@ -20,3 +20,24 @@ class ProjectForm(forms.ModelForm):
         model = Project
         fields = ['title', 'description', 'public_url', 'dev_url',
                   'github_url', 'topics', 'events', 'technologies']
+
+
+class TopicForm(forms.ModelForm):
+
+    class Meta:
+        model = Topic
+        exclude = ['pending']
+
+
+class EventForm(forms.ModelForm):
+
+    class Meta:
+        model = Event
+        exclude = ['pending']
+
+
+class TechnologyForm(forms.ModelForm):
+
+    class Meta:
+        model = Technology
+        exclude = ['pending']

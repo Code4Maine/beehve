@@ -13,6 +13,11 @@ class SelectManager(models.Manager):
 
 
 class BasicItem(TimeStampedModel, TitleSlugDescriptionModel):
+    pending = models.BooleanField(default=True)
+
+    class Meta:
+        abstract = True
+
     def __unicode__(self):
         return u'{0}'.format(self.title)
 

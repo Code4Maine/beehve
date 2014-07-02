@@ -3,11 +3,11 @@ from django.http import HttpResponse
 from django.views.generic.edit import CreateView, UpdateView, FormView
 from django.views.generic import DetailView, ListView, View
 from django.core import serializers
-from .forms import ProjectForm 
 from django.core.urlresolvers import reverse
 from django.template.loader import render_to_string
 
 from .models import Project, Topic, Technology, Event
+from .forms import ProjectForm, TopicForm, EventForm, TechnologyForm
 from braces import views
 
 
@@ -28,7 +28,7 @@ class ProjectCreateView(views.LoginRequiredMixin, CreateView):
         object.members.add(self.request.user)
         object.save()
         return super(ProjectCreateView, self).form_valid(form)
-
+    
 
 class ProjectUpdateView(views.LoginRequiredMixin, UpdateView):
     model = Project
@@ -106,6 +106,25 @@ class TechnologyListView(ListView):
     model = Technology
 
 
+class TechnologyCreateView(views.LoginRequiredMixin, CreateView):
+    model = Technology
+    form_class = TechnologyForm
+
+    def get_success_url(self, *args, **kwargs):
+        redirect = getattr(self.request.GET, 'next', '/projects/add/')
+        if redirect:
+            return redirect
+
+
+class TopicCreateView(views.LoginRequiredMixin, CreateView):
+    model = Topic
+    form_class = TopicForm
+
+    def get_success_url(self, *args, **kwargs):
+        redirect = getattr(self.request.GET, 'next', '/projects/add/')
+        if redirect:
+            return redirect
+
 class TopicDetailView(DetailView):
     model = Topic
 
@@ -120,3 +139,14 @@ class EventDetailView(DetailView):
 
 class EventListView(ListView):
     model = Event
+
+
+class EventCreateView(views.LoginRequiredMixin, CreateView):
+    model = Event
+    form_class = EventForm
+
+    def get_success_url(self, *args, **kwargs):
+        redirect = getattr(self.request.GET, 'next', '/projects/add/')
+        if redirect:
+            return redirect
+

@@ -5,6 +5,13 @@
 <link rel="stylesheet" href="{% static 'select2/css/djselect2.css?v=2' %}"/>
 <script src="{% static 'select2/js/select2.js?v=1' %}"></script>
 <script src="{% static 'select2/js/select2.jquery_ready.js?v=2' %}"></script>
+<script>
+jQuery('document').ready(function() {
+    jQuery("<a href='{% url 'topic-create' %}?next={% url 'project-create' %}' class='button tiny'><i class='fa fa-plus'></i></a>").insertAfter('#s2id_id_topics');
+    jQuery("<a href='{% url 'event-create' %}?next={% url 'project-create' %}' class='button tiny'><i class='fa fa-plus'></i></a>").insertAfter('#s2id_id_events');
+    jQuery("<a href='{% url 'technology-create' %}?next={% url 'project-create' %}' class='button tiny'><i class='fa fa-plus'></i></a>").insertAfter('#s2id_id_technologies');
+});
+</script>
 {% endblock %}
 
 

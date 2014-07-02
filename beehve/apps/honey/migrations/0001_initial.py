@@ -8,32 +8,39 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'BasicItem'
-        db.create_table(u'honey_basicitem', (
+        # Adding model 'Topic'
+        db.create_table(u'honey_topic', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('created', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, blank=True)),
             ('modified', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, blank=True)),
             ('title', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('slug', self.gf('django_extensions.db.fields.AutoSlugField')(allow_duplicates=False, max_length=50, separator=u'-', blank=True, populate_from='title', overwrite=False)),
             ('description', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-        ))
-        db.send_create_signal(u'honey', ['BasicItem'])
-
-        # Adding model 'Topic'
-        db.create_table(u'honey_topic', (
-            (u'basicitem_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['honey.BasicItem'], unique=True, primary_key=True)),
+            ('pending', self.gf('django.db.models.fields.BooleanField')(default=True)),
         ))
         db.send_create_signal(u'honey', ['Topic'])
 
         # Adding model 'Event'
         db.create_table(u'honey_event', (
-            (u'basicitem_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['honey.BasicItem'], unique=True, primary_key=True)),
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('created', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, blank=True)),
+            ('modified', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, blank=True)),
+            ('title', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('slug', self.gf('django_extensions.db.fields.AutoSlugField')(allow_duplicates=False, max_length=50, separator=u'-', blank=True, populate_from='title', overwrite=False)),
+            ('description', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('pending', self.gf('django.db.models.fields.BooleanField')(default=True)),
         ))
         db.send_create_signal(u'honey', ['Event'])
 
         # Adding model 'Technology'
         db.create_table(u'honey_technology', (
-            (u'basicitem_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['honey.BasicItem'], unique=True, primary_key=True)),
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('created', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, blank=True)),
+            ('modified', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, blank=True)),
+            ('title', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('slug', self.gf('django_extensions.db.fields.AutoSlugField')(allow_duplicates=False, max_length=50, separator=u'-', blank=True, populate_from='title', overwrite=False)),
+            ('description', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('pending', self.gf('django.db.models.fields.BooleanField')(default=True)),
         ))
         db.send_create_signal(u'honey', ['Technology'])
 
@@ -48,6 +55,7 @@ class Migration(SchemaMigration):
             ('public_url', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
             ('dev_url', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
             ('github_url', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
+            ('founder', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='founder', null=True, to=orm['auth.User'])),
             ('status', self.gf('django.db.models.fields.CharField')(default='active', max_length=10)),
         ))
         db.send_create_signal(u'honey', ['Project'])
@@ -88,11 +96,20 @@ class Migration(SchemaMigration):
         ))
         db.create_unique(m2m_table_name, ['project_id', 'user_id'])
 
+        # Adding model 'Buzz'
+        db.create_table(u'honey_buzz', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('created', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, blank=True)),
+            ('modified', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, blank=True)),
+            ('title', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('slug', self.gf('django_extensions.db.fields.AutoSlugField')(allow_duplicates=False, max_length=50, separator=u'-', blank=True, populate_from='title', overwrite=False)),
+            ('description', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('author', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+        ))
+        db.send_create_signal(u'honey', ['Buzz'])
+
 
     def backwards(self, orm):
-        # Deleting model 'BasicItem'
-        db.delete_table(u'honey_basicitem')
-
         # Deleting model 'Topic'
         db.delete_table(u'honey_topic')
 
@@ -116,6 +133,9 @@ class Migration(SchemaMigration):
 
         # Removing M2M table for field members on 'Project'
         db.delete_table(db.shorten_name(u'honey_project_members'))
+
+        # Deleting model 'Buzz'
+        db.delete_table(u'honey_buzz')
 
 
     models = {
@@ -155,8 +175,9 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        u'honey.basicitem': {
-            'Meta': {'ordering': "('-modified', '-created')", 'object_name': 'BasicItem'},
+        u'honey.buzz': {
+            'Meta': {'ordering': "('-modified', '-created')", 'object_name': 'Buzz'},
+            'author': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"}),
             'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
             'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -165,8 +186,14 @@ class Migration(SchemaMigration):
             'title': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
         u'honey.event': {
-            'Meta': {'ordering': "('-modified', '-created')", 'object_name': 'Event', '_ormbases': [u'honey.BasicItem']},
-            u'basicitem_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['honey.BasicItem']", 'unique': 'True', 'primary_key': 'True'})
+            'Meta': {'object_name': 'Event'},
+            'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
+            'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'modified': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
+            'pending': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'slug': ('django_extensions.db.fields.AutoSlugField', [], {'allow_duplicates': 'False', 'max_length': '50', 'separator': "u'-'", 'blank': 'True', 'populate_from': "'title'", 'overwrite': 'False'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
         u'honey.project': {
             'Meta': {'ordering': "('-modified', '-created')", 'object_name': 'Project'},
@@ -174,6 +201,7 @@ class Migration(SchemaMigration):
             'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'dev_url': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'events': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': u"orm['honey.Event']", 'null': 'True', 'blank': 'True'}),
+            'founder': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'founder'", 'null': 'True', 'to': u"orm['auth.User']"}),
             'github_url': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'members': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': u"orm['auth.User']", 'null': 'True', 'blank': 'True'}),
@@ -183,15 +211,27 @@ class Migration(SchemaMigration):
             'status': ('django.db.models.fields.CharField', [], {'default': "'active'", 'max_length': '10'}),
             'technologies': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': u"orm['honey.Technology']", 'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'topics': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': u"orm['honey.Topic']", 'null': 'True', 'blank': 'True'})
+            'topics': ('select2.fields.ManyToManyField', [], {'symmetrical': 'False', 'to': u"orm['honey.Topic']", 'null': 'True', 'search_field': 'None', 'blank': 'True'})
         },
         u'honey.technology': {
-            'Meta': {'ordering': "('-modified', '-created')", 'object_name': 'Technology', '_ormbases': [u'honey.BasicItem']},
-            u'basicitem_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['honey.BasicItem']", 'unique': 'True', 'primary_key': 'True'})
+            'Meta': {'object_name': 'Technology'},
+            'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
+            'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'modified': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
+            'pending': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'slug': ('django_extensions.db.fields.AutoSlugField', [], {'allow_duplicates': 'False', 'max_length': '50', 'separator': "u'-'", 'blank': 'True', 'populate_from': "'title'", 'overwrite': 'False'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
         u'honey.topic': {
-            'Meta': {'ordering': "('-modified', '-created')", 'object_name': 'Topic', '_ormbases': [u'honey.BasicItem']},
-            u'basicitem_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['honey.BasicItem']", 'unique': 'True', 'primary_key': 'True'})
+            'Meta': {'object_name': 'Topic'},
+            'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
+            'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'modified': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
+            'pending': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'slug': ('django_extensions.db.fields.AutoSlugField', [], {'allow_duplicates': 'False', 'max_length': '50', 'separator': "u'-'", 'blank': 'True', 'populate_from': "'title'", 'overwrite': 'False'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         }
     }
 

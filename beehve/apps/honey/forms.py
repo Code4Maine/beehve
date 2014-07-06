@@ -2,7 +2,13 @@ from django.core.urlresolvers import reverse
 import floppyforms as forms
 import select2.fields
 
-from .models import Project, Topic, Event, Technology
+from .models import Project, Topic, Event, Technology, Buzz
+
+
+class BuzzForm(forms.ModelForm):
+    class Meta:
+        model = Buzz
+        exclude = ['project', 'author']
 
 
 class ProjectForm(forms.ModelForm):

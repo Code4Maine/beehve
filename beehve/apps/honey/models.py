@@ -83,5 +83,14 @@ class Project(TimeStampedModel, TitleSlugDescriptionModel):
 
 
 class Buzz(TimeStampedModel, TitleSlugDescriptionModel):
+    project = models.ForeignKey(Project)
     author = models.ForeignKey(get_user_model())
     
+    def __unicode__(self):
+        return u'{0}'.format(self.title)
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('buzz-detail', None, {'project_slug': self.project.slug, 'slug': self.slug})
+
+

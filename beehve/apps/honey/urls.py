@@ -4,7 +4,8 @@ from .views import (ProjectListView, ProjectDetailView, ProjectCreateView,
                     ProjectLeaveView, EventListView, #ProjectListCSVView,
                     TechnologyDetailView, TechnologyListView, TopicDetailView,
                     TopicListView, EventDetailView, TopicCreateView,
-                    EventCreateView, TechnologyCreateView)
+                    EventCreateView, TechnologyCreateView, BuzzListView,
+                    BuzzCreateView, BuzzDetailView)
 
 
 # custom views
@@ -26,6 +27,14 @@ urlpatterns = patterns(
         view=ProjectLeaveView.as_view(),
         name="project-leave"),
 
+    url(r'^projects/(?P<slug>[-\w]+)/buzz/create/',
+        view=BuzzCreateView.as_view(),
+        name="buzz-create"),
+
+    url(r'^projects/(?P<project_slug>[-\w]+)/buzz/(?P<slug>[-\w]+)/',
+        view=BuzzDetailView.as_view(),
+        name="buzz-detail"),
+
     url(r'^projects.json',
         view=ProjectListJSONView.as_view(),
         name="project-list-json"),
@@ -33,6 +42,7 @@ urlpatterns = patterns(
     url(r'^projects/(?P<slug>[-\w]+)/',
         view=ProjectDetailView.as_view(),
         name="project-detail"),
+
     #url(r'^projects.csv',
     #    view=ProjectListCSVView.as_view(),
     #    name="project-list-csv"),
@@ -76,4 +86,8 @@ urlpatterns = patterns(
     url(r'^technology/$',
         view=TechnologyListView.as_view(),
         name="technology-list"),
+
+    url("^$", 
+        BuzzListView.as_view(template_name='homepage.html'), 
+        name="homepage")
 )

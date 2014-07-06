@@ -6,8 +6,8 @@ from django.core import serializers
 from django.core.urlresolvers import reverse
 from django.template.loader import render_to_string
 
-from .models import Project, Topic, Technology, Event
-from .forms import ProjectForm, TopicForm, EventForm, TechnologyForm
+from .models import Project, Topic, Technology, Event, Buzz
+from .forms import ProjectForm, TopicForm, EventForm, TechnologyForm, BuzzForm
 from braces import views
 
 
@@ -15,6 +15,40 @@ class JsonView(views.CsrfExemptMixin,
                views.JsonRequestResponseMixin,
                views.JSONResponseMixin, View):
     pass
+
+
+class BuzzListView(ListView):
+    model = Buzz
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(BuzzListView, self).get_context_data(*args, **kwargs)
+        context['technologies'] = Technology.objects.all()
+        context['topics'] = Topic.objects.all()
+        context['events'] = Event.objects.all()
+
+        return context
+
+
+
+class BuzzCreateView(views.LoginRequiredMixin, CreateView):
+    model = Buzz
+    form_class = BuzzForm
+
+    def get_success_url(self):
+        project = Project.objects.get(slug=self.kwargs['slug'])
+        return reverse('project-detail', args=(project.slug,))
+
+
+    def form_valid(self, form):
+        object = form.save(commit=False)
+        object.project = Project.objects.get(slug=self.kwargs['slug'])
+        object.author = self.request.user
+        object.save()
+        return super(BuzzCreateView, self).form_valid(form)
+
+
+class BuzzDetailView(JsonView, DetailView):
+    model = Buzz
 
 
 class ProjectCreateView(views.LoginRequiredMixin, CreateView):

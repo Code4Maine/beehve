@@ -1,7 +1,10 @@
 .links { font-size:24pt; }
 .project-card .description {  }
 
-#header, #footer { padding-top:300px; ;width:100%; max-width:none; background:url('../images/capitol.jpg') no-repeat; }
-#header h1 { color: white;  }
+.header { color:white; padding:10px; padding-top:120px; background:url('../images/maine-coast.png') no-repeat }
+.row.full_width { max-width:100%; width:100%;  }
+.header h1 { background:url('../images/code4maine-logo-small.png') no-repeat; width:400px; height:300px; text-indent:-9999px; display:inline; float:left;}
+.header h3 { padding-top:380px; }
+.footer { padding:20px; }
 #header, #footer { width: 100%; margin-left: auto; margin-right: auto; margin-top: 0;
                    margin-bottom: 0; max-width: 62.5rem; }

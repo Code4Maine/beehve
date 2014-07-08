@@ -2,7 +2,13 @@ from django.core.urlresolvers import reverse
 import floppyforms as forms
 import select2.fields
 
-from .models import Project, Topic, Event, Technology
+from .models import Project, Topic, Event, Technology, Buzz
+
+
+class BuzzForm(forms.ModelForm):
+    class Meta:
+        model = Buzz
+        exclude = ['project', 'author']
 
 
 class ProjectForm(forms.ModelForm):
@@ -20,3 +26,24 @@ class ProjectForm(forms.ModelForm):
         model = Project
         fields = ['title', 'description', 'public_url', 'dev_url',
                   'github_url', 'topics', 'events', 'technologies']
+
+
+class TopicForm(forms.ModelForm):
+
+    class Meta:
+        model = Topic
+        exclude = ['pending']
+
+
+class EventForm(forms.ModelForm):
+
+    class Meta:
+        model = Event
+        exclude = ['pending']
+
+
+class TechnologyForm(forms.ModelForm):
+
+    class Meta:
+        model = Technology
+        exclude = ['pending']

@@ -37,6 +37,8 @@ class Common(Configuration):
 
     ALLOWED_HOSTS = []
 
+    AUTH_PROFILE_MODULE = 'workers.Worker'
+
     # Application definition
 
     INSTALLED_APPS = (

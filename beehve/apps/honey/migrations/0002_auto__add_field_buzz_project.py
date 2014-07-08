@@ -8,15 +8,15 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding field 'Project.founder'
-        db.add_column(u'honey_project', 'founder',
-                      self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='founder', null=True, to=orm['auth.User']),
+        # Adding field 'Buzz.project'
+        db.add_column(u'honey_buzz', 'project',
+                      self.gf('django.db.models.fields.related.ForeignKey')(default=1, to=orm['honey.Project']),
                       keep_default=False)
 
 
     def backwards(self, orm):
-        # Deleting field 'Project.founder'
-        db.delete_column(u'honey_project', 'founder_id')
+        # Deleting field 'Buzz.project'
+        db.delete_column(u'honey_buzz', 'project_id')
 
 
     models = {
@@ -56,18 +56,26 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        u'honey.basicitem': {
-            'Meta': {'ordering': "('-modified', '-created')", 'object_name': 'BasicItem'},
+        u'honey.buzz': {
+            'Meta': {'ordering': "('-modified', '-created')", 'object_name': 'Buzz'},
+            'author': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"}),
             'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
             'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'modified': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
+            'project': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['honey.Project']"}),
             'slug': ('django_extensions.db.fields.AutoSlugField', [], {'allow_duplicates': 'False', 'max_length': '50', 'separator': "u'-'", 'blank': 'True', 'populate_from': "'title'", 'overwrite': 'False'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
         u'honey.event': {
-            'Meta': {'ordering': "('-modified', '-created')", 'object_name': 'Event', '_ormbases': [u'honey.BasicItem']},
-            u'basicitem_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['honey.BasicItem']", 'unique': 'True', 'primary_key': 'True'})
+            'Meta': {'object_name': 'Event'},
+            'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
+            'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'modified': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
+            'pending': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'slug': ('django_extensions.db.fields.AutoSlugField', [], {'allow_duplicates': 'False', 'max_length': '50', 'separator': "u'-'", 'blank': 'True', 'populate_from': "'title'", 'overwrite': 'False'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
         u'honey.project': {
             'Meta': {'ordering': "('-modified', '-created')", 'object_name': 'Project'},
@@ -88,12 +96,24 @@ class Migration(SchemaMigration):
             'topics': ('select2.fields.ManyToManyField', [], {'symmetrical': 'False', 'to': u"orm['honey.Topic']", 'null': 'True', 'search_field': 'None', 'blank': 'True'})
         },
         u'honey.technology': {
-            'Meta': {'ordering': "('-modified', '-created')", 'object_name': 'Technology', '_ormbases': [u'honey.BasicItem']},
-            u'basicitem_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['honey.BasicItem']", 'unique': 'True', 'primary_key': 'True'})
+            'Meta': {'object_name': 'Technology'},
+            'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
+            'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'modified': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
+            'pending': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'slug': ('django_extensions.db.fields.AutoSlugField', [], {'allow_duplicates': 'False', 'max_length': '50', 'separator': "u'-'", 'blank': 'True', 'populate_from': "'title'", 'overwrite': 'False'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
         u'honey.topic': {
-            'Meta': {'ordering': "('-modified', '-created')", 'object_name': 'Topic', '_ormbases': [u'honey.BasicItem']},
-            u'basicitem_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['honey.BasicItem']", 'unique': 'True', 'primary_key': 'True'})
+            'Meta': {'object_name': 'Topic'},
+            'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
+            'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'modified': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
+            'pending': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'slug': ('django_extensions.db.fields.AutoSlugField', [], {'allow_duplicates': 'False', 'max_length': '50', 'separator': "u'-'", 'blank': 'True', 'populate_from': "'title'", 'overwrite': 'False'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         }
     }
 

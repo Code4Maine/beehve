@@ -33,13 +33,13 @@
 </head>
 <body {% block body_attr %}{% endblock body_attr %}>
     {% block base_header %}
-    <nav class="top-bar" data-topbar>
+    <nav class="top-bar hide-for-small" data-topbar>
       <ul class="title-area">
         <!-- Title Area -->
         <li class="name">
           <h1>
             <a href="/">
-             Beehve 
+             Code 4 Maine Dashboard
             </a>
           </h1>
         </li>
@@ -51,31 +51,13 @@
         <ul class="right">
         {% if request.user.is_authenticated %}
           <li class="divider"></li>
-          <li class="">
-          <a href="{ url 'teammate-home' %}"><i class="fa fa-home"></i>&nbsp;Home</a>
-          </li>
+          <li class=""><a href="{% url 'homepage' %}"><i class="fa fa-home"></i>&nbsp;Home</a></li>
           <li class="divider"></li>
-          <li class="has-dropdown"><a href="#">Manage</a>
-            <ul class="dropdown">
-                <li><a href="{ url 'week-create' %}">Add week</a></li>
-                <li><a href="{ url 'week-list' %}">View plans</a></li>
-              <li class="divider"></li>
-              <li><a href="{% url 'account_logout' %}"><i class="fa fa-logout"></i>&nbsp;Logout</a></li>
-            </ul>
-          </li>
-          <li class="divider"></li>
-          <li class="has-dropdown">
-            <a href="#"><i class="fa fa-gears"></i>&nbsp;{{request.user.name}}</a>
-            <ul class="dropdown">
-              <li><a href="">Edit profile</a></li>
-              <li><a href="">My week</a></li>
-              <li class="divider"></li>
-              <li><a href="{% url 'account_logout' %}"><i class="fa fa-logout"></i>&nbsp;Logout</a></li>
-            </ul>
-          </li>
+          <li><a href="{% url 'account_logout' %}"><i class="fa fa-logout"></i>&nbsp;Sign Out</a></li>
         {% else %}
         <li class=""><a href="{% url 'account_signup' %}">Sign up</a></li>
-        <li class=""><a href="{% url 'account_login' %}">Log in</a></li>
+        <li class="divider"></li>
+        <li><a href="{% url 'account_login' %}"><i class="fa fa-login"></i>&nbsp;Sign In</a></li>
         {% endif %}
         </ul>
       </section>
@@ -83,9 +65,12 @@
 
     {% endblock %}
 
+    {% block full_header %}
+    {% endblock %}
+
     {# Main content goes here #}
     {% block base_body %}
-    <div class="row">
+    <div class="row {% block full_width %}{% endblock %}">
       <div class="large-12 columns">
       {% block content %}{% endblock %}
       </div>
@@ -93,12 +78,10 @@
     {% endblock %}
 
     {% block base_footer %}
-    <div class="row">
-        <div clsas="small-12 columns">
+    <div class="footer">
             {% block footer %}
             <p>Powered by <a href="http://beehve.com">beehve</a>, a <a href="http://code4maine.org">Code 4 Maine</a> project. <br /><img src="{% static 'images/built-in-bangor.png' %}" /></p>
             {% endblock %}
-        </div>
     </div>
     {% endblock %}
 
@@ -111,6 +94,7 @@
     {% block foundation_js %}
     {% foundation_js %}
     {% foundation_js 'reveal' %}
+    {% foundation_js 'tab' %}
     {% endblock foundation_js %}
 
     {# Custom JS #}
@@ -119,7 +103,7 @@
     {# Init Foundation #}
     {% block foundation_js_init %}
     <script>
-        $(document).foundation();
+        jQuery(document).foundation();
     </script>
     {% endblock foundation_js_init %}
 </body>

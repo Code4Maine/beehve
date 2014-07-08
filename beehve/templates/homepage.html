@@ -1,26 +1,63 @@
 {% extends "base.html" %}
+{% load markdown_deux_tags %}
+
+{% block full_width %}full_width{% endblock %}
 
 {% block content %}
 
-    <div class="row" id="header">
-      <div class="large-12 columns">
-        <h1>Code 4 Maine</h1>
-      </div>
+    <div class="header">
+        <div class="box">
+            <h1>Code 4 Maine</h1>
+	        <h3>Come join developers, designers, data geeks, leaders, and idea-makers who volunteer to help Maine government agencies and civic orgs adopt open web technologies.</h3>
+        </div>
     </div>
     
-    <div class="row">
-      <div class="large-12 columns">
-      	<div class="panel">
-	        <h3>Come join developers, designers, data geeks, leaders, and idea-makers who volunteer to help Maine government agencies and civic orgs adopt open web technologies.</h3>
+      	<div class="pane">
             <hr />
-	        <div class="row">
-	        	<div class="large-3 medium-3 columns">
-                    <h3><a href="{% url 'project-list' %}">Projects</a></h3>
+	        <div class="row" data-equalizer>
+	        	<div class="large-2 columns">
+                    <h2><a href="{% url 'project-list' %}">Projects</a></h2>
+                    <a class="button tiny radius" href="{% url 'project-create' %}"><i class="fa fa-plus"></i> new project</a>
+                    <ul class="tabs" data-tab>
+                        <li class="tab-title active"><a href="#tech">Tech</a></li>
+                        <li class="tab-title"><a href="#topics">Topics</a></li>
+                        <li class="tab-title"><a href="#events">Events</a></li>
+                    </ul>
+                    <ul class="tabs-content">
+                        <div id="tech">
+                          <ul class="">
+                              {% for tech in technologies %}
+                              <li><a href="{{tech.get_absolute_url}}">{{tech}}</a></li>
+                            {% endfor %}
+                          </ul>
+                        </div>
+                        <div id="topics">
+                          <ul class="">
+                              {% for topic in topics %}
+                              <li><a href="{{topic.get_absolute_url}}">{{topic}}</a></li>
+                            {% endfor %}
+                          </ul>
+                        </div>
+                        <div id="events">
+                          <ul class="">
+                              {% for event in events %}
+                              <li><a href="{{event.get_absolute_url}}">{{event}}</a></li>
+                            {% endfor %}
+                          </ul>
+                        </div>
+                    </ul>
                     <p>{% if user.is_authenticated %}<a data-reveal-id="myModal" data-reveal-ajax="true" href="{% url 'project-create' %}" class="button tiny radius"><i class="fa fa-plus"></i> Add</a>{% endif %}</p>
 	    	</div>
 	        	<div class="large-6 medium-6 columns">
                     <h2><a href="">Latest project activity</a></h2>
-                    <p>The latest buzz from the Code 4 Maine beehive.</p>
+                    {% for buzz in object_list %}
+                    <p class="label success" style="font-size:16pt;">{{buzz.project}}</p>
+                    <div class="panel">
+                        <p><a href="{{buzz.get_absolute_url}}">{{buzz.title}}</a></p>
+                        {{buzz.description|markdown}}
+                        <p class="byline">{{buzz.modified}} by <a href="{% url 'worker-detail' buzz.author.username %}">{{buzz.author}}</a></p>
+                    </div>
+                    {% endfor %}
 	        	</div>
 	        	<div class="large-3 medium-3 columns">
                     <h3><a href="{ url 'meeting-list' %}">Next Meetup</a></h3>

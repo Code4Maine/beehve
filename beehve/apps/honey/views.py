@@ -8,6 +8,7 @@ from django.template.loader import render_to_string
 
 from .models import Project, Topic, Technology, Event, Buzz
 from .forms import ProjectForm, TopicForm, EventForm, TechnologyForm, BuzzForm
+from .utils import send_email
 from braces import views
 
 
@@ -44,6 +45,13 @@ class BuzzCreateView(views.LoginRequiredMixin, CreateView):
         object.project = Project.objects.get(slug=self.kwargs['slug'])
         object.author = self.request.user
         object.save()
+
+        member_emails = [m.email for m in object.project.members.all()]
+        send_email(
+            self.request, 
+            member_emails,
+            'Someone is buzzing about {0} on Code 4 Maine'.format(object.project),
+            'honey/buzz_email.txt')
         return super(BuzzCreateView, self).form_valid(form)
 
 

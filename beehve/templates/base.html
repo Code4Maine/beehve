@@ -51,7 +51,7 @@
         <ul class="right">
         {% if request.user.is_authenticated %}
           <li class="divider"></li>
-          <li class=""><a href="{ url 'teammate-home' %}"><i class="fa fa-home"></i>&nbsp;Home</a></li>
+          <li class=""><a href="{% url 'homepage' %}"><i class="fa fa-home"></i>&nbsp;Home</a></li>
           <li class="divider"></li>
           <li><a href="{% url 'account_logout' %}"><i class="fa fa-logout"></i>&nbsp;Sign Out</a></li>
         {% else %}

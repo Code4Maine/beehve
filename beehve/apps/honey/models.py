@@ -8,8 +8,11 @@ import select2.fields
 
 class SelectManager(models.Manager):
     def as_choices(self):
-        for object in self.all():
-            yield (object.pk, unicode(object))
+        try:
+            for object in self.all():
+                yield (object.pk, unicode(object))
+        except:
+            yield []
 
 
 class BasicItem(TimeStampedModel, TitleSlugDescriptionModel):

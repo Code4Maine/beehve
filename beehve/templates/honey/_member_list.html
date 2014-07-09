@@ -1,5 +1,5 @@
 {% load avatar_tags %}
-<div class="member-thumbs">
+<div class="member-thumbs row">
 {% for member in members %}
     <div class="th" ><a href="{% url 'worker-detail' member.username %}">{% avatar member 65 %}</a></div>
 {% endfor %}

@@ -1,33 +1,28 @@
 {% extends "base.html" %}
 {% load avatar_tags %}
+{% load markdown_deux_tags %}
 
 {% block content %}
 
-<h2>Bridgade Project Directory</h2>
-
-{% for project in object_list %}
-
-<div class="row project-card">
-    <div class="small-12">
-        <h3><a href="{{project.get_absolute_url }}">{{project.title}}</a></h3>
+<div class="row">
+    <div class="col-md-12">
+        <h1>Bridgade Project Directory</h1>
+        
+        {% for project in object_list %}
         <div class="row">
-            <div class="small-6 columns description">
-                {{project.description|safe}}
+            <div class="col-md-4">
+                <h3><a href="{{project.get_absolute_url }}">{{project.title}}</a> <a href="{{project.get_absolute_url}}" class="btn btn-primary">Learn more <i class="fa fa-arrow-right"></i></a></h3>
+                <p><b>Built with</b> {% for tech in project.technologies.all %}<a class="badge" href="{{tech.get_absolute_url}}">{{tech}}</a> {% endfor %}</p>
             </div>
-            <div class="small-6  columns members">
+            <div class="col-md-6">
                 <h5>Members</h5>
                 {% for member in project.members.all %}
-                <div class="th" >{% avatar member 65 %}</div>
+                <span class="th" >{% avatar member 65 %}</span>
                 {% endfor %}
             </div>
         </div>
-        <p class="links">{% if project.public_url %}<a href="{{project.public_url}}"><i class="fa fa-globe"></i></a>{% endif %}{% if project.github_url %} <a href="{{project.github_url}}"><i class="fa fa-github"></i></a>{% endif %}</p>
-        {% if project.dev_url %}<p>Development: {{project.dev_url|urlize}}</p>{% endif %}
-        <p>Built with: {% for tech in project.technologies.all %}<a href="{{tech.get_absolute_url}}">{{tech}}</a>{% if not forloop.last %}, {% endif %} {% endfor %}</p>
         <hr />
+        {% endfor %}
     </div>
 </div>
-
-{% endfor %}
-
 {% endblock %}

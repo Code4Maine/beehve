@@ -59,7 +59,7 @@
                     </ul>
                 </li>
                 {% else %}
-                <li>
+                <li class="new-menu">
                     <ul>
                         <li><a href="{% url 'account_signup' %}"><i class="fa fa-plus fa-fw"></i> Register a new account</a>
                         <li class="divider"></li>
@@ -89,6 +89,9 @@
                             <a href="{% url 'homepage' %}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
                         <li>
+                            <a href="{% url 'project-list' %}"><i class="fa fa-star fa-fw"></i>View all projects</a>
+                        </li>
+                        <li>
                             <a href="#"><span class="badge">{{projects|length}}</span> Projects<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 {% for project in projects %}
@@ -100,11 +103,33 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                        <a href="#"><span class="badge">{{workers|length}}</span> Workers <span class="fa arrow"></span></a>
+                            <a href="#"><span class="badge">{{topics|length}}</span> Topics<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                {% for obj in topics %}
+                                <li>
+                                <a href="{{ obj.get_absolute_url }}">{{obj.title}}</a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><span class="badge">{{workers|length}}</span> Workers <span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 {% for worker in workers %}
                                 <li>
                                 <a href="{% url 'worker-detail' worker.username %}">{{worker}}</a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><span class="badge">{{events|length}}</span> Events<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                {% for obj in events %}
+                                <li>
+                                <a href="{{ obj.get_absolute_url }}">{{obj.title}}</a>
                                 </li>
                                 {% endfor %}
                             </ul>
@@ -131,16 +156,11 @@
     <script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
     <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/jquery.metisMenu.js' %}"></script>
-
-    <!-- Page-Level Plugin Scripts - Dashboard -->
-    <script src="{% static 'raphael/raphael-min.js"></script>
-    <script src="{% static 'morrisjs/morris.js' %}"></script>
-
     <!-- SB Admin Scripts - Include with every page -->
     <script src="{% static 'js/sb-admin.js' %}"></script>
 
-    <!-- Page-Level Demo Scripts - Dashboard - Use for reference -->
-    <script src="{% static 'js/dashboard-demo.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+
 
 </body>
 

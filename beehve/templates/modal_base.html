@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}{% endblock %} Code 4 Maine Dashboard</title>
+
+    <!-- Core CSS - Include with every page -->
+    <link href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+
+    <!-- Page-Level Plugin CSS - Dashboard -->
+    <link href="{% static 'morrisjs/morris.css' %}" rel="stylesheet">
+    <link href="{% static 'css/timeline.css' %}" rel="stylesheet">
+
+    <!-- SB Admin CSS - Include with every page -->
+    <link href="{% static 'css/sb-admin.css' %}" rel="stylesheet">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+<div class="wrapper" style="margin-left:20px;">
+    {% block content %}
+    {% endblock %}
+</div>
+    <!-- Core Scripts - Include with every page -->
+    <script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.metisMenu.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+    <!-- SB Admin Scripts - Include with every page -->
+    <script src="{% static 'js/sb-admin.js' %}"></script>
+
+
+
+</body>
+
+</html>

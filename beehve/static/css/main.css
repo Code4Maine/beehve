@@ -9,8 +9,11 @@
 #header, #footer { width: 100%; margin-left: auto; margin-right: auto; margin-top: 0;
                    margin-bottom: 0; max-width: 62.5rem; }
 .circle.small { width:20px !important; height:24px !important; border-radius:400px; font-size:14pt; color:#fff; text-align:center; background:#000; display:inline;}
-.nav .fa { font-size:14pt; }
+.nav .fa { font-size:12pt; }
+.new-menu { margin-top:12px; }
 
+.member-thumbs { display:block; }
+.th { float:left; margin-right:10px;  }
 .socialaccount_provider { font-size:14pt; }
 .socialaccount_providers { margin:0; padding:0; clear:both; display:block }
 .socialaccount_providers li { list-style:none; float:left; margin-right:5px; font-size:16pt;}
@@ -18,3 +21,4 @@
 .short-form { width:300px;}
 
 .project-badge { font-family:Impact; font-size:22pt; }
+.badge a { color:white;}

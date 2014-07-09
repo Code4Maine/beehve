@@ -1,18 +1,15 @@
-{% extends "base.html" %}
+{% extends "modal_base.html" %}
 {% load static %}
+{% load bootstrap %}
+
 
 {% block content %}
 
-<h2>Add some buzz</h2>
-
-<div class="row project-card">
-    <div class="small-12">
-        <form method="post" action=".">
-            {% csrf_token %}
-            {{ form.as_p  }}
-            <p><input type="submit" value="Save"></p>
-        </form>
-    </div>
-</div>
+<h2>Let's buzz about {{project}}!</h2>
+<form class="short-form" method="post" action="{% url 'buzz-create' project.slug %}">
+    {% csrf_token %}
+    {{ form|bootstrap}}
+    <p><input class="btn btn-success" type="submit" value="Post it!"> <button type="button" class="btn btn-danger" value="cancel">Cancel</button></p>
+</form>
 
 {% endblock %}

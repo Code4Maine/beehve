@@ -4,6 +4,14 @@
 
 {% block full_width %}full_width{% endblock %}
 
+{% block extra_js %}
+<!-- Page-Level Plugin Scripts - Dashboard -->
+<script src="{% static 'raphael/raphael-min.js"></script>
+<script src="{% static 'morrisjs/morris.js' %}"></script>
+<script src="{% static 'js/dashboard-demo.js' %}"></script>
+{% endblock %}
+
+
 {% block content %}
     
             <div class="row">
@@ -29,7 +37,7 @@
                                     </div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
-                                            <h4 class="timeline-title"><a href="{{buzz.get_absolute_url}}">{{buzz.title}}</a><hr/> <span class="badge right">{{buzz.project}}</span></h4>
+                                            <h4 class="timeline-title"><a href="{{buzz.get_absolute_url}}">{{buzz.title}}</a><hr/> <span class="badge right"><a href="{{buzz.project.get_absolute_url}}">{{buzz.project}}</a></span></h4>
                                             <p>
                                             <small class="text-muted"><i class="fa fa-time"></i> {{buzz.modified}} via Website</small>
                                             </p>
@@ -84,70 +92,37 @@
                     </div>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-bell fa-fw"></i> Find something, and get to work!
+                            <h4><i class="fa fa-bell fa-fw"></i> Find something, and get to work!</h4>
+                            <br />
+                            <p>Browse the following list of technologies wer're using in our projects. If something is familiar to you, please jump in and see where you can help!</p>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="list-group">
+                                {% for tech in technologies %}
                                 <a href="#" class="list-group-item">
-                                    <i class="fa fa-comment fa-fw"></i> New Comment
-                                    <span class="pull-right text-muted small"><em>4 minutes ago</em>
+                                    <span class="badge">{{tech.project_set.all|length}}</span> {{tech}}
+                                    <span class="pull-right text-muted small"><span>
                                     </span>
                                 </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                    <span class="pull-right text-muted small"><em>12 minutes ago</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-envelope fa-fw"></i> Message Sent
-                                    <span class="pull-right text-muted small"><em>27 minutes ago</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-tasks fa-fw"></i> New Task
-                                    <span class="pull-right text-muted small"><em>43 minutes ago</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                    <span class="pull-right text-muted small"><em>11:32 AM</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-bolt fa-fw"></i> Server Crashed!
-                                    <span class="pull-right text-muted small"><em>11:13 AM</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-warning fa-fw"></i> Server Not Responding
-                                    <span class="pull-right text-muted small"><em>10:57 AM</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-shopping-cart fa-fw"></i> New Order Placed
-                                    <span class="pull-right text-muted small"><em>9:49 AM</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-money fa-fw"></i> Payment Received
-                                    <span class="pull-right text-muted small"><em>Yesterday</em>
-                                    </span>
-                                </a>
+                                {% endfor %}
                             </div>
-                            <!-- /.list-group -->
-                            <a href="#" class="btn btn-default btn-block">View All Alerts</a>
                         </div>
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Donut Chart Example
+                            <i class="fa fa-calendar fa-fw"></i> Recent events
                         </div>
                         <div class="panel-body">
-                            <div id="morris-donut-chart"></div>
-                            <a href="#" class="btn btn-default btn-block">View Details</a>
+                                {% for event in events %}
+                                <a href="#" class="list-group-item">
+                                    <span class="badge">{{event.project_set.all|length}}</span> {{event}}
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                {% endfor %}
                         </div>
                         <!-- /.panel-body -->
                     </div>

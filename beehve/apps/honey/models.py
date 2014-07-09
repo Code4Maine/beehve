@@ -76,6 +76,9 @@ class Project(TimeStampedModel, TitleSlugDescriptionModel):
         max_length=10, 
         choices=PROJECT_STATUSES, 
         default='active')
+    color = models.CharField(_('Color'), max_length=100, blank=True, null=True)
+    screenshot = models.ImageField(_('Screenshot'), blank=True, null=True,
+                                   upload_to='screenshots')
 
     def __unicode__(self):
         return u'{0}'.format(self.title)

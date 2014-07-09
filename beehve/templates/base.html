@@ -96,7 +96,7 @@
                             <ul class="nav nav-second-level">
                                 {% for project in projects %}
                                 <li>
-                                <a href="{{ project.get_absolute_url }}"><div class="badge" style="background-color:red;">{{project.title|slice:":1"}}</div> {{project.title}}</a>
+                                <a href="{{ project.get_absolute_url }}"><div class="badge" style="background-color:#{{project.color}};">{{project.title|slice:":1"}}</div> {{project.title}}</a>
                                 </li>
                                 {% endfor %}
                             </ul>

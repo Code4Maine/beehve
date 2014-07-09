@@ -19,6 +19,7 @@
 .socialaccount_providers li { list-style:none; float:left; margin-right:5px; font-size:16pt;}
 .socialaccount_ballot { margin-bottom:80px; }
 .short-form { width:300px;}
+.modal-form { margin-left:20px; margin-right:20px; }
 
 .project-badge { font-family:Impact; font-size:22pt; }
 .badge a { color:white;}

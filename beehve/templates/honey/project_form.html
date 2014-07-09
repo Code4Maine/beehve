@@ -1,33 +1,40 @@
 {% extends "base.html" %}
 {% load static %}
-{% block body_js %}
+{% load bootstrap %}
+{% block extra_js %}
 <link rel="stylesheet" href="{% static 'select2/css/select2.css?v=1' %}"/>
 <link rel="stylesheet" href="{% static 'select2/css/djselect2.css?v=2' %}"/>
 <script src="{% static 'select2/js/select2.js?v=1' %}"></script>
 <script src="{% static 'select2/js/select2.jquery_ready.js?v=2' %}"></script>
 <script>
 jQuery('document').ready(function() {
-    jQuery("<a href='{% url 'topic-create' %}?next={% url 'project-create' %}' data-reveal-id='myModal' data-reveal-ajax='true' class='button tiny'><i class='fa fa-plus'></i></a>").insertAfter('#s2id_id_topics');
-    jQuery("<a href='{% url 'event-create' %}?next={% url 'project-create' %}' data-reveal-id='myModal' data-reveal-ajax='true' class='button tiny'><i class='fa fa-plus'></i></a>").insertAfter('#s2id_id_events');
-    jQuery("<a href='{% url 'technology-create' %}?next={% url 'project-create' %}' data-reveal-id='myModal' data-reveal-ajax='true' class='button tiny'><i class='fa fa-plus'></i></a>").insertAfter('#s2id_id_technologies');
+    jQuery("<a href='{% url 'topic-create' %}' data-toggle='modal' data-target='#modal' class='btn btn-primary'><i class='fa fa-plus'></i></a>").insertAfter('#s2id_id_topics');
+    jQuery("<a href='{% url 'event-create' %}' data-toggle='modal' data-target='#modal' class='btn btn-primary'><i class='fa fa-plus'></i></a>").insertAfter('#s2id_id_events');
+    jQuery("<a href='{% url 'technology-create' %}' data-toggle='modal' data-target='#modal' class='btn btn-primary'><i class='fa fa-plus'></i></a>").insertAfter('#s2id_id_technologies');
 });
 </script>
 {% endblock %}
 
 
 {% block content %}
-<div id="myModal"></div>>
+<div id="myModal"></div>
 
 <h2>{% if not object %}Add a Project{% else %}Edit {{object}}{% endif %}</h2>
 
 <div class="row project-card">
     <div class="small-12">
-        <form method="post" action=".">
-            {% csrf_token %}
-            {{ form.as_p  }}
-            <p><input type="submit" value="Save"></p>
+        <form method="post" action=".">{% csrf_token %}
+            {{ form|bootstrap}}
+            <p><input class="btn btn-success" type="submit" value="Add"></p>
         </form>
     </div>
+</div>
+
+<div id="modal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    </div>
+  </div>
 </div>
 
 {% endblock %}

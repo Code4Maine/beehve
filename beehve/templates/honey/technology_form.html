@@ -1,18 +1,14 @@
-{% extends "base.html" %}
+{% extends "modal_base.html" %}
 {% load static %}
+{% load bootstrap %}
 
 {% block content %}
 
 <h2>{% if not object %}Add a Technology{% else %}Edit {{object}}{% endif %}</h2>
 
-<div class="row project-card">
-    <div class="small-12">
-        <form method="post" action=".?next={{request.GET.next}}">
-            {% csrf_token %}
-            {{ form.as_p  }}
-            <p><input type="submit" value="Save"></p>
-        </form>
-    </div>
-</div>
+<form class="modal-form" method="post" action="{% url 'technology-create' %}">{% csrf_token %}
+    {{ form|bootstrap}}
+    <p><input type="submit" class="btn btn-success" value="Add"></p>
+</form>
 
 {% endblock %}

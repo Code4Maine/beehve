@@ -1,78 +1,278 @@
 {% extends "base.html" %}
 {% load markdown_deux_tags %}
+{% load static %}
 
 {% block full_width %}full_width{% endblock %}
 
 {% block content %}
-
-    <div class="header">
-        <div class="box">
-            <h1>Code 4 Maine</h1>
-	        <h3>Come join developers, designers, data geeks, leaders, and idea-makers who volunteer to help Maine government agencies and civic orgs adopt open web technologies.</h3>
-        </div>
-    </div>
     
-      	<div class="pane">
-            <hr />
-	        <div class="row" data-equalizer>
-	        	<div class="large-2 columns">
-                    <h2><a href="{% url 'project-list' %}">Projects</a></h2>
-                    <a class="button tiny radius" href="{% url 'project-create' %}"><i class="fa fa-plus"></i> new project</a>
-                    <ul class="tabs" data-tab>
-                        <li class="tab-title active"><a href="#tech">Tech</a></li>
-                        <li class="tab-title"><a href="#topics">Topics</a></li>
-                        <li class="tab-title"><a href="#events">Events</a></li>
-                    </ul>
-                    <ul class="tabs-content">
-                        <div id="tech">
-                          <ul class="">
-                              {% for tech in technologies %}
-                              <li><a href="{{tech.get_absolute_url}}">{{tech}}</a></li>
-                            {% endfor %}
-                          </ul>
+            <div class="row">
+                <div class="col-lg-12 eader">
+                    <h1 class="age-header">Dashboard</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- /.panel -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-clock-o fa-fw"></i> Latest Project Buzz
                         </div>
-                        <div id="topics">
-                          <ul class="">
-                              {% for topic in topics %}
-                              <li><a href="{{topic.get_absolute_url}}">{{topic}}</a></li>
-                            {% endfor %}
-                          </ul>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <ul class="timeline">
+                                {% for buzz in object_list %}
+                                <li class="{% cycle 'timeline-inverted' '' %}">
+                                <div class="timeline-badge success"><i class="fa fa-flag"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <h4 class="timeline-title"><a href="{{buzz.get_absolute_url}}">{{buzz.title}}</a><hr/> <span class="badge right">{{buzz.project}}</span></h4>
+                                            <p>
+                                            <small class="text-muted"><i class="fa fa-time"></i> {{buzz.modified}} via Website</small>
+                                            </p>
+                                        </div>
+                                        <div class="timeline-body">
+                                            {{buzz.description|markdown}}
+                                            <p class="byline">{{buzz.modified}} by <a href="{% url 'worker-detail' buzz.author.username %}">{{buzz.author}}</a></p>
+                                        </div>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                                <li>
+                                    <div class="timeline-badge info"><i class="fa fa-file-code-o"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <h4 class="timeline-title">Timeline Event</h4>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel justo eu mi scelerisque vulputate. Aliquam in metus eu lectus aliquet egestas.</p>
+                                            <hr>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                    <i class="fa fa-cog"></i> 
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="#">Action</a>
+                                                    </li>
+                                                    <li><a href="#">Another action</a>
+                                                    </li>
+                                                    <li><a href="#">Something else here</a>
+                                                    </li>
+                                                    <li class="divider"></li>
+                                                    <li><a href="#">Separated link</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
-                        <div id="events">
-                          <ul class="">
-                              {% for event in events %}
-                              <li><a href="{{event.get_absolute_url}}">{{event}}</a></li>
-                            {% endfor %}
-                          </ul>
-                        </div>
-                    </ul>
-                    <p>{% if user.is_authenticated %}<a data-reveal-id="myModal" data-reveal-ajax="true" href="{% url 'project-create' %}" class="button tiny radius"><i class="fa fa-plus"></i> Add</a>{% endif %}</p>
-	    	</div>
-	        	<div class="large-6 medium-6 columns">
-                    <h2><a href="">Latest project activity</a></h2>
-                    {% for buzz in object_list %}
-                    <p class="label success" style="font-size:16pt;">{{buzz.project}}</p>
-                    <div class="panel">
-                        <p><a href="{{buzz.get_absolute_url}}">{{buzz.title}}</a></p>
-                        {{buzz.description|markdown}}
-                        <p class="byline">{{buzz.modified}} by <a href="{% url 'worker-detail' buzz.author.username %}">{{buzz.author}}</a></p>
+                        <!-- /.panel-body -->
                     </div>
-                    {% endfor %}
-	        	</div>
-	        	<div class="large-3 medium-3 columns">
-                    <h3><a href="{ url 'meeting-list' %}">Next Meetup</a></h3>
-                    <div>
-                        <h5>Hacker Club - Bangor</h5>
-                        <p>Thursday, July 3
-                        <br/>5:00-8:00 p.m.</p>
-                        <p><a href="">RSVP @ meetup.com</a></p>
-                        <p><span class="label tiny">1 coming</span></p>
-                        <hr />
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-8 -->
+                <div class="col-lg-4">
+                    <div class="panel" style="background:#eee;">
+                        <img style="margin-left:30px;" src="{% static 'images/code4maine-logo-small.png' %}">
                     </div>
-	        	</div>        
-					</div>
-      	</div>
-      </div>
-    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bell fa-fw"></i> Find something, and get to work!
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item">
+                                    <i class="fa fa-comment fa-fw"></i> New Comment
+                                    <span class="pull-right text-muted small"><em>4 minutes ago</em>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
+                                    <span class="pull-right text-muted small"><em>12 minutes ago</em>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <i class="fa fa-envelope fa-fw"></i> Message Sent
+                                    <span class="pull-right text-muted small"><em>27 minutes ago</em>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <i class="fa fa-tasks fa-fw"></i> New Task
+                                    <span class="pull-right text-muted small"><em>43 minutes ago</em>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                                    <span class="pull-right text-muted small"><em>11:32 AM</em>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <i class="fa fa-bolt fa-fw"></i> Server Crashed!
+                                    <span class="pull-right text-muted small"><em>11:13 AM</em>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <i class="fa fa-warning fa-fw"></i> Server Not Responding
+                                    <span class="pull-right text-muted small"><em>10:57 AM</em>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <i class="fa fa-shopping-cart fa-fw"></i> New Order Placed
+                                    <span class="pull-right text-muted small"><em>9:49 AM</em>
+                                    </span>
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <i class="fa fa-money fa-fw"></i> Payment Received
+                                    <span class="pull-right text-muted small"><em>Yesterday</em>
+                                    </span>
+                                </a>
+                            </div>
+                            <!-- /.list-group -->
+                            <a href="#" class="btn btn-default btn-block">View All Alerts</a>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Donut Chart Example
+                        </div>
+                        <div class="panel-body">
+                            <div id="morris-donut-chart"></div>
+                            <a href="#" class="btn btn-default btn-block">View Details</a>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                    <div class="chat-panel panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-comments fa-fw"></i>
+                            Chat
+                            <div class="btn-group pull-right">
+                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-chevron-down"></i>
+                                </button>
+                                <ul class="dropdown-menu slidedown">
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-refresh fa-fw"></i> Refresh
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-check-circle fa-fw"></i> Available
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-times fa-fw"></i> Busy
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-clock-o fa-fw"></i> Away
+                                        </a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-sign-out fa-fw"></i> Sign Out
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <ul class="chat">
+                                <li class="left clearfix">
+                                    <span class="chat-img pull-left">
+                                        <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
+                                    </span>
+                                    <div class="chat-body clearfix">
+                                        <div class="header">
+                                            <strong class="primary-font">Jack Sparrow</strong> 
+                                            <small class="pull-right text-muted">
+                                                <i class="fa fa-clock-o fa-fw"></i> 12 mins ago
+                                            </small>
+                                        </div>
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="right clearfix">
+                                    <span class="chat-img pull-right">
+                                        <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
+                                    </span>
+                                    <div class="chat-body clearfix">
+                                        <div class="header">
+                                            <small class=" text-muted">
+                                                <i class="fa fa-clock-o fa-fw"></i> 13 mins ago</small>
+                                            <strong class="pull-right primary-font">Bhaumik Patel</strong>
+                                        </div>
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="left clearfix">
+                                    <span class="chat-img pull-left">
+                                        <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
+                                    </span>
+                                    <div class="chat-body clearfix">
+                                        <div class="header">
+                                            <strong class="primary-font">Jack Sparrow</strong> 
+                                            <small class="pull-right text-muted">
+                                                <i class="fa fa-clock-o fa-fw"></i> 14 mins ago</small>
+                                        </div>
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="right clearfix">
+                                    <span class="chat-img pull-right">
+                                        <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
+                                    </span>
+                                    <div class="chat-body clearfix">
+                                        <div class="header">
+                                            <small class=" text-muted">
+                                                <i class="fa fa-clock-o fa-fw"></i> 15 mins ago</small>
+                                            <strong class="pull-right primary-font">Bhaumik Patel</strong>
+                                        </div>
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- /.panel-body -->
+                        <div class="panel-footer">
+                            <div class="input-group">
+                                <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-warning btn-sm" id="btn-chat">
+                                        Send
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- /.panel-footer -->
+                    </div>
+                    <!-- /.panel .chat-panel -->
+                </div>
+                <!-- /.col-lg-4 -->
+            </div>
+            <!-- /.row -->
 
 {% endblock %}

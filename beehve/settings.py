@@ -64,6 +64,8 @@ class Common(Configuration):
         'avatar',
         'select2',
         'markdown_deux',
+        'djangobower',
+        'bootstrapform',
 
         'honey',
         'workers',
@@ -72,6 +74,7 @@ class Common(Configuration):
     TEMPLATE_CONTEXT_PROCESSORS = Configuration.TEMPLATE_CONTEXT_PROCESSORS + \
         ("django.core.context_processors.request",
          "django.core.context_processors.tz",
+         "honey.context_processors.menu_preloader",
          "allauth.account.context_processors.account",
          "allauth.socialaccount.context_processors.socialaccount",)
 
@@ -87,6 +90,19 @@ class Common(Configuration):
     STATICFILES_FINDERS = (
         "django.contrib.staticfiles.finders.FileSystemFinder",
         "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+        'djangobower.finders.BowerFinder',
+    )
+
+    BOWER_COMPONENTS_ROOT= os.path.join(BASE_DIR, 'components')
+
+    BOWER_INSTALLED_APPS = (
+        'jquery#2.1.1',
+        'bootstrap#3.2.0',
+        'font-awesome#4.1.0',
+        'morrisjs#0.5.1',
+        'timeline#2.29.1', 
+        'raphael#2.1.2',
+        'underscore',
     )
 
 

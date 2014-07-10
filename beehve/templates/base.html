@@ -145,7 +145,7 @@
             <!-- /.navbar-static-side -->
         </nav>
 
-        <div id="page-wrapper">
+        <div id="page-wrapper" {% if user.worker.background %}style="background:{{user.worker.background}}"{% endif %}>
             {% block content %}
             {% endblock %}
         </div>

@@ -3,6 +3,7 @@ from localflavor.us.models import PhoneNumberField
 from django.utils.translation import ugettext_lazy as _
 from django_extensions.db.models import TimeStampedModel
 from django.contrib.auth import get_user_model
+from django.db.models.signals import post_save
 
 
 class Worker(TimeStampedModel):
@@ -30,3 +31,10 @@ class Worker(TimeStampedModel):
             return ' '.join([self.user.first_name, self.user.last_name])
         else:
             return None
+
+
+def get_or_create_worker(sender, instance, **kwargs):
+    Worker.objects.get_or_create(user=instance)
+
+post_save.connect(get_or_create_worker, sender=get_user_model(), dispatch_uid='get_or_create_worker')
+get_user_model().worker = property(lambda u: Worker.objects.get_or_create(user=u)[0])

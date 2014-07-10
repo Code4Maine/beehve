@@ -1,11 +1,31 @@
 {% extends "base.html" %}
 {% load avatar_tags %}
+{% load markdown_deux_tags %}
 
 {% block content %}
 
 <h2>{{object.user}}</h2>
-<div class="th" >{% avatar object.user 150 %}</a></div>
 
+<div class="well">
+  {% with object as worker %}
+  <h2>{{worker}}</h2>
+  <hr />
+
+  <div class="th" >{% avatar object.user 150 %}</a></div>
+
+  <h4>Why am I part of Code 4 Maine?</h4>
+  {{worker.why|markdown}}
+  
+  <h4>My personal webiste</h4>
+  <p>{{worker.website|urlize}}
+
+  <h4>My phone number</h4>
+  <p>{{worker.phone}}</p>
+
+  <h4>I live in</h4>
+  <p>{{worker.city}}</p>
+  {% endwith %}
+</div>
 
 
 {% endblock %}

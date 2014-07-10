@@ -8,6 +8,7 @@ from django.db.models.signals import post_save
 
 class Worker(TimeStampedModel):
     user = models.ForeignKey(get_user_model())
+    name = models.CharField(_('Name'), max_length=255, blank=True, null=True)
     why = models.TextField(_('Why I am part of Code 4 Maine'), blank=True, null=True)
     website = models.CharField(_('Personal website'), max_length=200, blank=True, null=True)
     phone = models.CharField(_('Phone'), max_length=20, blank=True, null=True)
@@ -23,15 +24,9 @@ class Worker(TimeStampedModel):
     @models.permalink
     def get_absolute_url(self):
         return ('worker-detail', None, {'slug': self.user.username})
-    
 
-    @property
-    def name(self):
-        if self.user.first_name or self.user.last_name:
-            return ' '.join([self.user.first_name, self.user.last_name])
-        else:
-            return None
-
+    def __unicode__(self):
+        return u'{0}'.format(self.name)
 
 def get_or_create_worker(sender, instance, **kwargs):
     Worker.objects.get_or_create(user=instance)

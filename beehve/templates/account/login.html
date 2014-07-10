@@ -3,7 +3,7 @@
 {% load i18n %}
 {% load account %}
 {% load url from future %}
-{% load bootstrap %}
+{% load bootstrap3 %}
 
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
@@ -27,7 +27,7 @@ for a {{site_name}} account and sign in below:{% endblocktrans %}</p>
 
   <form role="form" class="short-form login" method="POST" action="{% url 'account_login' %}">
       <div class="form-group">{% csrf_token %}
-      {{ form|bootstrap}}
+      {% bootstrap_form form %}
       {% if redirect_field_value %}
       <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
       {% endif %}

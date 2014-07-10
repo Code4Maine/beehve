@@ -65,7 +65,7 @@ class Common(Configuration):
         'select2',
         'markdown_deux',
         'djangobower',
-        'bootstrapform',
+        'bootstrap3',
 
         'honey',
         'workers',
@@ -102,6 +102,8 @@ class Common(Configuration):
         'morrisjs#0.5.1',
         'timeline#2.29.1', 
         'raphael#2.1.2',
+        'bootstrap-multiselect#0.9.5',
+        'bootstrap-colorpicker',
         'underscore',
     )
 

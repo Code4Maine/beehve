@@ -1,16 +1,25 @@
 {% extends "base.html" %}
 {% load static %}
-{% load bootstrap %}
+{% load bootstrap3 %}
+
 {% block extra_js %}
-<link rel="stylesheet" href="{% static 'select2/css/select2.css?v=1' %}"/>
-<link rel="stylesheet" href="{% static 'select2/css/djselect2.css?v=2' %}"/>
-<script src="{% static 'select2/js/select2.js?v=1' %}"></script>
-<script src="{% static 'select2/js/select2.jquery_ready.js?v=2' %}"></script>
+<script src="{% static 'bootstrap-multiselect/js/bootstrap-multiselect.js' %}" ></script>
+<script src="{% static 'bootstrap-multiselect/js/prettify.js' %}" ></script>
+<link href="{% static 'bootstrap-multiselect/css/bootstrap-multiselect.css' %}" rel="stylesheet">
+<link href="{% static 'bootstrap-multiselect/css/prettify.css' %}" rel="stylesheet">
+<script src="{% static 'bootstrap-colorpicker/js/bootstrap-colorpicker.js' %}" ></script>
+<link href="{% static 'bootstrap-colorpicker/css/colorpicker.css' %}" rel="stylesheet">
+<script type="text/javascript">
+$(document).ready(function() {
+    jQuery('.multiselect').multiselect();
+    jQuery('.colorpicker').colorpicker();
+});
+</script>
 <script>
 jQuery('document').ready(function() {
-    jQuery("<a href='{% url 'topic-create' %}' data-toggle='modal' data-target='#modal' class='btn btn-primary'><i class='fa fa-plus'></i></a>").insertAfter('#s2id_id_topics');
-    jQuery("<a href='{% url 'event-create' %}' data-toggle='modal' data-target='#modal' class='btn btn-primary'><i class='fa fa-plus'></i></a>").insertAfter('#s2id_id_events');
-    jQuery("<a href='{% url 'technology-create' %}' data-toggle='modal' data-target='#modal' class='btn btn-primary'><i class='fa fa-plus'></i></a>").insertAfter('#s2id_id_technologies');
+    jQuery("<a href='{% url 'topic-create' %}' data-toggle='modal' data-target='#modal' class='btn btn-primary'><i class='fa fa-plus'></i></a>").insertAfter('#id_topics');
+    jQuery("<a href='{% url 'event-create' %}' data-toggle='modal' data-target='#modal' class='btn btn-primary'><i class='fa fa-plus'></i></a>").insertAfter('#id_events');
+    jQuery("<a href='{% url 'technology-create' %}' data-toggle='modal' data-target='#modal' class='btn btn-primary'><i class='fa fa-plus'></i></a>").insertAfter('#id_technologies');
 });
 </script>
 {% endblock %}
@@ -24,7 +33,7 @@ jQuery('document').ready(function() {
 <div class="row project-card">
     <div class="small-12">
         <form method="post" action=".">{% csrf_token %}
-            {{ form|bootstrap}}
+            {% bootstrap_form form %}
             <p><input class="btn btn-success" type="submit" value="Add"></p>
         </form>
     </div>

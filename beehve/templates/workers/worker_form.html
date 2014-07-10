@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-{% load bootstrap %}
+{% load bootstrap3 %}
 
 {% block content %}
 
@@ -10,7 +10,7 @@
     <div class="small-12">
         <form method="post" action=".?next={{request.GET.next}}">
             {% csrf_token %}
-            {{ form|bootstrap }}
+            {% bootstrap_form form %}
             <p><input type="submit" value="Save"></p>
         </form>
     </div>

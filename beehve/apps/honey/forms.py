@@ -12,15 +12,25 @@ class BuzzForm(forms.ModelForm):
 
 
 class ProjectForm(forms.ModelForm):
-    topics = select2.fields.MultipleChoiceField(
-        choices=Topic.objects.as_choices(),
-        overlay="Choose topics ...")
-    events = select2.fields.MultipleChoiceField(
-        choices=Event.objects.as_choices(),
-        overlay="Choose events ...")
-    technologies = select2.fields.MultipleChoiceField(
-        choices=Technology.objects.as_choices(),
-        overlay="Choose technologies ...")
+    topics = forms.ModelMultipleChoiceField(
+        queryset=Topic.objects.all(),
+        widget=forms.SelectMultiple(
+            attrs={'inline': True, 'class': 'multiselect',}),
+        required=False)
+    events = forms.ModelMultipleChoiceField(
+        queryset=Event.objects.all(),
+        widget=forms.SelectMultiple(
+            attrs={'inline': True, 'class': 'multiselect',}),
+        required=False)
+    technologies = forms.ModelMultipleChoiceField(
+        queryset=Technology.objects.all(),
+        widget=forms.SelectMultiple(
+            attrs={'inline': True, 'class': 'multiselect',}),
+        required=False)
+    color = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'inline': True, 'class': 'colorpicker',}),
+        required=False)
 
     class Meta:
         model = Project

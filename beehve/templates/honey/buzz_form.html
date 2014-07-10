@@ -1,6 +1,6 @@
 {% extends "modal_base.html" %}
 {% load static %}
-{% load bootstrap %}
+{% load bootstrap3 %}
 
 
 {% block content %}
@@ -8,7 +8,7 @@
 <h2>Let's buzz about {{project}}!</h2>
 <form class="short-form" method="post" action="{% url 'buzz-create' project.slug %}">
     {% csrf_token %}
-    {{ form|bootstrap}}
+    {% bootstrap_form form %}
     <p><input class="btn btn-success" type="submit" value="Post it!"> <button type="button" class="btn btn-danger" value="cancel">Cancel</button></p>
 </form>
 

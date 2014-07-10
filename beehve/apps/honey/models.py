@@ -3,16 +3,6 @@ from django.utils.translation import ugettext_lazy as _
 from django_extensions.db.models import (TitleSlugDescriptionModel,
                                          TimeStampedModel)
 from django.contrib.auth import get_user_model
-import select2.fields
-
-
-class SelectManager(models.Manager):
-    def as_choices(self):
-        try:
-            for object in self.all():
-                yield (object.pk, unicode(object))
-        except:
-            yield []
 
 
 class BasicItem(TimeStampedModel, TitleSlugDescriptionModel):
@@ -35,7 +25,6 @@ class BasicItem(TimeStampedModel, TitleSlugDescriptionModel):
 
 
 class Topic(BasicItem):
-    objects = SelectManager()
 
     @models.permalink
     def get_absolute_url(self):
@@ -43,7 +32,6 @@ class Topic(BasicItem):
 
 
 class Event(BasicItem):
-    objects = SelectManager()
 
     @models.permalink
     def get_absolute_url(self):
@@ -51,7 +39,6 @@ class Event(BasicItem):
 
 
 class Technology(BasicItem):
-    objects = SelectManager()
 
     @models.permalink
     def get_absolute_url(self):
@@ -75,7 +62,7 @@ class Project(TimeStampedModel, TitleSlugDescriptionModel):
     public_url = models.CharField(max_length=255, blank=True, null=True)
     dev_url = models.CharField(max_length=255, blank=True, null=True)
     github_url = models.CharField(max_length=255, blank=True, null=True)
-    topics = select2.fields.ManyToManyField(Topic, blank=True, null=True)
+    topics = models.ManyToManyField(Topic, blank=True, null=True)
     events = models.ManyToManyField(Event, blank=True, null=True)
     technologies = models.ManyToManyField(Technology, blank=True, null=True)
     members = models.ManyToManyField(get_user_model(), blank=True, null=True)

@@ -74,6 +74,9 @@
             <div class="navbar-default navbar-static-side" role="navigation">
                 <div class="sidebar-collapse">
                     <ul class="nav" id="side-menu">
+                        <li>
+                            <img width=200px; style="margin-bottom:20px; margin-left:25px;" src="{% static 'images/code4maine-logo-small.png' %}">
+                        </li >
                         <li class="sidebar-search">
                             <div class="input-group custom-search-form">
                                 <input type="text" class="form-control" placeholder="Search...">
@@ -89,7 +92,10 @@
                             <a href="{% url 'homepage' %}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
                         <li>
-                            <a href="{% url 'project-list' %}"><i class="fa fa-star fa-fw"></i>View all projects</a>
+                            <a href="{% url 'project-list' %}"><i class="fa fa-star fa-fw"></i> Project directory</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'worker-list' %}"><i class="fa fa-book fa-fw"></i> Worker directory</a>
                         </li>
                         <li>
                             <a href="#"><span class="badge">{{projects|length}}</span> Projects<span class="fa arrow"></span></a>

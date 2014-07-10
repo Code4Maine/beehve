@@ -3,10 +3,10 @@
 {% load markdown_deux_tags %}
 
 {% block content %}
-
 <div class="row">
     <div class="col-md-12">
         <h1>Bridgade Project Directory</h1>
+        <h3><span class="badge">{{object_list|length}} project{{object_list|length|pluralize}}</span></h3>
         
         {% for project in object_list %}
         <div class="row">

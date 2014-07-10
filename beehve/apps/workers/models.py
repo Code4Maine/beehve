@@ -23,3 +23,10 @@ class Worker(TimeStampedModel):
     def get_absolute_url(self):
         return ('worker-detail', None, {'slug': self.user.username})
     
+
+    @property
+    def name(self):
+        if self.user.first_name or self.user.last_name:
+            return ' '.join([self.user.first_name, self.user.last_name])
+        else:
+            return None

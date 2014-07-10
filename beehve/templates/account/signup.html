@@ -2,7 +2,7 @@
 
 {% load url from future %}
 {% load i18n %}
-{% load bootstrap %}
+{% load bootstrap3 %}
 
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 
@@ -10,10 +10,11 @@
   <h1>{% trans "Sign Up" %}</h1>
   
   <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+  <p>From the login page, you can also use your Github or Google account to login without creating a new profile here.</p>
   
   <form class="short-form signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
     {% csrf_token %}
-    {{ form|bootstrap}}
+    {% bootstrap_form form %}
     {% if redirect_field_value %}
     <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
     {% endif %}

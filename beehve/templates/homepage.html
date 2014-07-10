@@ -97,7 +97,7 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="list-group">
-                                {% for tech in technologies %}
+                                {% for tech in technologies|dictsortreversed:"project_count" %}
                                 <a href="{{tech.get_absolute_url}}" class="list-group-item">
                                     <span class="badge">{{tech.project_set.all|length}}</span> {{tech}}
                                     <span class="pull-right text-muted small"><span>
@@ -116,7 +116,7 @@
                             <p>Browse our projects by what events they were created at.</p>
                         </div>
                         <div class="panel-body">
-                                {% for event in events %}
+                                {% for event in events|dictsortreversed:"project_count" %}
                                 <a href="{{event.get_absolute_url}}" class="list-group-item">
                                     <span class="badge">{{event.project_set.all|length}}</span> {{event}}
                                     <span class="pull-right text-muted small"><span>
@@ -135,7 +135,7 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                                {% for topic in topics %}
+                                {% for topic in topics|dictsortreversed:"project_count" %}
                                 <a href="{{topic.get_absolute_url}}" class="list-group-item">
                                     <span class="badge">{{topic.project_set.all|length}}</span> {{topic}}
                                     <span class="pull-right text-muted small"><span>

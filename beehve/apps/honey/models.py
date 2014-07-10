@@ -17,12 +17,21 @@ class SelectManager(models.Manager):
 
 class BasicItem(TimeStampedModel, TitleSlugDescriptionModel):
     pending = models.BooleanField(default=True)
+    project_count = models.IntegerField(default=0)
 
     class Meta:
         abstract = True
 
     def __unicode__(self):
         return u'{0}'.format(self.title)
+
+    def save(self, *args, **kwargs):
+        try:
+            self.project_count = len(self.project_set.all())
+        except:
+            pass
+        super(BasicItem, self).save(*args, **kwargs)
+
 
 
 class Topic(BasicItem):

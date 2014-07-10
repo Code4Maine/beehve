@@ -1,6 +1,7 @@
 from django.views.generic.edit import CreateView, UpdateView, FormView
 from django.views.generic import DetailView, ListView, View
 from django.core import serializers
+from django.core.urlresolvers import reverse
 
 from .models import Worker
 from .forms import WorkerForm
@@ -37,8 +38,11 @@ class WorkerUpdateView(UpdateView):
     model = Worker
     form_class = WorkerForm
 
+    def get_success_url(self):
+        return reverse('profile-detail')
+
     def get_object(self, *args, **kwargs):
-        return self.request.user
+        return self.request.user.worker
 
 
 class WorkerProfileView(DetailView):

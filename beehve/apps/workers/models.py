@@ -22,6 +22,7 @@ class Worker(TimeStampedModel):
     email_notify = models.BooleanField(_('Email notifications on updates'), default=True)
     background = models.CharField(_('Dashboard background color or URL'), 
                                   max_length=255, blank=True, null=True)
+    active = models.BooleanField(_('Is worker active?'), default=True)
 
 
     @models.permalink

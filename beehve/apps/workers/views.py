@@ -17,6 +17,7 @@ class JsonView(views.CsrfExemptMixin,
 class WorkerListJSONView(JsonView, ListView):
     model = Worker
     json_dumps_kwargs = {u"indent": 2}
+    queryset = Worker.objects.filter(active=True)
 
     def get(self, request, *args, **kwargs):
         context = serializers.serialize('json',
@@ -28,15 +29,18 @@ class WorkerListJSONView(JsonView, ListView):
 class WorkerDetailView(DetailView):
     model = Worker
     slug_field = 'user__username'
+    queryset = Worker.objects.filter(active=True)
 
 
 class WorkerListView(ListView):
     model = Worker
+    queryset = Worker.objects.filter(active=True)
 
 
 class WorkerUpdateView(UpdateView):
     model = Worker
     form_class = WorkerForm
+    queryset = Worker.objects.filter(active=True)
 
     def get_success_url(self):
         return reverse('profile-detail')
@@ -47,6 +51,7 @@ class WorkerUpdateView(UpdateView):
 
 class WorkerProfileView(DetailView):
     model = Worker
+    queryset = Worker.objects.filter(active=True)
 
     def get_object(self, *args, **kwargs):
         return self.request.user

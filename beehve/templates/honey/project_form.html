@@ -24,18 +24,23 @@ jQuery('document').ready(function() {
 </script>
 {% endblock %}
 
+{% block header_title %}{% if not object %}Add{% else %}Edit{% endif %}{% endblock %}
 
 {% block content %}
-<div id="myModal"></div>
-
-<h2>{% if not object %}Add a Project{% else %}Edit {{object}}{% endif %}</h2>
 
 <div class="row project-card">
     <div class="small-12">
-        <form method="post" action=".">{% csrf_token %}
-            {% bootstrap_form form %}
-            <p><input class="btn btn-success" type="submit" value="Add"></p>
-        </form>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2>{% if not object %}New {% else %}{{object}}{% endif %} project</h2>
+            </div>
+            <div class="panel-body">
+                <form method="post" action=".">{% csrf_token %}
+                    {% bootstrap_form form %}
+                    <p><input class="btn btn-success" type="submit" value="{% if not object %}Add{% else %}Save{% endif %}"></p>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -46,4 +51,5 @@ jQuery('document').ready(function() {
   </div>
 </div>
 
+<div id="myModal"></div>
 {% endblock %}

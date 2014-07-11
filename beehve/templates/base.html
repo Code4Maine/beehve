@@ -20,6 +20,7 @@
     <!-- SB Admin CSS - Include with every page -->
     <link href="{% static 'css/sb-admin.css' %}" rel="stylesheet">
     <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 
 </head>
 
@@ -105,11 +106,33 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
+                            <a href="#"><span class="badge">{{technologies|length}}</span> Technology<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                {% for obj in technologies %}
+                                <li>
+                                <a href="{{ obj.get_absolute_url }}"><span class="badge">{{obj.project_count}}</span> {{obj.title}}</a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
                             <a href="#"><span class="badge">{{topics|length}}</span> Topics<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 {% for obj in topics %}
                                 <li>
-                                <a href="{{ obj.get_absolute_url }}">{{obj.title}}</a>
+                                <a href="{{ obj.get_absolute_url }}"><span class="badge">{{obj.project_count}}</span> {{obj.title}}</a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><span class="badge">{{events|length}}</span> Events<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                {% for obj in events%}
+                                <li>
+                                <a href="{{ obj.get_absolute_url }}"><span class="badge">{{obj.project_count}}</span> {{obj.title}}</a>
                                 </li>
                                 {% endfor %}
                             </ul>
@@ -146,6 +169,13 @@
         </nav>
 
         <div id="page-wrapper" {% if user.worker.background %}style="background:{{user.worker.background}}"{% endif %}>
+            <div class="row">
+                <div class="col-lg-12 header">
+                    <h1 class="age-header">{% block header_title %}Dashboard{% endblock %}</h1>
+                    <div class="project-add right"><a class="btn btn-primary"  href="{% url 'project-create' %}"><i class="fa fa-plus"></i> Add a new project</a></div>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
             {% block content %}
             {% endblock %}
         </div>

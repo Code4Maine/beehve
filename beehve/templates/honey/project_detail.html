@@ -11,34 +11,51 @@ $('#modal').on('hidden.bs.modal', function () {
 </script>
 {% endblock %}
 
+{% block header_title %}Project Directory{% endblock %}
+
 {% block content %}
 
 <div class="row">
     <div class="col-md-8">
-       <h1>{{object}}</h1>
-       <p>Built with {% for tech in project.technologies.all %}<a class="badge" href="{{tech.get_absolute_url}}">{{tech}}</a> {% endfor %}</p>
-       
-       <div class="well">
-           <h4>README</h4>
-           {{project.description|markdown}}
-       </div>
-       <p><i>Founded on {{project.created|date:"r"}} by {{project.founder.username}}</i></p>
-       <p class="links">{% if project.public_url %}<a href="{{project.public_url}}"><i class="fa fa-globe"></i></a>{% endif %}{% if project.github_url %} <a href="{{project.github_url}}"><i class="fa fa-github"></i></a>{% endif %}</p>
-        <hr />
+        <div class="panel panel-default">
+            <div class="panel-heading" {% if object.color %}style="background:{{object.color}}; color:white;"{% endif %}>
+                <h1>{{object}}</h1>
+            </div>
+            <div class="panel-body">
+                <p>Built with {% for tech in project.technologies.all %}<a class="badge" href="{{tech.get_absolute_url}}">{{tech}}</a> {% endfor %}</p>
+                
+                <div class="well">
+                    <h4>README</h4>
+                    {{project.description|markdown}}
+                </div>
+                <p class="links">{% if project.public_url %}<a href="{{project.public_url}}"><i class="fa fa-globe"></i></a>{% endif %}{% if project.github_url %} <a href="{{project.github_url}}"><i class="fa fa-github"></i></a>{% endif %}</p>
+                <hr />
+                <p><i>Founded on {{project.created|date:"r"}} by {{project.founder.username}}</i></p>
+            </div>
+        </div>
     </div>
-    
+        
     <div class="col-md-4 columns members">
-        <h5>Members</h5>
-        {% with project.members.all as members %}
-        {% include 'honey/_member_list.html' %}
-        {% endwith %}
-        <hr />
-        {% if request.user.is_authenticated %}
-        {% if request.user in project.members.all %}<p class="leave-button" ><a href="{% url 'project-leave' project.slug %}" class="ajax btn btn-danger" data-replace=".leave-button"><i class="fa fa-times"></i> Leave project</a></p>{% endif %}
-        {% if not request.user in project.members.all %}<p class="join-button" ><a href="{% url 'project-join' project.slug %}" class="ajax btn btn-success" data-replace=".join-button"><i class="fa fa-plus"></i> Join project</a></p>{% endif %}
-        {% if project.dev_url %}<p><a href="{{project.dev_url}}" class="btn btn-primary" style="font-size:16pt;"><i class="fa fa-wrench"></i> Get involved!</a></p>{% endif %}
-        {% if user.is_authenticated %}<a href="{% url 'project-update' project.slug %}" class="btn btn-primary ">Edit project</a>{% endif %}
-        {% endif %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5>Members</h5>
+            </div>
+            <div class="panel-body">
+                <div class="member-box">
+                {% with project.members.all as members %}
+                {% include 'honey/_member_list.html' %}
+                {% endwith %}
+            </div>
+                <hr />
+                {% if request.user.is_authenticated %}
+                {% if request.user in project.members.all %}<p class="leave-button" ><a href="{% url 'project-leave' project.slug %}" class="ajax btn btn-danger" data-replace=".leave-button"><i class="fa fa-times"></i> Leave project</a></p>{% endif %}
+                {% if not request.user in project.members.all %}<p class="join-button" ><a href="{% url 'project-join' project.slug %}" class="ajax btn btn-success" data-replace=".join-button"><i class="fa fa-plus"></i> Join project</a></p>{% endif %}
+                {% if project.dev_url %}<a href="{{project.dev_url}}" class="btn btn-primary"><i class="fa fa-wrench"></i> Get involved!</a>{% endif %}
+                {% if user.is_authenticated %}<a href="{% url 'project-update' project.slug %}" class="btn btn-primary ">Edit project</a>{% endif %}
+                {% if user.is_authenticated %}<a href="{% url 'buzz-create' object.slug %}" class="btn btn-primary" class="" data-toggle="modal" data-target="#modal" >Add more buzz</a>{% endif %}
+                {% endif %}
+            </div>
+        </div>
     </div>
 </div>
 
@@ -52,20 +69,26 @@ $('#modal').on('hidden.bs.modal', function () {
 
 <div class="row">
     <div class="col-md-12">
-             <h2>Project buzz {% if user.is_authenticated %}<a href="{% url 'buzz-create' object.slug %}" class="btn btn-primary" class="" data-toggle="modal" data-target="#modal" >Add more buzz</a>{% endif %}</h2>
-             {% if project.buzz_set.all %}
-             {% for buzz in project.buzz_set.all %}
-             <h5>{{buzz.title}}</h5>
-             <div class="well">
-                 {{buzz.description|markdown}}
-                 <p class="byline">{{buzz.modified}} by <a href="{{buzz.author.get_absolute_url}}">{{buzz.author}}</a></p>
-             </div>
-             {% endfor %}
-             {% else %}
-             <p><i>There's no buzz about this project, find some fellow workers, and get busy!</i></p>
-             <p>{% if user.is_authenticated %}<a href="{% url 'buzz-create' object.slug %}" class="tiny button radius ">Add some buzz</a>{% endif %}</p>
-             {% endif %}
-         </div>
-     </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3>Project buzz {% if user.is_authenticated %}<a href="{% url 'buzz-create' object.slug %}" class="btn btn-primary" class="" data-toggle="modal" data-target="#modal" >Add more buzz</a>{% endif %}</h3>
+            </div>
+            <div class="panel-body">
+                {% if project.buzz_set.all %}
+                {% for buzz in project.buzz_set.all %}
+                <h5>{{buzz.title}}</h5>
+                <div class="well">
+                    {{buzz.description|markdown}}
+                    <p class="byline">{{buzz.modified}} by <a href="{{buzz.author.get_absolute_url}}">{{buzz.author}}</a></p>
+                </div>
+                {% endfor %}
+                {% else %}
+                <p><i>There's no buzz about this project, find some fellow workers, and get busy!</i></p>
+                <p>{% if user.is_authenticated %}<a href="{% url 'buzz-create' object.slug %}" class="tiny button radius ">Add some buzz</a>{% endif %}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

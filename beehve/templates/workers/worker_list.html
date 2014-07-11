@@ -2,21 +2,29 @@
 {% load markdown_deux_tags %}
 {% load avatar_tags %}
 
+{% block header_title %}Brigade Directory{% endblock %}
+
 {% block content %}
 
 <div class="row">
     <div class="col-md-12">
-        <h1>Brigade Workers Directory</h1>
-        <h3><span class="badge">{{object_list|length}} worker{{object_list|length|pluralize}}</span></h3>
-        
-        {% for worker in object_list %}
-        <div class="row">
-            <div class="col-md-4">
-                <h3><span class="th" >{% avatar worker.user 65 %}</span> <a href="{{worker.get_absolute_url }}">{% if worker.name %}{{worker.name}} ({{worker.user.username}}){% else %}{{worker.user.username}}{% endif %}</a></h3>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2>Workers</h2>
+                <span class="badge">{{object_list|length}} worker{{object_list|length|pluralize}}</span>
+            </div>
+            <div class="panel-body">
+                
+                {% for worker in object_list %}
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3><span class="th" >{% avatar worker.user 65 %}</span> <a href="{{worker.get_absolute_url }}">{% if worker.name %}{{worker.name}} ({{worker.user.username}}){% else %}{{worker.user.username}}{% endif %}</a></h3>
+                    </div>
+                </div>
+                {% if not forloop.last %}<hr />{% endif %}
+                {% endfor %}
             </div>
         </div>
-        <hr />
-        {% endfor %}
     </div>
 </div>
 {% endblock %}

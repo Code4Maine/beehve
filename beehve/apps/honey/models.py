@@ -16,10 +16,10 @@ class BasicItem(TimeStampedModel, TitleSlugDescriptionModel):
         return u'{0}'.format(self.title)
 
     def save(self, *args, **kwargs):
-        try:
-            self.project_count = len(self.project_set.all())
-        except:
-            pass
+        super(BasicItem, self).save(*args, **kwargs)
+
+        self.project_count = len(self.project_set.all())
+
         super(BasicItem, self).save(*args, **kwargs)
 
 

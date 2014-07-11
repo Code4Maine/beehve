@@ -2,9 +2,7 @@
 .project-card .description {  }
 
 .row.full_width { max-width:100%; width:100%;  }
-.header { background:#aaa; margin-bottom:1em;}
 .page-header { background:url('../images/code4maine-logo-small.png') no-repeat; width:400px; height:300px; text-indent:-9999px; display:inline; float:left; border:none;}
-.header h3 { padding-top:380px; }
 .footer { padding:20px; }
 #header, #footer { width: 100%; margin-left: auto; margin-right: auto; margin-top: 0;
                    margin-bottom: 0; max-width: 62.5rem; }
@@ -26,3 +24,6 @@
 
 .control-label { margin-right:10px; }
 
+.right { float:right;  }
+.project-add { margin-top:25px; }
+.header h1 { float:left;  }

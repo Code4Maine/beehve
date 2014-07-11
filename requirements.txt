@@ -24,3 +24,4 @@ django-storages==1.1.8
 #psycopg2==2.5
 django-bower==5.0.1
 django-bootstrap3==4.8.1
+django-select2-forms==1.1.18

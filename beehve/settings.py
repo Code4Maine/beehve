@@ -64,6 +64,7 @@ class Common(Configuration):
         'markdown_deux',
         'djangobower',
         'bootstrap3',
+        'select2',
 
         'honey',
         'workers',

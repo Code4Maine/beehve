@@ -29,7 +29,10 @@ class Worker(TimeStampedModel):
         return ('worker-detail', None, {'slug': self.user.username})
 
     def __unicode__(self):
-        return u'{0}'.format(self.name)
+        if self.name:
+            return u'{0}'.format(self.name)
+        else:
+            return u'{0}'.format(self.user)
 
 def get_or_create_worker(sender, instance, **kwargs):
     Worker.objects.get_or_create(user=instance)

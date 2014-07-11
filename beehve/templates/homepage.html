@@ -14,13 +14,6 @@
 
 {% block content %}
     
-            <div class="row">
-                <div class="col-lg-12 header">
-                    <h1 class="age-header">Dashboard</h1>
-                    <div class="project-add right"><a class="btn btn-primary"  href="{% url 'project-create' %}"><i class="fa fa-plus"></i> Add a new project</a></div>
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-8">
@@ -38,14 +31,13 @@
                                     </div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
-                                            <h4 class="timeline-title"><a href="{{buzz.get_absolute_url}}">{{buzz.title}}</a><hr/> <span class="badge right" style="background-color:{{buzz.project.color}};"><a href="{{buzz.project.get_absolute_url}}">{{buzz.project}}</a></span></h4>
-                                            <p>
-                                            <small class="text-muted"><i class="fa fa-time"></i> {{buzz.modified}} via Website</small>
-                                            </p>
+                                            <h4 class="timeline-title"><a href="{{buzz.get_absolute_url}}">{{buzz.title}}</a>
+                                            <span class="badge right" style="background-color:{{buzz.project.color}};"><a href="{{buzz.project.get_absolute_url}}">{{buzz.project}}</a></span></h4>
+                                            <hr />
                                         </div>
                                         <div class="timeline-body">
                                             {{buzz.description|markdown}}
-                                            <br />
+                                            <hr />
                                             <p class="byline">{{buzz.modified}} by <a href="{% url 'worker-detail' buzz.author.username %}">{{buzz.author}}</a></p>
                                         </div>
                                     </div>

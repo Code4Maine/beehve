@@ -43,18 +43,18 @@ class TopicForm(forms.ModelForm):
 
     class Meta:
         model = Topic
-        exclude = ['pending']
+        exclude = ['pending', 'project_count']
 
 
 class EventForm(forms.ModelForm):
 
     class Meta:
         model = Event
-        exclude = ['pending']
+        exclude = ['pending', 'project_count']
 
 
 class TechnologyForm(forms.ModelForm):
 
     class Meta:
         model = Technology
-        exclude = ['pending']
+        exclude = ['pending', 'project_count']

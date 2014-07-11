@@ -1,1 +1,14 @@
-A new buzz was just posted on Code 4 Maine!
+{% load markdown_deux_tags %}
+
+A buzz was just posted for {{project}} on the Code 4 Maine Dashboard!
+
+
+{{buzz.title}}
+========================================
+
+{{buzz.description}}
+
+Posted by {{buzz.author}}
+{{buzz.modified}} via Website
+
+Read it on the site: {{buzz.get_absolute_url}}

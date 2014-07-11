@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 from django.template.loader import render_to_string
 
 from .models import Project, Topic, Technology, Event, Buzz
+from workers.models import Worker
 from .forms import ProjectForm, TopicForm, EventForm, TechnologyForm, BuzzForm
 from .utils import send_email
 from braces import views
@@ -50,13 +51,16 @@ class BuzzCreateView(views.LoginRequiredMixin, CreateView):
         object.project = Project.objects.get(slug=self.kwargs['slug'])
         object.author = self.request.user
         object.save()
+        user_ids = [m.id for m in object.project.members.all()]
+        workers = Worker.objects.filter(id__in=user_ids)
 
-        member_emails = [m.email for m in object.project.members.all()]
+        worker_emails = [w.user.email if w.email_notify else '' for w in workers]
         send_email(
             self.request, 
-            member_emails,
+            worker_emails,
             'Someone is buzzing about {0} on Code 4 Maine'.format(object.project),
-            'honey/buzz_email.txt')
+            'honey/buzz_email.txt',
+            context={'buzz': object, 'project': object.project})
         return super(BuzzCreateView, self).form_valid(form)
 
 

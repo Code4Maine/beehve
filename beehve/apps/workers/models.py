@@ -19,6 +19,7 @@ class Worker(TimeStampedModel):
     facebook = models.CharField(_('Facebook username'), max_length=100, blank=True, null=True)
     instagram = models.CharField(_('Instagram username'), max_length=100, blank=True, null=True)
     linkedin = models.CharField(_('LinkedIn username'), max_length=100, blank=True, null=True)
+    email_notify = models.BooleanField(_('Email notifications on updates'), default=True)
     background = models.CharField(_('Dashboard background color or URL'), 
                                   max_length=255, blank=True, null=True)
 

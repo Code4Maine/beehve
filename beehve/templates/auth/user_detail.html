@@ -15,8 +15,7 @@
                 <div class="row">
                     {% with object.worker as worker %}
                     <div class="col-md-2">
-                        <!-- <div class="th" >{% avatar object 250 %}</a></div> -->
-                        <img src="" width=250 height=250 />
+                        {% avatar object 250 %}</a></div>
                         {% if user.is_authenticated %}
                         <ul class="social-btns">
                             <li><a href="skype:{{worker.skype}}"><i class="fa fa-skype"></i> {{worker.skype}}</a></li>

@@ -2,17 +2,24 @@
 {% load static %}
 {% load bootstrap3 %}
 
+{% block header_title %}Account{% endblock %}
+
 {% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2>Update Your Profile</h2>
+            </div>
+            <div class="panel-body">
 
-<h2>Update your profile</h2>
-
-<div class="row project-card">
-    <div class="small-12">
-        <form method="post" action=".?next={{request.GET.next}}">
-            {% csrf_token %}
-            {% bootstrap_form form %}
-            <p><input type="submit" value="Save"></p>
-        </form>
+                <form class="short-form" method="post" action=".?next={{request.GET.next}}">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <p><input class="btn btn-primary" type="submit" value="Update"></p>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 

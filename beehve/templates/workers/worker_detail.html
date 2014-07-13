@@ -1,35 +1,55 @@
 {% extends "base.html" %}
-{% load avatar_tags %}
 {% load markdown_deux_tags %}
+{% load avatar_tags %}
 
-{% block header_title %}{{object}}{% if object.name %} ({{object.user}}){% endif %}{% endblock %}
+{% block header_title %}Account{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
+                <h2>Your Profile</h2>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    {% with object as worker %}
+                    <div class="col-md-2">
+                        <!-- <div class="th" >{% avatar object 250 %}</a></div> -->
+                        <img src="" width=250 height=250 />
+                        {% if user.is_authenticated %}
+                        <ul class="social-btns">
+                            <li><a href="skype:{{worker.skype}}"><i class="fa fa-skype"></i> {{worker.skype}}</a></li>
+                            <li><a href="http://github.com/{{worker.github}}"><i class="fa fa-github"></i> {{worker.github}}</a></li>
+                            <li><a href="http://twitter.com/#/{{worker.twitter}}"><i class="fa fa-twitter"></i> {{worker.twitter}}</a></li>
+                            <li><a href="http://facebook.com/{{worker.facebook}}"><i class="fa fa-facebook"></i> {{worker.facebook}}</a></li>
+                            <li><a href="http://instagram.com/{{worker.instagram}}"><i class="fa fa-instagram"></i> {{worker.instagram}}</a></li>
+                            <li><a href="http://linkedin.com/{{worker.linkedin}}"><i class="fa fa-linkedin"></i> {{worker.linkedin}}</a></li>
+                        </ul>
+                        {% else %}
+                        <p>Register or login to view worker contact information</p>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <h2 style="font-size:24pt">{% if worker.name %}{{worker.name}} ({{worker.user.username}}){% else %}{{worker}}{% endif %}</h2>
+                        <hr />
+                        <div class="why">
+                            {% if worker.why %}{{worker.why|markdown}}
+                            {% else %}<p>Update your profile and tell folks why you're a member of Code 4 Maine!</p>
+                            {% endif %}
+                        </div>
+                        
+                        {% if worker.website %}<h4>My personal webiste is {{worker.website|urlize}}</h4>{% endif %}
 
-                  {% with object as worker %}
-                
-                  <div class="th" >{% avatar object.user 150 %}</a></div>
-                
-                  <h4>Why am I part of Code 4 Maine?</h4>
-                  {{worker.why|markdown}}
-                  
-                  <h4>My personal webiste</h4>
-                  <p>{{worker.website|urlize}}
-                
-                  <h4>My phone number</h4>
-                  <p>{{worker.phone}}</p>
-                
-                  <h4>I live in</h4>
-                  <p>{{worker.city}}</p>
-                  {% endwith %}
+                        {% if worker.city %}<h4>They live in {{worker.city}}</h4>{% endif %}
+
+                        <p><a href="{% url 'worker-update' %}" class="btn btn-primary">Update your profile</a></p>
+                    </div>
+                    {% endwith %}
+
             </div>
         </div>
     </div>
 </div>
-
-
+  
 {% endblock %}

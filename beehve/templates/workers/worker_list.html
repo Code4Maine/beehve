@@ -17,8 +17,9 @@
                 
                 {% for worker in object_list %}
                 <div class="row">
-                    <div class="col-md-4">
-                        <h3><span class="th" >{% avatar worker.user 65 %}</span> <a href="{{worker.get_absolute_url }}">{% if worker.name %}{{worker.name}} ({{worker.user.username}}){% else %}{{worker.user.username}}{% endif %}</a></h3>
+                    <div class="col-md-10">
+                        <h3><span class="th" >{% avatar worker.user 115 %}</span> <a href="{{worker.get_absolute_url }}">{% if worker.name %}{{worker.name}} ({{worker.user.username}}){% else %}{{worker.user.username}}{% endif %}</a></h3>
+                        <p>{{worker.why|markdown}}</p>
                     </div>
                 </div>
                 {% if not forloop.last %}<hr />{% endif %}

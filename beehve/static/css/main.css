@@ -26,6 +26,7 @@ body { font-family:"Roboto"; }
 .control-label { margin-right:10px; }
 
 .right { float:right;  }
+.left { float:left;  }
 .project-add { margin-top:25px; }
 .header h1 { float:left;  }
 .member-box { margin-left:15px;  }

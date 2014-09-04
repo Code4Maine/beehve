@@ -1,7 +1,7 @@
 ---
 server: dash.code4maine.org
 domainname: dash.code4maine.org
-mode: Local
+mode: Dev
 deployment_name: beehve
 locale: en_US.UTF-8
 timezone: America/New_York

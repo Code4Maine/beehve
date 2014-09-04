@@ -4,14 +4,14 @@
   git: repo="{{project_repo}}" dest="/home/{{deployment_name}}/{{ mode }}/" version="{{branch}}" accept_hostkey=yes
   sudo_user: "{{deployment_name}}"
   register: git
-  when: mode != 'Local'
+  when: mode != 'Dev'
   tags:
     - deploy
     - clone
 
 - name: Link the local source code to our user home
   file: src=/vagrant/ path="/home/{{deployment_name}}/{{mode}}" owner={{deployment_name}} group={{deployment_name}} state=link
-  when: mode == 'Local'
+  when: mode == 'Dev'
 
 - name: Upgrade the Virtualenv.
   pip: requirements="/home/{{deployment_name}}/{{ mode }}/requirements.txt" virtualenv=/home/{{deployment_name}}/{{ mode }}/venv/

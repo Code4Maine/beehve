@@ -8,6 +8,8 @@ timezone: America/New_York
 port_number: 45000
 project_repo: git@github.com:powellc/outline.git
 branch: master
-dbpassword: jzxovijlsakdfj0ojookfjl32k3jrl
+dbpass: jzxovijlsakdfj0ojookfjl32k3jrl
+port_number: 30000
 postgis: False
+bower: True
 secret_key: ALKJSDFLKXJCOVIJSELKJFEWLKJSLDFKJLEKJ-KLEJWLFEKJ

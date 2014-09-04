@@ -14,7 +14,7 @@
   when: mode == 'Dev'
 
 - name: Upgrade the Virtualenv.
-  pip: requirements="/home/{{deployment_name}}/{{ mode }}/requirements.txt" virtualenv=/home/{{deployment_name}}/{{ mode }}/venv/
+  pip: requirements="/home/{{deployment_name}}/{{ mode }}/requirements.txt" virtualenv=/home/{{deployment_name}}/.venv-{{mode}}/
   sudo_user: "{{deployment_name}}"
   register: venv
   tags:

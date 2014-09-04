@@ -64,4 +64,8 @@ docs/_build/
 venv
 *.sqlite3
 public
-components
+bower_components
+
+dash.code4maine.org
+staging-dash.code4maine.org
+.vagrant

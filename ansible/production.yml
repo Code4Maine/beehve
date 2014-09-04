@@ -1,0 +1,14 @@
+---
+- hosts: production
+  gather_facts: True
+  user: root
+  sudo: True
+  roles:
+    - role: common
+    - role: postgresql
+    - role: nginx
+    - role: nodejs
+    - role: django
+
+  tasks:
+    - include: roles/django/tasks/deploy.yml

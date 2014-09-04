@@ -1,0 +1,14 @@
+---
+server: dash.code4maine.org
+domainname: dash.code4maine.org
+mode: Dev
+deployment_name: beehve
+locale: en_US.UTF-8
+timezone: America/New_York
+project_repo: git@github.com:powellc/outline.git
+branch: master
+dbpass: lkj;zxlvjoasdjok3lkwjelfksjdlfkjlsdf
+port_number: 30000
+postgis: False
+bower: True
+secret_key: kjlzxlkJLSKJLE>SDLjpjef-ojwelksjdfkzjxlfJDFKLDKJf

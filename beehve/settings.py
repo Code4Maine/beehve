@@ -219,14 +219,22 @@ class Dev(Common):
 
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-    INSTALLED_APPS = Common.INSTALLED_APPS + ('debug_toolbar',)
+    #INSTALLED_APPS = Common.INSTALLED_APPS + ('debug_toolbar',)
 
-    MIDDLEWARE_CLASSES = Common.MIDDLEWARE_CLASSES + (
-        'debug_toolbar.middleware.DebugToolbarMiddleware',)
+    #MIDDLEWARE_CLASSES = Common.MIDDLEWARE_CLASSES + (
+    #    'debug_toolbar.middleware.DebugToolbarMiddleware',)
 
 
 class Stage(Common):
-    pass
+    DEBUG = TEMPLATE_DEBUG = True
+
+    SECRET_KEY = values.SecretValue()
+
+    EMAIL_HOST = values.Value('localhost')
+    EMAIL_HOST_USER = values.Value()
+    EMAIL_HOST_PASSWORD = values.Value()
+    EMAIL_PORT = values.Value()
+    EMAIL_USE_TLS = values.BooleanValue(False)
 
 
 class Prod(Common):

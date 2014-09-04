@@ -30,7 +30,14 @@ Not all of these work yet, but we're on way to a 1.0.
 Deployment
 ----------
 
-Need some instructions for deploying this baby here.
+Deployment of Beehve is done via the ansible roles found in the ansible
+directory (tada ...). Usage of these roles is contingent on a few configuration
+details:
+
+1. Configure your target hosts in the ansible/hosts file
+2. Copy ansible/hosts_vars/www.example.com ansible/host_vars/www.yourdomain.com
+3. Fill in the details of the host_vars file
+4. Run 
 
 Easy bootstrapping!
 -------------------
@@ -41,6 +48,11 @@ Powered by the ubiquitous Makefile ... this should be pretty easy:
 2. make run
 3. open your browser to: http://127.0.0.1:45000
 
+Alternately, you can build a vagrant box, in case you're not on Linux:
+
+1. vagrant up
+
+That's pretty slick, but will also come with some "issues"
 
 Librarys, librarys, librarys!
 -----------------------------

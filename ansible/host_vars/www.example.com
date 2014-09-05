@@ -12,4 +12,5 @@ dbpass: jzxovijlsakdfj0ojookfjl32k3jrl
 port_number: 30000
 postgis: False
 bower: True
+sentry_key: None
 secret_key: ALKJSDFLKXJCOVIJSELKJFEWLKJSLDFKJLEKJ-KLEJWLFEKJ

@@ -2,7 +2,7 @@ install:
 	virtualenv venv
 	venv/bin/python setup.py install
 	venv/bin/python manage.py syncdb --noinput
-	npm install -g bower
+	npm install bower
 
 test:
 	rm -rf .tox

@@ -30,6 +30,7 @@ install_requires = [
     'south==0.8.2',
     'django-localflavor==1.0.0',
     'django-select2-forms==1.1.18',
+    'PyGithub==1.25'
 ]
 
 

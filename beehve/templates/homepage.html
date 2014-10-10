@@ -25,20 +25,21 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <ul class="timeline">
-                                {% for buzz in object_list %}
+                                {% for update in updates %}
                                 <li class="{% cycle 'timeline-inverted' '' %}">
-                                <div class="timeline-badge success"><i class="fa fa-flag"></i>
+                                <div class="timeline-badge{% if update.summary %} danger"><i class="fa fa-git"></i>{% else %} success"><i class="fa fa-flag">{% endif %}</i>
                                     </div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
-                                            <h4 class="timeline-title"><a href="{{buzz.get_absolute_url}}">{{buzz.title}}</a>
-                                            <span class="badge right" style="background-color:{{buzz.project.color}};"><a href="{{buzz.project.get_absolute_url}}">{{buzz.project}}</a></span></h4>
+                                            <h4 class="timeline-title"><a href="{{update.get_absolute_url}}">{% if update.title %}{{update.title}}{% endif %}{% if update.summary%}{{update.summary}}{% endif %}</a>
+                                            <span class="badge right" style="background-color:{{update.project.color}};"><a href="{{update.project.get_absolute_url}}">{{update.project}}</a></span></h4>
                                             <hr />
                                         </div>
                                         <div class="timeline-body">
-                                            {{buzz.description|markdown}}
+                                            {% if update.description %}{{update.description|markdown}}{% endif %}
+                                            {% if update.message%}{{update.message}}{% endif %}
                                             <hr />
-                                            <p class="byline">{{buzz.modified}} by <a href="{% url 'worker-detail' buzz.author.username %}">{{buzz.author}}</a></p>
+                                            <p class="byline">{{update.created}} by <a href=" url 'worker-detail' buzz.author.username %}">{{update.author}}</a></p>
                                         </div>
                                     </div>
                                 </li>

@@ -35,7 +35,7 @@ class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ['title', 'description', 'public_url', 'dev_url',
-                  'screenshot', 'github_url', 'topics', 'events', 
+                  'screenshot', 'git_url', 'topics', 'events', 
                   'technologies', 'color']
 
 

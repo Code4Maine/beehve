@@ -1,4 +1,5 @@
 import json
+from itertools import chain
 from django.http import HttpResponse
 from django.views.generic.edit import CreateView, UpdateView, FormView
 from django.views.generic import DetailView, ListView, View
@@ -6,7 +7,7 @@ from django.core import serializers
 from django.core.urlresolvers import reverse
 from django.template.loader import render_to_string
 
-from .models import Project, Topic, Technology, Event, Buzz
+from .models import Project, Topic, Technology, Event, Buzz, ProjectCommit
 from workers.models import Worker
 from .forms import ProjectForm, TopicForm, EventForm, TechnologyForm, BuzzForm
 from .utils import send_email
@@ -27,6 +28,12 @@ class BuzzListView(ListView):
         context['technologies'] = Technology.objects.all()
         context['topics'] = Topic.objects.all()
         context['events'] = Event.objects.all()
+        # zipper together all the commits and buzzes into a list 
+        # sorted by created time
+        context['commits'] = ProjectCommit.objects.all()[:10]
+        context['updates'] = sorted(
+            chain(self.object_list, context['commits']),
+            key=lambda instance: instance.created, reverse=True)
 
         return context
 

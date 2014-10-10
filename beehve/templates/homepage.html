@@ -39,7 +39,7 @@
                                             {% if update.description %}{{update.description|markdown}}{% endif %}
                                             {% if update.message%}{{update.message}}{% endif %}
                                             <hr />
-                                            <p class="byline">{{update.created}} by <a href=" url 'worker-detail' buzz.author.username %}">{{update.author}}</a></p>
+                                            <p class="byline">{{update.created}} by {% if update.author.username %}<a href="{% url 'worker-detail' update.author.username %}">{% endif %}{{update.author}}{% if update.author.username %}</a>{% endif %}</p>
                                         </div>
                                     </div>
                                 </li>

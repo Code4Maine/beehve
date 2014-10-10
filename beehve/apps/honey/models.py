@@ -104,7 +104,8 @@ class ProjectCommit(TimeStampedModel):
     chash = models.CharField(max_length=255)
     message = models.TextField(blank=True, null=True)
     summary = models.TextField(blank=True, null=True)
-    author = models.CharField(max_length=255, blank=True, null=True)
+    string_author = models.CharField(max_length=255, blank=True, null=True)
+    user_author = models.ForeignKey(get_user_model(), blank=True, null=True)
     time = models.DateTimeField(blank=True, null=True)
     diff = models.TextField(blank=True, null=True)
 
@@ -113,6 +114,13 @@ class ProjectCommit(TimeStampedModel):
 
     def __unicode__(self):
         return u'Commit {0} in {1}'.format(self.chash[:15], self.project)
+
+    @property
+    def author(self):
+        if self.user_author:
+            return self.user_author
+        else:
+            return self.string_author
 
 
 class Buzz(TimeStampedModel, TitleSlugDescriptionModel):

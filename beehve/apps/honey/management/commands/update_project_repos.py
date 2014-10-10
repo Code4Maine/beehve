@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 import pytz
 from django.core.management.base import BaseCommand, CommandError
 from django.utils import translation
+from django.contrib.auth import get_user_model
 
 from honey.models import Project, ProjectCommit
 
@@ -15,11 +16,12 @@ class Command(BaseCommand):
         projects = Project.objects.all()
 
         for project in projects:
+            print 'Checking {0} for new commits'.format(project)
             if project.git_url:
                 repo_path = '/tmp/' + project.slug
                 try:
                     repo = Gittle(repo_path, project.git_url)
-                except Gittle.NotGitRepository:
+                except:
                     try:
                         repo = Gittle.clone(project.git_url, repo_path)
                     except:
@@ -31,22 +33,31 @@ class Command(BaseCommand):
                         try:
                             prev_commit = repo.get_previous_commit(commit['sha'])
                             time = (datetime.fromtimestamp(commit['time']) + timedelta(commit['timezone']/(60*60))).replace(tzinfo=pytz.utc)
+                            try:
+                                user_author = get_user_model().objects.get(email=commit['author']['email'])
+                                string_author = None
+                            except:
+                                string_author = commit['author']['name']
+                                user_author = None
+
                             if commit['message'][:-1] != commit['summary']:
                                 summary = commit['summary']
                                 message = commit['message']
                             else:
                                 message = commit['summary']
-                                summary = 'Commit {0} was pushed.'.format(commit['sha'][:15])
+                                summary = 'New commit was pushed ({0})'.format(commit['sha'][:8])
                             pcommit = ProjectCommit.objects.create(
                                 project=project,
                                 chash=commit['sha'],
                                 message=message,
                                 summary=summary,
-                                author=commit['author']['raw'],
+                                user_author=user_author,
+                                string_author=string_author,
                                 created=time,
                                 time=time,
                                 diff=repo.diff(commit['sha'], prev_commit).next()['diff']
                             )
+                            print pcommit, ' added.'
                             new_commits.append(pcommit)
                         except:
                             pass

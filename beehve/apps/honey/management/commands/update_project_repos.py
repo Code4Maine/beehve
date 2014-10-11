@@ -21,18 +21,19 @@ class Command(BaseCommand):
                 repo_path = '/tmp/' + project.slug
                 try:
                     repo = Gittle(repo_path, project.git_url)
+                    repo.pull()
                 except:
                     try:
                         repo = Gittle.clone(project.git_url, repo_path)
                     except:
                         # put some logging here
-                        pass
+                        repo = None
                 if repo:
                     new_commits = []
                     for commit in repo.commit_info():
                         try:
                             prev_commit = repo.get_previous_commit(commit['sha'])
-                            time = (datetime.fromtimestamp(commit['time']) + timedelta(commit['timezone']/(60*60))).replace(tzinfo=pytz.utc)
+                            time = (datetime.fromtimestamp(commit['time']) + timedelta(hours=commit['timezone']/(60*60))).replace(tzinfo=pytz.utc)
                             try:
                                 user_author = get_user_model().objects.get(email=commit['author']['email'])
                                 string_author = None
@@ -40,7 +41,7 @@ class Command(BaseCommand):
                                 string_author = commit['author']['name']
                                 user_author = None
 
-                            if commit['message'][:-1] != commit['summary']:
+                            if commit['message'] != commit['summary']:
                                 summary = commit['summary']
                                 message = commit['message']
                             else:

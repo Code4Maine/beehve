@@ -76,6 +76,9 @@ class Project(TimeStampedModel, TitleSlugDescriptionModel):
     screenshot = models.ImageField(_('Screenshot'), blank=True, null=True,
                                    upload_to='screenshots')
 
+    class Meta:
+        ordering = ['-created']
+
     def __unicode__(self):
         return u'{0}'.format(self.title)
 
@@ -111,6 +114,7 @@ class ProjectCommit(TimeStampedModel):
 
     class Meta:
         unique_together = ('project', 'chash')
+        ordering = ['-created']
 
     def __unicode__(self):
         return u'Commit {0} in {1}'.format(self.chash[:15], self.project)

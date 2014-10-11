@@ -41,16 +41,11 @@ class Command(BaseCommand):
                                 string_author = commit['author']['name']
                                 user_author = None
 
-                            if commit['message'] != commit['summary']:
-                                summary = commit['summary']
-                                message = commit['message']
-                            else:
-                                message = commit['summary']
-                                summary = 'New commit was pushed ({0})'.format(commit['sha'][:8])
+                            summary = commit['message'][:50]
                             pcommit = ProjectCommit.objects.create(
                                 project=project,
                                 chash=commit['sha'],
-                                message=message,
+                                message=commit['message'],
                                 summary=summary,
                                 user_author=user_author,
                                 string_author=string_author,

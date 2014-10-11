@@ -41,7 +41,7 @@ class Command(BaseCommand):
                                 string_author = commit['author']['name']
                                 user_author = None
 
-                            summary = commit['message'][:50]
+                            summary = commit['message'].split('\n')[0][:45]
                             pcommit = ProjectCommit.objects.create(
                                 project=project,
                                 chash=commit['sha'],

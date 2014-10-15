@@ -27,7 +27,7 @@
                             <ul class="timeline">
                                 {% for update in updates %}
                                 <li class="{% cycle 'timeline-inverted' '' %}">
-                                <div class="timeline-badge{% if update.summary %} danger"><i class="fa fa-git"></i>{% else %} success"><i class="fa fa-flag">{% endif %}</i>
+                                <div class="timeline-badge{% if update.summary %} primary"><i class="fa fa-git"></i>{% else %} success"><i class="fa fa-bullhorn">{% endif %}</i>
                                     </div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">

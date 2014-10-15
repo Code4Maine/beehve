@@ -1,6 +1,18 @@
 Changelog
 =========
 
+v2.0.0
+------
+
+  * Adding git commit syncing for projects with git URL
+  * Includes a cronjob for checking, ansible playbooks updated
+  * Also includes a fix for settings when Sentry not available
+
+v1.1.1
+------
+
+  * ??
+
 v1.0.0
 ------
 

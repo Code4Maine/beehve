@@ -254,9 +254,10 @@ class Prod(Common):
     DSN_VALUE = values.Value()
 
     # If we're on production, connect to Sentry
-    RAVEN_CONFIG = {
-        'dsn': DSN_VALUE,
-    }
+    if DSN_VALUE:
+        RAVEN_CONFIG = {
+            'dsn': DSN_VALUE,
+        }
 
-    INSTALLED_APPS = Common.INSTALLED_APPS + (
-        'raven.contrib.django.raven_compat',)
+        INSTALLED_APPS = Common.INSTALLED_APPS + (
+            'raven.contrib.django.raven_compat',)

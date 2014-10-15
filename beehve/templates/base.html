@@ -96,16 +96,13 @@
                             <a href="{% url 'worker-list' %}"><i class="fa fa-book fa-fw"></i> Worker directory</a>
                         </li>
                         <li>
-                            <a href="#"><span class="badge">{{projects|length}}</span> Projects<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                {% for project in projects %}
-                                <li>
-                                <a href="{{ project.get_absolute_url }}"><div class="badge" style="background-color:{{project.color}};">{{project.title|slice:":1"}}</div> {{project.title}}</a>
-                                </li>
-                                {% endfor %}
-                            </ul>
-                            <!-- /.nav-second-level -->
+                            <a>Brigade Projects</a>
                         </li>
+                        {% for project in projects %}
+                        <li>
+                            <a href="{{ project.get_absolute_url }}"><div class="badge" style="background-color:{{project.color}};">{{project.title|slice:":1"}}</div> {{project.title}}</a>
+                        </li>
+                        {% endfor %}
                         <li>
                             <a href="#"><span class="badge">{{technologies|length}}</span> Technology<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -172,7 +169,7 @@
         <div id="page-wrapper" {% if user.worker.background %}style="background:{{user.worker.background}}"{% endif %}>
             <div class="row">
                 <div class="col-lg-12 header">
-                    <h1 class="age-header">{% block header_title %}Dashboard{% endblock %}</h1>
+                    <h1 class="age-header">{% block header_title %}<span class="">Dashboard</span>{% endblock %}&nbsp;<span class="button">Projects</span>&nbsp;Workers</h1>
                     <div class="project-add right"><a class="btn btn-primary"  href="{% url 'project-create' %}"><i class="fa fa-plus"></i> Add a new project</a></div>
                 </div>
                 <!-- /.col-lg-12 -->

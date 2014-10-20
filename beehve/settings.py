@@ -65,6 +65,7 @@ class Common(Configuration):
         'djangobower',
         'bootstrap3',
         'select2',
+        'djcelery',
 
         'honey',
         'workers',
@@ -119,6 +120,21 @@ class Common(Configuration):
     DATABASES = values.DatabaseURLValue('sqlite:///{0}'.format(
         os.path.join(BASE_DIR, 'db.sqlite3'),
         environ=True))
+
+    BROKER_URL = values.Value('redis://localhost:6379/0')
+    CELERY_RESULT_BACKEND=values.Value('djcelery.backends.database:DatabaseBackend')
+    CELERY_TIMEZONE = values.Value('UTC')
+    CELERY_ACCEPT_CONTENT = ['pickle', 'json', 'msgpack', 'yaml']
+
+    from datetime import timedelta
+
+    CELERYBEAT_SCHEDULE = {
+        'check-git-repos': {
+            'task': 'honey.tasks.check_git_repos',
+            'schedule': timedelta(seconds=60),
+            'args': ()
+        },
+    }
 
     NEVERCACHE_KEY = values.Value('klladsf-wefkjlwef-wekjlwef--wefjlkjfslkxvl')
 

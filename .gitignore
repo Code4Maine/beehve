@@ -70,3 +70,5 @@ dash.code4maine.org
 staging-dash.code4maine.org
 .vagrant
 node_modules
+celerybeat-schedule
+celerybeat.pid

@@ -21,23 +21,6 @@
   - name: Install Gunicorn conf file.
     template: src=gunicorn.conf.j2 dest=/etc/gunicorn_{{deployment_name}}_{{mode}}.py
 
-  - name: set MAILTO in crontab
-      cron:
-        name: MAILTO
-        minute: MAILTO={{admin_email}}
-        hour: ""
-        day: ""
-        month: ""
-        weekday: ""
-        job: ""
-
-  - name: Setup git repo checking cronjob
-    cron: 
-        name: "Check repos for commits" 
-        minute: "*/5" 
-        job: "/bin/bash {{mode}}/crons/update_repos.sh > /dev/null" 
-        user: {{deployment_name}}
-  
   - name: Restart NGINX
     service: name=nginx state=restarted
     sudo_user: root

@@ -5,7 +5,7 @@ from .views import (ProjectListView, ProjectDetailView, ProjectCreateView,
                     TechnologyDetailView, TechnologyListView, TopicDetailView,
                     TopicListView, EventDetailView, TopicCreateView,
                     EventCreateView, TechnologyCreateView, BuzzListView,
-                    BuzzCreateView, BuzzDetailView)
+                    BuzzCreateView, BuzzDetailView, LinkCreateView)
 
 
 # custom views
@@ -34,6 +34,10 @@ urlpatterns = patterns(
     url(r'^projects/(?P<project_slug>[-\w]+)/buzz/(?P<slug>[-\w]+)/',
         view=BuzzDetailView.as_view(),
         name="buzz-detail"),
+
+    url(r'^projects/(?P<slug>[-\w]+)/link/create/',
+        view=LinkCreateView.as_view(),
+        name="link-create"),
 
     url(r'^projects.json',
         view=ProjectListJSONView.as_view(),

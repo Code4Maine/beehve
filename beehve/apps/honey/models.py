@@ -53,8 +53,10 @@ class Event(BasicItem):
     def get_absolute_url(self):
         return ('topic-detail', None, {'slug': self.slug})
 
-PROJECT_STATUSES = (('active', 'Active'),
-                    ('inactive', 'Inactive'),
+PROJECT_STATUSES = (('in progress', 'In Progress'),
+                    ('ideation', 'Ideation'),
+                    ('stalled', 'Stalled'),
+                    ('defunct', 'Defunct'),
                     ('launched', 'Launched'))
 
 
@@ -100,6 +102,15 @@ class Project(TimeStampedModel, TitleSlugDescriptionModel):
           - number of requests for help
         '''
         return 0
+
+
+class Link(TimeStampedModel, TitleSlugDescriptionModel):
+    project = models.ForeignKey(Project)
+    author = models.ForeignKey(get_user_model())
+    url = models.CharField(max_length=255)
+
+    def __unicode__(self):
+        return u'{0} ({1})'.format(self.title, self.url)
 
 
 class ProjectCommit(TimeStampedModel):

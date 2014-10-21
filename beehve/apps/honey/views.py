@@ -7,9 +7,9 @@ from django.core import serializers
 from django.core.urlresolvers import reverse
 from django.template.loader import render_to_string
 
-from .models import Project, Topic, Technology, Event, Buzz, ProjectCommit
+from .models import Project, Topic, Technology, Event, Buzz, ProjectCommit, Link
 from workers.models import Worker
-from .forms import ProjectForm, TopicForm, EventForm, TechnologyForm, BuzzForm
+from .forms import ProjectForm, TopicForm, EventForm, TechnologyForm, BuzzForm, LinkForm
 from .utils import send_email
 from braces import views
 
@@ -180,6 +180,27 @@ class TopicCreateView(views.LoginRequiredMixin, CreateView):
 
     def get_success_url(self, *args, **kwargs):
         redirect = getattr(self.request.GET, 'next', '/projects/add/')
+        if redirect:
+            return redirect
+
+class LinkCreateView(views.LoginRequiredMixin, CreateView):
+    model = Link
+    form_class = LinkForm
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(LinkCreateView, self).get_context_data(*args, **kwargs)
+        self.project = context['project'] = Project.objects.get(slug=self.kwargs['slug'])
+        return context
+
+    def form_valid(self, form):
+        object = form.save(commit=False)
+        object.project = Project.objects.get(slug=self.kwargs['slug'])
+        object.author = self.request.user
+        object.save()
+        return super(LinkCreateView, self).form_valid(form)
+
+    def get_success_url(self, *args, **kwargs):
+        redirect = getattr(self.request.GET, 'next', reverse('project-detail', kwargs={'slug':self.kwargs['slug']}))
         if redirect:
             return redirect
 

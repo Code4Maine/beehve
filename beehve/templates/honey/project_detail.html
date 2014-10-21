@@ -28,6 +28,13 @@ $('#modal').on('hidden.bs.modal', function () {
                     <h4>README</h4>
                     {{project.description|markdown}}
                 </div>
+                <hr />
+                <h4>Resources & Links</h4>
+                {% for link in project.link_set.all %}
+                <p><a href="{{link.url}}">{{link.title}}</a> <i>{{link.url}}</i></p>
+                {% endfor %}
+                {% if user.is_authenticated %}{% if user in project.members.all %}<a href="{% url 'link-create' object.slug %}" class="btn btn-primary" class="" data-toggle="modal" data-target="#modal" >Add a link</a>{% endif %}{% endif %}
+                <hr />
                 <p class="links">{% if project.public_url %}<a target="_blank" href="{{project.public_url}}"><i class="fa fa-globe"></i></a>{% endif %}{% if project.git_url %} <a target="_blank" href="{{project.github_url}}"><i class="fa fa-github"></i></a>{% endif %}</p>
                 <hr />
                 <p><i>Founded on {{project.created|date:"r"}} by {{project.founder.username}}</i></p>

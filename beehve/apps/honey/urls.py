@@ -91,7 +91,7 @@ urlpatterns = patterns(
         view=TechnologyListView.as_view(),
         name="technology-list"),
 
-    url("^$", 
-        BuzzListView.as_view(template_name='homepage.html'), 
-        name="homepage")
+    url(r'^$',
+        view=ProjectListView.as_view(),
+        name="homepage"),
 )

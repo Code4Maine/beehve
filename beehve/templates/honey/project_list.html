@@ -1,35 +1,80 @@
-{% extends "base.html" %}
+{% extends "dashboard_base.html" %}
 {% load avatar_tags %}
 {% load markdown_deux_tags %}
+{% load static %}
 
 {% block header_title %}Brigade Directory{% endblock %}
 
+{% block extra_js %}
+<!-- isotope for the box layout | added for the project_list template -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.0.0/isotope.pkgd.min.js"></script>
+
+<script>
+var $container = $('#project-container');
+// init
+$container.isotope({
+  // options
+  itemSelector: '.item',
+  layoutMode: 'fitRows'
+});
+</script>
+{% endblock %}
+
 {% block content %}
-<div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h2>Projects</h2>
-                <span class="badge">{{object_list|length}} project{{object_list|length|pluralize}}</span>
-                <span class="right"><a href="{% url 'project-list-json' %}">View as JSON</a></span>
-            </div>
-            <div class="panel-body">
-                
-                {% for project in object_list %}
-                <div class="row">
-                    <div class="col-md-4">
-                        <h3><a href="{{project.get_absolute_url }}">{{project.title}}</a> <a href="{{project.get_absolute_url}}" class="btn btn-primary">Learn more <i class="fa fa-arrow-right"></i></a></h3>
-                        <p><b>Built with</b> {% for tech in project.technologies.all %}<a class="badge" href="{{tech.get_absolute_url}}">{{tech}}</a> {% endfor %}</p>
+<div class="content-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Active projects</h3>
+                <p>Welcome to Code for Maine's project tracker. Here you will be able to view, sort and sign up to work on a variety of projects.
+                   Besides the various technologies being used on a project, you can also view a few important things on this page:</p>
+                   <ul>
+                     <li>Health of a project (<i class="fa fa-medkit"></i>)</li>
+                     <li>Current status (<i class="fa fa-question"></i>)</li>
+                     <li>Participants (<i class="fa fa-user"></i>)</li>
+                   </ul>
+                <div class="right"><a href="{% url 'project-list-json' %}">View as JSON</a></div>
+                <hr />
+                        
+                <div class="projects isotope" id="project-container">
+                    {% for project in object_list %}
+                    <div class="item well {% if forloop.counter == 1 %}green{% else %}yellow{%endif %}" style="border-top:5px solid {% if project.color%}{{project.color}}{% else %}#AAA{% endif %}">
+                        <div class="cover shadow"></div>
+                        <div class="well-content">
+                            <h4><a href="{{project.get_absolute_url }}">{{project.title}}</a> </h4>
+                            <p class="description">{{project.description|safe|truncatewords:"15"}}</p>
+                        </div>
+                        <div class="well-footer row-fluid">
+                            <div class="health box">
+                                <a href="#"><i style="color:{% if forloop.counter == 1 %}maroon{% else %}green{% endif %}" class="fa fa-medkit"></i></a>
+                            </div>
+                            <div class="status box">
+                                <a href="#"><i class="fa fa-question"></i></a>
+                            </div>
+                            <div class="favorite box">
+                                <a href="#">3&nbsp;<i class="fa fa-user"></i></a>
+                            </div>
+                            <div class'' style="float:right;">
+                                <div class="view box left-box">
+                                    <a href="#">View</a>
+                                </div>
+                                <div class="edit box">
+                                    <a href="#">Edit</a>
+                                </div>
+                                <div class="demo box right-box">
+                                    <a href="#">Demo</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <h5>Members</h5>
-                        {% for member in project.members.all %}
-                        <span class="th" >{% avatar member 65 %}</span>
-                        {% endfor %}
+                    {% endfor %}
+                    <div class="item well">
+                        <div class="cover shadow"></div>
+                        <div class="well-content">
+                        <a class="btn btn-primary" href="{% url 'project-create' %}"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add a new project</a>
+                    </div>
                     </div>
                 </div>
-                {% if not forloop.last %}<hr />{% endif %}
-                {% endfor %}
             </div>
         </div>
     </div>

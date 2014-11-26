@@ -5,15 +5,17 @@ from django.views.generic import TemplateView
 from django.contrib import admin
 admin.autodiscover()
 
+from honey.views import BuzzListView
+
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     (r'^accounts/', include('allauth.urls')),
     (r'^avatar/', include('avatar.urls')),
     (r'^select2/', include('select2.urls')),
-    (r'^', include('workers.urls')),
-    (r'^', include('honey.urls')),
+    (r'^dashboard/', include('honey.urls')),
+    (r'^dashboard/', include('workers.urls')),
     url("^$", 
-        TemplateView.as_view(template_name='homepage.html'), 
+        BuzzListView.as_view(template_name='homepage.html'), 
         name="homepage")
 )
 

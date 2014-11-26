@@ -42,6 +42,7 @@ class Common(Configuration):
     # Application definition
 
     INSTALLED_APPS = (
+        'suit',
         "django.contrib.admin",
         "django.contrib.comments",
         "django.contrib.auth",
@@ -105,6 +106,7 @@ class Common(Configuration):
         'bootstrap-multiselect#0.9.5',
         'bootstrap-colorpicker',
         'underscore',
+        'isotope',
     )
 
 

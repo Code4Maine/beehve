@@ -1,0 +1,260 @@
+/*!
+ * Start Bootstrap - Landing Page Bootstrap Theme (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+body,
+html {
+    width: 100%;
+    height: 100%;
+    font-size:12pt;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Josefin Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+}
+
+.well { border-radius:0; }
+.lead {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.intro-header {
+    padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
+    padding-bottom: 50px;
+    text-align: left;
+    color: #f8f8f8;
+    background: url(../img/default-bg.png) no-repeat center center;
+    background-size: cover;
+}
+
+.intro-message {
+    position: relative;
+    padding-top: 15%;
+    padding-bottom: 0;
+}
+.intro-message > p { letter-spacing:0.01em; font-style:normal;}
+
+.intro-message > h1 {
+    margin: 0;
+    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    font-size: 5em;
+}
+
+.dashboard-message {
+  padding-top:8%;
+  padding-bottom:0;
+}
+
+.intro-divider {
+    width: 1200px;
+    border-top: 1px solid #f8f8f8;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+.intro-message > h3 {
+    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+}
+
+@media(max-width:767px) {
+    .intro-message {
+        padding-bottom: 15%;
+    }
+
+    .intro-message > h1 {
+        font-size: 3em;
+    }
+
+    ul.intro-social-buttons > li {
+        display: block;
+        margin-bottom: 20px;
+        padding: 0;
+    }
+
+    ul.intro-social-buttons > li:last-child {
+        margin-bottom: 0;
+    }
+
+    .intro-divider {
+        width: 100%;
+    }
+}
+
+.network-name {
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 2px;
+}
+
+.content-section-a {
+    padding: 50px 0;
+    background-color: #f8f8f8;
+}
+
+.content-section-b {
+    padding: 50px 0;
+    border-top: 1px solid #e7e7e7;
+    border-bottom: 1px solid #e7e7e7;
+}
+
+.content-section-c {
+    padding: 50px 0;
+    background-color: #eee;
+}
+
+.content-main {
+    padding:20px 0;
+    border-top: 1px solid #e7e7e7;
+    border-bottom: 1px solid #e7e7e7;
+}
+
+.section-heading {
+    margin-bottom: 30px;
+}
+
+.section-heading-spacer {
+    float: left;
+    width: 200px;
+    border-top: 3px solid #e7e7e7;
+}
+
+.banner {
+    padding: 100px 0;
+    color: #f8f8f8;
+    background: url(../img/default-sm-bg.png) no-repeat center center;
+    background-size: cover;
+}
+
+.intro-message h2 {
+    margin: 0;
+    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    font-size: 2em;
+}
+
+.banner ul {
+    margin-bottom: 0;
+}
+
+.banner-social-buttons {
+    float: right;
+    margin-top: 0;
+}
+
+@media(max-width:1199px) {
+    ul.banner-social-buttons {
+        float: left;
+        margin-top: 15px;
+    }
+}
+
+@media(max-width:767px) {
+    .banner h2 {
+        margin: 0;
+        text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+        font-size: 3em;
+    }
+
+    ul.banner-social-buttons > li {
+        display: block;
+        margin-bottom: 20px;
+        padding: 0;
+    }
+
+    ul.banner-social-buttons > li:last-child {
+        margin-bottom: 0;
+    }
+}
+
+footer {
+    padding: 50px 0;
+    background-color: #f8f8f8;
+}
+
+p.copyright {
+    margin: 15px 0 0;
+}
+
+.navbar { border-bottom:2px solid red; padding-bottom:10px;}
+.navbar .btn { margin-top:15px; }
+a.btn { text-decoration:none; }
+body { font-family:"Droid Sans"; }
+.links { font-size:24pt; }
+.project-card .description {  }
+
+.row.full_width { max-width:100%; width:100%;  }
+.page-header { background:url('../images/code4maine-logo-small.png') no-repeat; width:400px; height:300px; text-indent:-9999px; display:inline; float:left; border:none;}
+.footer { padding:20px; }
+#header, #footer { width: 100%; margin-left: auto; margin-right: auto; margin-top: 0;
+                   margin-bottom: 0; max-width: 62.5rem; }
+.circle.small { width:20px !important; height:24px !important; border-radius:400px; font-size:14pt; color:#fff; text-align:center; background:#000; display:inline;}
+.nav .fa { font-size:12pt; }
+
+.member-thumbs { display:block; }
+.th { float:left; margin-right:10px;  }
+.socialaccount_provider { font-size:14pt; }
+.socialaccount_providers { margin:0; padding:0; clear:both; display:block }
+.socialaccount_providers li { list-style:none; float:left; margin-right:5px; font-size:16pt;}
+.socialaccount_ballot { margin-bottom:80px; }
+.short-form { width:300px;}
+.modal-form { margin-left:20px; margin-right:20px; }
+
+.project-badge { font-family:Impact; font-size:22pt; }
+.badge a { color:white;}
+
+.control-label { margin-right:10px; }
+
+.right { float:right;  }
+.left { float:left;  }
+.project-add { margin-top:25px; }
+.header h1 { float:left;  }
+.member-box { margin-left:15px;  }
+.why { font-size:larger; }
+.social-btns { list-style:none; clear:both; margin-top:12.5em; font-size:16pt; padding-left:0px;}
+.social-btns li { float:left; margin:5px;}
+.dropdown { padding:0; }
+.dropdown a { text-decoration:none; }
+.pj-box { }
+.lower-header, .dashboard-header { padding-top:20px; padding-bottom:15px; background:#afdfaa; font-size:14pt; }
+.lower-message { font-family:"Josefin Sans", "Helvetica Neue", arial; font-size:20pt;}
+a { color:red;  text-decoration:underline;}
+a.join { text-decoration:none; }
+.join { padding:1em 2em 1em 2em;}
+.intro-header a { color:white; }
+.btn {border-radius: 0;}
+.subhead { padding-bottom:20px; }
+.timeline { padding-left:0; }
+.timeline li { list-style:none; padding-left:0; }
+.timeline .timeline-badge { float:left; padding:5px; margin-right:5px; }
+.timeline .update { margin:10px 0; padding:10px; border:1px solid #aaa; background:white; }
+.timeline .fa { color:white; padding:5px; }
+.timeline .fa-git { background: green; }
+.timeline .fa-bullhorn { background:maroon; }
+.timeline .timeline-body { padding:0 20px 0 20px; font-style:italic; font-size: 10pt; }
+.badge { padding-top:7px; border-radius:0; }
+.badge a { text-decoration:none;}
+.event-box { background:lightgreen; border:none; }
+.event-box a { font-size:16pt; }
+
+.item { width: 25%; background-color:white; padding-top:0; padding:0; margin-right:20px;}
+.item h4 { padding-bottom:5px; }
+.item:hover !important { border-top:3px solid black; }
+.item.w2 { width: 50%;  }
+.item .description { font-size:10pt; }
+.well { word-wrap: break-word; }
+.well .cover { background: none repeat scroll 0% 0% #000; }
+.well-content { padding:15px; }
+.well-footer { padding:0; widthj100%}
+.well-footer a { text-decoration:none; color:black;}
+.well-footer .box { padding:5px 5px 1px 5px; margin-bottom:3px; border:1px solid #ccc; border-bottom:none; border-left:none; display:inline;}
+.well-footer .left-box { padding-left:5px; border-left: 1px solid #ccc}
+.well-footer .right-box { border-right:none; padding-right:5px; }
+.welcome { padding:20px; margin-top:15px; }

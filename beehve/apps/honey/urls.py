@@ -90,7 +90,6 @@ urlpatterns = patterns(
         name="technology-list"),
 
     url(r'^$',
-        view=honey_views.BuzzListView.as_view(
-        template_name = 'honey/dashboard.html'),
-        name="homepage",),
+        view=honey_views.DashboardView.as_view(),
+        name="dashboard",),
 )

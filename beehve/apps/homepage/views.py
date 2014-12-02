@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from django.utils import timezone
 from itertools import chain
 from django.conf import settings
 from django.views.generic.edit import CreateView, UpdateView, FormView
@@ -34,11 +35,11 @@ class HomepageView(ListView):
         context['workers'] = Worker.objects.all()
         # zipper together all the commits and buzzes into a list 
         # sorted by created time
-        now = datetime.now()
-        context['commit_days'] = commits_since = getattr(settings, 'HONEY_COMMITS_SINCE_DAYS', 60)
+        now = timezone.now()
+        context['commit_days'] = commits_since = getattr(settings, 'HONEY_COMMITS_SINCE_DAYS', 14)
         since = now - timedelta(days=commits_since)
         context['commits'] = ProjectCommit.objects.filter(created__gte=since)
-        context['buzzes'] = Buzz.objects.filter(created__gte=since)
+        context['buzzes'] = Buzz.objects.all()
         context['updates'] = sorted(
             chain(context['buzzes'], context['commits']),
             key=lambda instance: instance.created, reverse=True)

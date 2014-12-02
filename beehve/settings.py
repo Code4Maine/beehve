@@ -243,7 +243,7 @@ class Dev(Common):
 
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-    HONEY_COMMITS_SINCE_DAYS = 120 
+    HONEY_COMMITS_SINCE_DAYS = 260 
 
     #INSTALLED_APPS = Common.INSTALLED_APPS + ('debug_toolbar',)
 

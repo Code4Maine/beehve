@@ -1,10 +1,11 @@
 from django.conf import settings
+from django.utils import timezone
 import json
 from datetime import datetime, timedelta
 from itertools import chain
 from django.http import HttpResponse
 from django.views.generic.edit import CreateView, UpdateView, FormView
-from django.views.generic import DetailView, ListView, View
+from django.views.generic import DetailView, ListView, View, TemplateView
 from django.core import serializers
 from django.core.urlresolvers import reverse
 from django.template.loader import render_to_string
@@ -27,6 +28,15 @@ class BuzzListView(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(BuzzListView, self).get_context_data(*args, **kwargs)
+        context['form'] = BuzzForm()
+        return context
+
+
+class DashboardView(TemplateView):
+    template_name = 'honey/dashboard.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(DashboardView, self).get_context_data(*args, **kwargs)
         context['technologies'] = Technology.objects.all()
         context['topics'] = Topic.objects.all()
         context['events'] = Event.objects.all()
@@ -34,12 +44,13 @@ class BuzzListView(ListView):
         context['workers'] = Worker.objects.all()
         # zipper together all the commits and buzzes into a list 
         # sorted by created time
-        now = datetime.now()
-        context['commit_days'] = commits_since = getattr(settings, 'HONEY_COMMITS_SINCE_DAYS', 60)
+        now = timezone.now()
+        context['commit_days'] = commits_since = getattr(settings, 'HONEY_COMMITS_SINCE_DAYS', 14)
         since = now - timedelta(days=commits_since)
         context['commits'] = ProjectCommit.objects.filter(created__gte=since)
+        context['buzzes'] = Buzz.objects.all()
         context['updates'] = sorted(
-            chain(self.object_list, context['commits']),
+            chain(context['buzzes'], context['commits']),
             key=lambda instance: instance.created, reverse=True)
 
         return context

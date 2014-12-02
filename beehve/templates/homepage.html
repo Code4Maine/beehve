@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load markdown_deux_tags %}
 {% load static %}
+{% load biblion_tags %}
 
 {% block full_width %}full_width{% endblock %}
 
@@ -27,19 +28,20 @@
                 <div class="col-lg-7 col-lg-offset-1">
                     <hr class="sectjon-heading-spacer">
                     <div class="clearfix"></div>
-                            <h2>Connect With Your Fellow Hackers</h2>
+                    <h2>Connect With Your Fellow Hackers</h2>
+                    <br />
                     <div class="row">
-                        <div class="col-lg-3 ">
-                            <p><a href="https://github.com/code4maine/"><i class="fa fa-github" style="font-size:10em;"></i><br />Github</a></p>
-                            <img class="img-responsive" src="img/ipad.png" alt="">
+                        <div class="col-lg-3 big-icon">
+                            <p class="calendar"><a href="http://www.meetup.com/Code-for-Maine/"><i class="fa fa-calendar"></i></a></p>
+                            <p class="lower"><a href="http://www.meetup.com/Code-for-Maine/">Signup @ Meetup</a></p>
                         </div>
-                        <div class="col-lg-3 ">
-                            <p><a href="https://gitter.im/Code4Maine?utm_source=share-link&utm_medium=link&utm_campaign=share-link"><i class="fa fa-comment" style="font-size:9em;"></i><br />Gitter</a></p>
-                            <img class="img-responsive" src="img/ipad.png" alt="">
+                        <div class="col-lg-3 big-icon">
+                            <p class="chat"><a href="https://gitter.im/Code4Maine?utm_source=share-link&utm_medium=link&utm_campaign=share-link"><i class="fa fa-comment" style="font-size:9em;"></i></a></p>
+                            <p class="lower"><a href="https://gitter.im/Code4Maine?utm_source=share-link&utm_medium=link&utm_campaign=share-link">Chat @ Gitter.im</a></p>
                         </div>
-                        <div class="col-lg-3 ">
-                            <p><i class="fa fa-github" style="font-size:10em;"></i><br />On Github</p>
-                            <img class="img-responsive" src="img/ipad.png" alt="">
+                        <div class="col-lg-3 big-icon">
+                            <p class="github"><a href="https://github.com/code4maine/"><i class="fa fa-github" ></i></a></p>
+                            <p class="lower"><a href="https://github.com/code4maine/">Code @ Github</a></p>
                         </div>
                 </div>
             </div>
@@ -122,13 +124,16 @@
                 </div>
                 <div class="col-lg-4">
                     <h3 class="section-heading"><i class="fa fa-building"></i>&nbsp;&nbsp;Municipal ME Blog</h3>
+                    {% latest_blog_posts as posts %}
+                    {% for post in posts %}
                     <div class="well ">
-                        <h4>You can help make Code for Maine&nbsp;great!</h4>
-                        <h5><em>October 30, 2014</em></h5>
-                        <p>An example of a blog post enticing folks to come volunteer for code for maine.</p>
-                        <p><a href="#">Continue reading &raquo;</a></p>
+                        <h4>{{ post.title }}
+                        <h5><em>{{post.published|date:"M d, Y"}}</em></h5>
+                        <p>{{post.content_html|safe|truncatewords:"30"}}
+                        <p><a href="{{post.get_absolute_url}}">Continue reading &raquo;</a></p>
                     </div>
-                    <p><a class="btn btn-default" href="/blog/">Read more blog posts</a></p>
+                    {% endfor%}
+                    <p><a class="btn btn-default" href="{% url 'blog' %}">Read more blog posts</a></p>
                 </div>
             </div>
 

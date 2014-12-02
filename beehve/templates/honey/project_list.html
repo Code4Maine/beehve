@@ -49,20 +49,22 @@ $container.isotope({
                                 <a href="#"><i style="color:{% if forloop.counter == 1 %}maroon{% else %}green{% endif %}" class="fa fa-medkit"></i></a>
                             </div>
                             <div class="status box">
-                                <a href="#"><i class="fa fa-question"></i></a>
+                                <a href="#"><i class="fa fa-info"></i></a>
                             </div>
                             <div class="favorite box">
-                                <a href="#">3&nbsp;<i class="fa fa-user"></i></a>
+                                <a href="#">{{project.members.all|length}}&nbsp;<i class="fa fa-user"></i></a>
                             </div>
                             <div class'' style="float:right;">
                                 <div class="view box left-box">
-                                    <a href="#">View</a>
+                                    <a href="{{project.get_absolute_url}}">View</a>
                                 </div>
-                                <div class="edit box">
-                                    <a href="#">Edit</a>
+                                {% if project.public_url %}
+                                <div class="demo box">
+                                    <a href="{{project.public_url}}">Demo</a>
                                 </div>
-                                <div class="demo box right-box">
-                                    <a href="#">Demo</a>
+                                {% endif %}
+                                <div class="edit box right-box">
+                                    <a href="{% url 'project-update' project.slug %}">Edit</a>
                                 </div>
                             </div>
                         </div>

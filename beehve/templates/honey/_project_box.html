@@ -1,0 +1,29 @@
+<div class="item well {% if forloop.counter == 1 %}green{% else %}yellow{%endif %}" style="border-top:5px solid {% if project.color%}{{project.color}}{% else %}#AAA{% endif %}">
+    <div class="cover shadow"></div>
+    <div class="well-content">
+        <h4><a href="{{project.get_absolute_url }}">{{project.title}}</a> </h4>
+        <p class="description">{{project.description|safe|truncatewords:"15"}}</p>
+    </div>
+    <div class="well-footer row-fluid">
+        <div class="health box">
+            <a href="#"><i style="color:{% if forloop.counter == 1 %}maroon{% else %}green{% endif %}" class="fa fa-medkit"></i></a>
+        </div>
+        <div class="status box">
+            <a href="#"><i class="fa fa-question"></i></a>
+        </div>
+        <div class="favorite box">
+            <a href="#">3&nbsp;<i class="fa fa-user"></i></a>
+        </div>
+        <div class'' style="float:right;">
+            <div class="view box left-box">
+                <a href="#">View</a>
+            </div>
+            <div class="edit box">
+                <a href="#">Edit</a>
+            </div>
+            <div class="demo box right-box">
+                <a href="#">Demo</a>
+            </div>
+        </div>
+    </div>
+</div>

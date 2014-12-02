@@ -25,7 +25,7 @@ class Common(Configuration):
     BASE_DIR = os.path.dirname(os.path.dirname(__file__))
     sys.path.insert(0, os.path.join(BASE_DIR, 'beehve/apps'))
 
-    USE_SOUTH = True
+    #USE_SOUTH = True
 
     # Quick-start development settings - unsuitable for production
     # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -58,7 +58,7 @@ class Common(Configuration):
         'allauth.socialaccount',
         'allauth.socialaccount.providers.github',
         'allauth.socialaccount.providers.google',
-        'south',
+        #'south',
         'django_extensions',
         'floppyforms',
         'avatar',
@@ -67,15 +67,20 @@ class Common(Configuration):
         'bootstrap3',
         'select2',
         'djcelery',
+        'biblion',
 
         'honey',
         'workers',
     )
 
+    TEMPLATE_LOADERS = Configuration.TEMPLATE_LOADERS + \
+        ('gnocchi.cms.loaders.Loader',)
+
     TEMPLATE_CONTEXT_PROCESSORS = Configuration.TEMPLATE_CONTEXT_PROCESSORS + \
         ("django.core.context_processors.request",
          "django.core.context_processors.tz",
          "honey.context_processors.menu_preloader",
+         'gnocchi.cms.context.context_variables',
          "allauth.account.context_processors.account",
          "allauth.socialaccount.context_processors.socialaccount",)
 

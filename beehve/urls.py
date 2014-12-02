@@ -12,11 +12,13 @@ urlpatterns = patterns('',
     (r'^accounts/', include('allauth.urls')),
     (r'^avatar/', include('avatar.urls')),
     (r'^select2/', include('select2.urls')),
+    (r'^blog/', include('biblion.urls')),
     (r'^dashboard/', include('honey.urls')),
     (r'^dashboard/', include('workers.urls')),
     url("^$", 
         BuzzListView.as_view(template_name='homepage.html'), 
-        name="homepage")
+        name="homepage"),
+    (r'', include('gnocchi.cms.urls')),
 )
 
 if settings.DEBUG:

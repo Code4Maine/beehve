@@ -1,0 +1,91 @@
+{% extends "dashboard_base.html" %}
+{% load avatar_tags %}
+{% load markdown_deux_tags %}
+{% load static %}
+
+{% block header_title %}Brigade Directory{% endblock %}
+
+{% block extra_js %}
+<!-- isotope for the box layout | added for the project_list template -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.0.0/isotope.pkgd.min.js"></script>
+
+<script>
+var $container = $('#project-container');
+// init
+$container.isotope({
+  // options
+  itemSelector: '.item',
+  layoutMode: 'fitRows'
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="content-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    {% for update in updates %}
+                    {% if forloop.counter <= 1 %}
+                    <div class="col-md-8">
+                          <div class="well widget update {% cycle 'timeline-inverted' '' %}">
+                            <h4>Recent Activity</h4>
+                              <div class="timeline-badge{% if update.summary %} primary"><i class="fa fa-git"></i>{% else %} success"><i class="fa fa-bullhorn"></i>{% endif %}
+                                  <span class="timeline-title"><a href="{{update.get_absolute_url}}">{% if update.title %}{{update.title}}{% endif %}{% if update.summary%}{{update.summary}}{% endif %}</a></span>
+                                  <div class="timeline-description">
+                                      {% if update.summary %}{{ update.summary|truncatewords:"20" }}{% endif %}
+                                      {% if update.description %}{{ update.description|truncatewords:"20"  }}{% endif %}
+                                  </div>
+                                  <span><a class="btn btn-default" href="{{update.project.get_absolute_url}}">Project page</a></span>
+                              </div>
+                          </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    <div class="col-md-4 thirds">
+                        <div class="well widget help-projects">
+                            <h4>Projects that need your help</h4>
+                            <p>{{ projects.count }}</p>
+                            <span><a class="btn btn-default" href="{% url 'project-list' %}">View projects that need your help</a></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="well widget techs">
+                            <h4>Technologies in use</h4>
+                            <p>{{ technologies.count }}</p>
+                            <span><a class="btn btn-default" href="{% url 'technology-list' %}">View technologies</a></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="well widget commits">
+                            <h4>Commits in the past {{commit_days}} days</h4>
+                            <p>{{ commits.count }}</p>
+                            <span><a class="btn btn-default" href="{% url 'technology-list' %}">View technologies</a></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 thirds">
+                        <div class="well widget projects">
+                            <h4>Healthy projects</h4>
+                            <p>{{ projects.count }}</p>
+                            <span><a class="btn btn-default" href="{% url 'project-list' %}">View projects</a></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="well widget workers">
+                            <h4>Active Hackers</h4>
+                            <p>{{ workers.count }}</p>
+                            <span><a class="btn btn-default" href="{% url 'worker-list' %}">View workers</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

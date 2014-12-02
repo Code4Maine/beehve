@@ -1,4 +1,6 @@
+from django.conf import settings
 import json
+from datetime import datetime, timedelta
 from itertools import chain
 from django.http import HttpResponse
 from django.views.generic.edit import CreateView, UpdateView, FormView
@@ -28,9 +30,14 @@ class BuzzListView(ListView):
         context['technologies'] = Technology.objects.all()
         context['topics'] = Topic.objects.all()
         context['events'] = Event.objects.all()
+        context['projects'] = Project.objects.all()
+        context['workers'] = Worker.objects.all()
         # zipper together all the commits and buzzes into a list 
         # sorted by created time
-        context['commits'] = ProjectCommit.objects.all()[:10]
+        now = datetime.now()
+        context['commit_days'] = commits_since = getattr(settings, 'HONEY_COMMITS_SINCE_DAYS', 60)
+        since = now - timedelta(days=commits_since)
+        context['commits'] = ProjectCommit.objects.filter(created__gte=since)
         context['updates'] = sorted(
             chain(self.object_list, context['commits']),
             key=lambda instance: instance.created, reverse=True)
@@ -73,6 +80,11 @@ class BuzzCreateView(views.LoginRequiredMixin, CreateView):
 
 class BuzzDetailView(JsonView, DetailView):
     model = Buzz
+
+
+class ProjectCommitDetailView(JsonView, DetailView):
+    model = ProjectCommit
+    slug_field = 'chash'
 
 
 class ProjectCreateView(views.LoginRequiredMixin, CreateView):

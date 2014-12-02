@@ -1,11 +1,8 @@
 from django.conf import settings
 from django.conf.urls import patterns, include, url
-from django.views.generic import TemplateView
 
 from django.contrib import admin
 admin.autodiscover()
-
-from honey.views import BuzzListView
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
@@ -15,10 +12,7 @@ urlpatterns = patterns('',
     (r'^blog/', include('biblion.urls')),
     (r'^dashboard/', include('honey.urls')),
     (r'^dashboard/', include('workers.urls')),
-    url("^$", 
-        BuzzListView.as_view(template_name='homepage.html'), 
-        name="homepage"),
-    (r'', include('gnocchi.cms.urls')),
+    (r'', include('homepage.urls')),
 )
 
 if settings.DEBUG:

@@ -69,6 +69,7 @@ class Common(Configuration):
         'djcelery',
         'biblion',
 
+        'homepage',
         'honey',
         'workers',
     )
@@ -241,6 +242,8 @@ class Dev(Common):
     SECRET_KEY = 'notasecretatall'
 
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+    HONEY_COMMITS_SINCE_DAYS = 120 
 
     #INSTALLED_APPS = Common.INSTALLED_APPS + ('debug_toolbar',)
 

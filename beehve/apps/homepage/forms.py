@@ -1,11 +1,22 @@
 from django.core.urlresolvers import reverse
 import floppyforms as forms
-from .models import Worker
+from .models import Partner, Initiative, Brigade
 
 
-class WorkerForm(forms.ModelForm):
+class BrigadeForm(forms.ModelForm):
     class Meta:
-        model = Worker
-        exclude = ['user']
+        model = Brigade
+
+
+class PartnerForm(forms.ModelForm):
+    class Meta:
+        model = Partner
+        exclude = ['brigade']
+
+
+class InitiativeForm(forms.ModelForm):
+    class Meta:
+        model = Initiative
+        exclude = ['brigade']
 
 

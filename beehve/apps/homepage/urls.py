@@ -1,32 +1,35 @@
 from django.conf.urls import patterns, url
-from .views import (WorkerListJSONView, WorkerListView, WorkerDetailView,
-                    WorkerUpdateView, WorkerProfileView)
+from homepage import views as homepage_views
 
 
 # custom views
 urlpatterns = patterns(
     '',
-    url(r'^profile/edit/',
-        view=WorkerUpdateView.as_view(),
-        name="worker-update"),
+    url(r'^initiatives.json',
+        view=homepage_views.InitiativeListJSONView.as_view(),
+        name="iniative-list-json"),
 
-    url(r'^profile/',
-        view=WorkerProfileView.as_view(),
-        name="profile-detail"),
+    url(r'^initiatives/(?P<slug>[-\w]+)/',
+        view=homepage_views.InitiativeDetailView.as_view(),
+        name="initiative-detail"),
 
-    url(r'^workers.json',
-        view=WorkerListJSONView.as_view(),
-        name="worker-list-json"),
+    url(r'^initiatives/',
+        view=homepage_views.InitiativeListView.as_view(),
+        name="initiative-list"),
 
-    #url(r'^workers.csv',
-    #    view=WorkerListCSVView.as_view(),
-    #    name="worker-list-csv"),
+    #url(r'^partners.json',
+    #    view=homepage_views.PartnerListJSONView.as_view(),
+    #    name="partner-list-json"),
 
-    url(r'^workers/(?P<slug>[-\w]+)/',
-        view=WorkerDetailView.as_view(),
-        name="worker-detail"),
+    url(r'^partners/(?P<slug>[-\w]+)/',
+        view=homepage_views.PartnerDetailView.as_view(),
+        name="partner-detail"),
 
-    url(r'^workers/',
-        view=WorkerListView.as_view(),
-        name="worker-list"),
+    url(r'^partners/',
+        view=homepage_views.PartnerListView.as_view(),
+        name="partner-list"),
+
+    url("^$", 
+        view=homepage_views.HomepageView.as_view(), 
+        name="homepage"),
 )

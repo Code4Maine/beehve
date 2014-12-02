@@ -76,6 +76,13 @@ $container.isotope({
                 </div>
                 <div class="row">
                     <div class="col-md-4">
+                        <div class="well widget topics">
+                            <h4>Topics being covered</h4>
+                            <p>{{ topics.count }}</p>
+                            <span><a class="btn btn-default" href="{% url 'topic-list' %}">View topics</a></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
                         <div class="well widget workers">
                             <h4>Active Hackers</h4>
                             <p>{{ workers.count }}</p>

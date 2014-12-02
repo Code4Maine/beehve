@@ -23,8 +23,9 @@
                     <div class="clearfix"></div>
                     <h2 class="section-heading">What is Civic Innovation?</h2>
                     <p class="lead"><em>Civic Innovation is a new idea, technology or methodology that challenges and improves upon existing processes and systems, thereby improving the lives of citizens or the function of the society that they live within.</em></p>
-                    <p>&mdash; Alex Howard in <a href="http://gov20.govfresh.com/defining-civic-innovation-definition-open-government/">A definition for civic innovaction</a></p>
+                    <p>&mdash; Alex Howard in <a href="http://gov20.govfresh.com/defining-civic-innovation-definition-open-government/">A definition for civic innovation</a></p>
                 </div>
+                {% with object_list.0 as brigade %}
                 <div class="col-lg-7 col-lg-offset-1">
                     <hr class="sectjon-heading-spacer">
                     <div class="clearfix"></div>
@@ -32,18 +33,19 @@
                     <br />
                     <div class="row">
                         <div class="col-lg-3 big-icon">
-                            <p class="calendar"><a href="http://www.meetup.com/Code-for-Maine/"><i class="fa fa-calendar"></i></a></p>
-                            <p class="lower"><a href="http://www.meetup.com/Code-for-Maine/">Signup @ Meetup</a></p>
+                            <p class="calendar"><a href="{{brigade.meetup}}"><i class="fa fa-calendar"></i></a></p>
+                            <p class="lower"><a href="{{brigade.meetup}}">Signup @ Meetup</a></p>
                         </div>
                         <div class="col-lg-3 big-icon">
-                            <p class="chat"><a href="https://gitter.im/Code4Maine?utm_source=share-link&utm_medium=link&utm_campaign=share-link"><i class="fa fa-comment" style="font-size:9em;"></i></a></p>
-                            <p class="lower"><a href="https://gitter.im/Code4Maine?utm_source=share-link&utm_medium=link&utm_campaign=share-link">Chat @ Gitter.im</a></p>
+                            <p class="chat"><a href="{{brigade.chat}}"><i class="fa fa-comment" style="font-size:9em;"></i></a></p>
+                            <p class="lower"><a href="{{brigade.chat}}">Chat @ Skymob</a></p>
                         </div>
                         <div class="col-lg-3 big-icon">
-                            <p class="github"><a href="https://github.com/code4maine/"><i class="fa fa-github" ></i></a></p>
-                            <p class="lower"><a href="https://github.com/code4maine/">Code @ Github</a></p>
+                            <p class="github"><a href="{{brigade.github}}"><i class="fa fa-github" ></i></a></p>
+                            <p class="lower"><a href="{{brigade.github}}">Code @ Github</a></p>
                         </div>
                 </div>
+                {% endwith %}
             </div>
 
         </div>
@@ -60,19 +62,23 @@
                 <h2>Our Initiatives for 2015</h2>
                 <hr />
                 <div class="col-lg-4">
-                    <h3><em>State-wide Initiative</em></h3>
-                    <h2 class="section-heading">Open Internet Access</h2>
-                    <p>Each year we pick one project to be our state-wide iniative. Being a state-wide brigade means that ... </p>
-                    <p><a href="">Learn more</a></p>
+                    {% with initiatives.0 as object %}
+                    <h3><em>{{object.area}} Initiative</em></h3>
+                    <h2 class="section-heading">{{object.title}}</h2>
+                    <p>{{object.description|truncatewords:"20"}} </p>
+                    <p><a href="{{object.get_absolute_url}}">Learn more</a></p>
+                    {% endwith %}
                 </div>
                 <div class="col-lg-4">
                     <img class="img-responsive" src="{% static 'img/bangor-flag.gif' %}" style="border:1px solid #aaa;" alt="">
                 </div>
                 <div class="col-lg-4 ">
-                    <h3><em>Municipal Partner</em></h3>
-                    <h2 class="section-heading">the City of Bangor</h2>
-                    <p class="lead">As part of our <a href="">Strategic Plan for 2014-15</a> Code for Maine will be working closely with members of the Bangor city government and community to help build tools and improve access to services.</p>
-                    <p><a href="">Learn more</a></p>
+                    {% with partners.0 as object %}
+                    <h3><em>{{object.partner_type}} Initiative</em></h3>
+                    <h2 class="section-heading">{{object.title}}</h2>
+                    <p>{{object.description|truncatewords:"20"}} </p>
+                    <p><a href="{{object.get_absolute_url}}">Learn more</a></p>
+                    {% endwith %}
                 </div>
             </div>
 

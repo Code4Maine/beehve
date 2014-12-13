@@ -21,7 +21,10 @@ class HomepageView(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super(HomepageView, self).get_context_data(*args, **kwargs)
         # TODO: Get the brigade that's indicated in the subdomain
-        context['brigade'] = Brigade.objects.filter(active=True)[0]
+        try:
+            context['brigade'] = Brigade.objects.filter(active=True)[0]
+        except:
+            context['brigade'] = None
 
         context['initiatives'] = Initiative.objects.filter(brigade=context['brigade'],
                                                           active=True)
@@ -40,9 +43,10 @@ class HomepageView(ListView):
         since = now - timedelta(days=commits_since)
         context['commits'] = ProjectCommit.objects.filter(created__gte=since)
         context['buzzes'] = Buzz.objects.all()
-        context['updates'] = sorted(
-            chain(context['buzzes'], context['commits']),
-            key=lambda instance: instance.created, reverse=True)
+        if context['buzzes'] and context['commits']:
+            context['updates'] = sorted(
+                chain(context['buzzes'], context['commits']),
+                key=lambda instance: instance.created, reverse=True)
 
         return context
 

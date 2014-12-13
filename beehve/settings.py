@@ -44,7 +44,6 @@ class Common(Configuration):
     INSTALLED_APPS = (
         'suit',
         "django.contrib.admin",
-        "django.contrib.comments",
         "django.contrib.auth",
         "django.contrib.contenttypes",
         "django.contrib.redirects",
@@ -74,14 +73,10 @@ class Common(Configuration):
         'workers',
     )
 
-    TEMPLATE_LOADERS = Configuration.TEMPLATE_LOADERS + \
-        ('gnocchi.cms.loaders.Loader',)
-
     TEMPLATE_CONTEXT_PROCESSORS = Configuration.TEMPLATE_CONTEXT_PROCESSORS + \
         ("django.core.context_processors.request",
          "django.core.context_processors.tz",
          "honey.context_processors.menu_preloader",
-         'gnocchi.cms.context.context_variables',
          "allauth.account.context_processors.account",
          "allauth.socialaccount.context_processors.socialaccount",)
 

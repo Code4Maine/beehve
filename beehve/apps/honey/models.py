@@ -39,6 +39,11 @@ class Technology(BasicItem):
 
 
 class Event(BasicItem):
+    start_date = models.DateField(_('Start date'))
+    start_time = models.TimeField(_('Start time'), blank=True, null=True)
+    end_date = models.DateField(_('End date'), blank=True, null=True)
+    end_time = models.TimeField(_('End time'), blank=True, null=True)
+    url = models.CharField(_('Signup URL'), max_length=255, blank=True, null=True)
     location = models.CharField(max_length=255, blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
 

@@ -37,7 +37,7 @@ details:
 1. Configure your target hosts in the ansible/hosts file
 2. Copy ansible/hosts_vars/www.example.com ansible/host_vars/www.yourdomain.com
 3. Fill in the details of the host_vars file
-4. Run 
+4. Run: ```ansible-playbook -i ansible/hosts --limit production ansible/all.yml```
 
 Easy bootstrapping!
 -------------------

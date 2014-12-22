@@ -12,7 +12,7 @@
     copy: src=key dest="/home/{{deployment_name}}/.ssh/id_rsa" mode=0600
 
   - name: Install upstart conf file.
-    template: src=upstart.conf.j2 dest=/etc/init/{{deployment_name}}_{{mode}}.conf
+    template: src=upstart.conf.j2 dest=/etc/init/{{deployment_name}}_{{mode}}.conf mode=0600
 
   - name: Install Celery upstart conf file.
     template: src=upstart-celery.conf.j2 dest=/etc/init/{{deployment_name}}_{{mode}}_celery.conf

@@ -31,7 +31,7 @@ jQuery('document').ready(function() {
     <div class="container">
         <div class="row project-card">
             <div class="small-12">
-                <h2>{% if not object %}New {% else %}{{object}}{% endif %} project</h2>
+                <h2>{% if not object %}New {% else %}{{object}}{% endif %} project idea</h2>
                 {% bootstrap_form_errors form %}
                 <form method="post" action=".">{% csrf_token %}
                     {% bootstrap_form form %}

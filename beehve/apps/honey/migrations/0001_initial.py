@@ -87,7 +87,7 @@ class Migration(migrations.Migration):
                 ('public_url', models.CharField(max_length=255, null=True, blank=True)),
                 ('dev_url', models.CharField(max_length=255, null=True, blank=True)),
                 ('git_url', models.CharField(max_length=255, null=True, blank=True)),
-                ('status', models.CharField(default=b'active', max_length=10, choices=[(b'inprogress', b'In Progress'), (b'ideation', b'Ideation'), (b'stalled', b'Stalled'), (b'defunct', b'Defunct'), (b'launched', b'Launched')])),
+                ('status', models.CharField(default=b'ideation', max_length=10, choices=[(b'inprogress', b'In Progress'), (b'ideation', b'Ideation'), (b'stalled', b'Stalled'), (b'defunct', b'Defunct'), (b'launched', b'Launched')])),
                 ('color', models.CharField(max_length=100, null=True, verbose_name='Color', blank=True)),
                 ('screenshot', models.ImageField(upload_to=b'screenshots', null=True, verbose_name='Screenshot', blank=True)),
                 ('events', models.ManyToManyField(to='honey.Event', null=True, blank=True)),
@@ -113,6 +113,24 @@ class Migration(migrations.Migration):
                 ('diff', models.TextField(null=True, blank=True)),
                 ('project', models.ForeignKey(to='honey.Project')),
                 ('user_author', models.ForeignKey(blank=True, to=settings.AUTH_USER_MODEL, null=True)),
+            ],
+            options={
+                'ordering': ['-created'],
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='ProjectIdea',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('created', django_extensions.db.fields.CreationDateTimeField(default=django.utils.timezone.now, verbose_name='created', editable=False, blank=True)),
+                ('modified', django_extensions.db.fields.ModificationDateTimeField(default=django.utils.timezone.now, verbose_name='modified', editable=False, blank=True)),
+                ('title', models.CharField(max_length=255, verbose_name='title')),
+                ('slug', django_extensions.db.fields.AutoSlugField(allow_duplicates=b"'False'", separator=b'"u\'-\'"', blank=True, populate_from=b'"\'title\'"', editable=False, verbose_name='slug', overwrite=b"'False'")),
+                ('description', models.TextField(null=True, verbose_name='description', blank=True)),
+                ('started_date', models.DateTimeField(null=True, blank=True)),
+                ('created_by', models.ForeignKey(related_name='created_by', blank=True, to=settings.AUTH_USER_MODEL, null=True)),
+                ('user_votes', models.ManyToManyField(related_name='user_votes', null=True, to=settings.AUTH_USER_MODEL, blank=True)),
             ],
             options={
                 'ordering': ['-created'],

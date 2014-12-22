@@ -50,7 +50,8 @@
             <li class="dropdown btn btn-default">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user"></i>&nbsp;&nbsp;{{ request.user.worker_set.all.0 }}</a>
                 <ul class="dropdown-menu dropdown-user">
-                    <li><a href="{% url 'project-list' %}"><i class="fa fa-line-chart"></i>&nbsp;&nbsp;Projects</a></li>
+                    <li><a href="{% url 'project-list' %}"><i class="fa fa-line-chart"></i>&nbsp;&nbsp;View Projects</a></li>
+                    <li><a href="{% url 'project-create' %}"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add Project</a></li>
                     {% if user.project_set.all %}
                     <li class="divider"></li>
                     <li class="dropdown-header">Your projects</li>

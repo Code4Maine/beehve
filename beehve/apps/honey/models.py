@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django_extensions.db.models import (TitleSlugDescriptionModel,
                                          TimeStampedModel)
+from django_extensions.db.fields import ShortUUIDField
 
 
 class BasicItem(TimeStampedModel, TitleSlugDescriptionModel):
@@ -51,6 +52,47 @@ class Event(BasicItem):
     def get_absolute_url(self):
         return ('topic-detail', None, {'slug': self.slug})
 
+
+class HotIdeaManager(models.Manager):
+    pass
+
+
+class ColdIdeaManager(models.Manager):
+    pass
+
+
+class ProjectIdea(TimeStampedModel):
+    title = models.CharField(_('Title'), max_length=255)
+    description = models.TextField(_('Description'))
+    slug = ShortUUIDField()
+    user_votes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True,
+            null=True, related_name='user_votes')
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True,
+            null=True, related_name="created_by")
+    started_date = models.DateTimeField(blank=True, null=True)
+
+    objects = models.Manager()
+    hot_objects = HotIdeaManager()
+    cold_objects = ColdIdeaManager()
+
+    class Meta:
+        ordering = ['-created']
+
+    def __unicode__(self):
+        return u'{0}'.format(self.title)
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('projectidea-detail', [], {'slug':self.slug})
+
+    @property
+    def started(self):
+        if not self.started_date:
+            return False
+        else:
+            return True
+
+
 PROJECT_STATUSES = (('inprogress', 'In Progress'),
                     ('ideation', 'Ideation'),
                     ('stalled', 'Stalled'),
@@ -71,7 +113,7 @@ class Project(TimeStampedModel, TitleSlugDescriptionModel):
     status = models.CharField(
         max_length=10, 
         choices=PROJECT_STATUSES, 
-        default='active')
+        default='ideation')
     color = models.CharField(_('Color'), max_length=100, blank=True, null=True)
     screenshot = models.ImageField(_('Screenshot'), blank=True, null=True,
                                    upload_to='screenshots')

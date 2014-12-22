@@ -25,8 +25,6 @@ class Common(Configuration):
     BASE_DIR = os.path.dirname(os.path.dirname(__file__))
     sys.path.insert(0, os.path.join(BASE_DIR, 'beehve/apps'))
 
-    #USE_SOUTH = True
-
     # Quick-start development settings - unsuitable for production
     # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
@@ -57,7 +55,6 @@ class Common(Configuration):
         'allauth.socialaccount',
         'allauth.socialaccount.providers.github',
         'allauth.socialaccount.providers.google',
-        #'south',
         'django_extensions',
         'floppyforms',
         'avatar',

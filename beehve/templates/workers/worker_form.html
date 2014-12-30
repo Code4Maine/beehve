@@ -1,18 +1,16 @@
-{% extends "base.html" %}
+{% extends "dashboard_base.html" %}
 {% load static %}
 {% load bootstrap3 %}
 
 {% block header_title %}Account{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
+<div class="content-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
                 <h2>Update Your Profile</h2>
-            </div>
-            <div class="panel-body">
-
+        
                 <form class="short-form" method="post" action=".?next={{request.GET.next}}">
                     {% csrf_token %}
                     {% bootstrap_form form %}

@@ -1,6 +1,10 @@
+from django.contrib.auth import get_user_model
+from django.db.models.signals import post_save
 from django.conf.urls import patterns, url
 from .views import (WorkerListJSONView, WorkerListView, WorkerDetailView,
                     WorkerUpdateView, WorkerProfileView)
+
+from .models import Worker
 
 
 # custom views
@@ -30,3 +34,10 @@ urlpatterns = patterns(
         view=WorkerListView.as_view(),
         name="worker-list"),
 )
+
+def get_or_create_worker(sender, instance, **kwargs):
+    Worker.objects.get_or_create(user=instance)
+
+
+post_save.connect(get_or_create_worker, sender=get_user_model(), dispatch_uid='get_or_create_worker')
+get_user_model().worker = property(lambda u: Worker.objects.get_or_create(user=u)[0])

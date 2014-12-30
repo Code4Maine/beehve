@@ -1,0 +1,49 @@
+{% extends "dashboard_base.html" %}
+{% load static %}
+{% load markdown_deux_tags %}
+
+{% block extra_js %}
+<script src="{% static 'js/eldarion-ajax.min.js' %}"></script>
+<script>
+$('#modal').on('hidden.bs.modal', function () {
+ location.reload();
+})
+</script>
+{% endblock %}
+
+{% block header_title %}Project Directory{% endblock %}
+
+{% block content %}
+<div class="content-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h3>Project idea</h3>
+                <h2>{{object}}</h2>
+                <div class="well">
+                    {{object.description|markdown}}
+                </div>
+                <p><i>Added on {{object.created|date:"r"}} by {{object.created_by.username}}</i></p>
+            </div>
+                
+            <div class="col-md-4 columns members">
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="{% url 'projectidea-list' %}">Back to idea list</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="modal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

@@ -1,6 +1,12 @@
 Changelog
 =========
 
+v3.0.0-alpha1
+------
+
+  * Changes the homepage to provide a better initial experience for brigades
+  * Adds initial project idea implementation
+
 v2.0.0
 ------
 

@@ -9,18 +9,17 @@
 
     <title>{% block title %}{% endblock %} Code 4 Maine Dashboard</title>
 
-    <!-- Core CSS - Include with every page -->
-    <link href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+    <!-- Bootstrap Core CSS -->
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Page-Level Plugin CSS - Dashboard -->
-    <link href="{% static 'morrisjs/morris.css' %}" rel="stylesheet">
-    <link href="{% static 'css/timeline.css' %}" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{% static 'css/landing-page.css' %}" rel="stylesheet">
 
-    <!-- SB Admin CSS - Include with every page -->
-    <link href="{% static 'css/sb-admin.css' %}" rel="stylesheet">
-    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="http:////maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Josefin+Sans|Droid+Sans|Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
+    <link href="{% static 'css/landing-page.css' %}" rel="stylesheet">
 </head>
 
 <body>
@@ -28,15 +27,11 @@
     {% block content %}
     {% endblock %}
 </div>
-    <!-- Core Scripts - Include with every page -->
-    <script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
-    <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/jquery.metisMenu.js' %}"></script>
-    {% block extra_js %}{% endblock %}
-    <!-- SB Admin Scripts - Include with every page -->
-    <script src="{% static 'js/sb-admin.js' %}"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 
-
+    <!-- Bootstrap Core JavaScript -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 
 </body>
 

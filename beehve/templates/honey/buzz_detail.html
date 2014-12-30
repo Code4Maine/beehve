@@ -1,23 +1,23 @@
-{% extends "base.html" %}
+{% extends "dashboard_base.html" %}
 {% load avatar_tags %}
 {% load markdown_deux_tags %}
 
 {% block header_title %}Buzzing About {{object.project}}{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
+<div class="content-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>A buzzing</h3>
                 <h2>{{object}} </h2>
                 <span class="badge" style="background-color:{{object.project.color}};"><a href="{{object.project.get_absolute_url}}">{{object.project}}</a></span>
-            </div>
-            <div class="panel-body">
                 {{object.description|markdown}}
                 <hr />
                 <p class="byline">{{buzz.modified}} by <a href="{% url 'worker-detail' buzz.author.username %}">{{buzz.author}}</a></p>
             </div>
         </div>
+        <p><a class="btn btn-default" href="{{buzz.project.get_absolute_url}}">Back to {{buzz.project}}</a></p>
     </div>
 </div>
 {% endblock %}

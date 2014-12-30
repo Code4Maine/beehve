@@ -1,0 +1,53 @@
+{% extends "dashboard_base.html" %}
+{% load static %}
+{% load bootstrap3 %}
+
+{% block extra_js %}
+<script src="{% static 'bootstrap-multiselect/js/bootstrap-multiselect.js' %}" ></script>
+<script src="{% static 'bootstrap-multiselect/js/prettify.js' %}" ></script>
+<link href="{% static 'bootstrap-multiselect/css/bootstrap-multiselect.css' %}" rel="stylesheet">
+<link href="{% static 'bootstrap-multiselect/css/prettify.css' %}" rel="stylesheet">
+<script src="{% static 'bootstrap-colorpicker/js/bootstrap-colorpicker.js' %}" ></script>
+<link href="{% static 'bootstrap-colorpicker/css/colorpicker.css' %}" rel="stylesheet">
+<script type="text/javascript">
+$(document).ready(function() {
+    jQuery('.multiselect').multiselect();
+    jQuery('.colorpicker').colorpicker();
+});
+</script>
+<script>
+jQuery('document').ready(function() {
+    jQuery("<a href='{% url 'topic-create' %}' data-toggle='modal' data-target='#modal' class='btn btn-primary'><i class='fa fa-plus'></i></a>").insertAfter('#id_topics');
+    jQuery("<a href='{% url 'event-create' %}' data-toggle='modal' data-target='#modal' class='btn btn-primary'><i class='fa fa-plus'></i></a>").insertAfter('#id_events');
+    jQuery("<a href='{% url 'technology-create' %}' data-toggle='modal' data-target='#modal' class='btn btn-primary'><i class='fa fa-plus'></i></a>").insertAfter('#id_technologies');
+});
+</script>
+{% endblock %}
+
+{% block header_title %}{% if not object %}Add{% else %}Edit{% endif %}{% endblock %}
+
+{% block content %}
+<div class="content-main">
+    <div class="container">
+        <div class="row project-card">
+            <div class="small-12">
+                <h2>{% if not object %}New {% else %}{{object}}{% endif %} project idea</h2>
+                {% bootstrap_form_errors form %}
+                <form method="post" action=".">{% csrf_token %}
+                    {% bootstrap_form form %}
+                    <p><input class="btn btn-success" type="submit" value="{% if not object %}Add{% else %}Save{% endif %}"></p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+        
+<div id="modal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    </div>
+  </div>
+</div>
+
+<div id="myModal"></div>
+{% endblock %}

@@ -2,14 +2,25 @@ from django.core.urlresolvers import reverse
 import floppyforms as forms
 import select2.fields
 
-from .models import Project, Topic, Event, Technology, Buzz
+from .models import Project, Topic, Event, Technology, Buzz, Link, ProjectIdea
+
+class ProjectIdeaForm(forms.ModelForm):
+    class Meta:
+        model = ProjectIdea
+        exclude = ['user_votes', 'created_by', 'started_date']
 
 
 class BuzzForm(forms.ModelForm):
     class Meta:
         model = Buzz
         exclude = ['project', 'author']
+        readonly = ('links',)
 
+class LinkForm(forms.ModelForm):
+    class Meta:
+        model = Link
+        exclude = ['project', 'author']
+        readonly = ('links',)
 
 class ProjectForm(forms.ModelForm):
     topics = forms.ModelMultipleChoiceField(
@@ -34,7 +45,7 @@ class ProjectForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ['title', 'description', 'public_url', 'dev_url',
+        fields = ['title', 'description', 'status', 'public_url', 'dev_url',
                   'screenshot', 'git_url', 'topics', 'events', 
                   'technologies', 'color']
 

@@ -1,0 +1,15 @@
+{% extends "modal_base.html" %}
+{% load static %}
+{% load bootstrap3 %}
+
+
+{% block content %}
+
+<h2>Add a resource link to {{project}}</h2>
+<form class="short-form" method="post" action="{% url 'link-create' project.slug %}">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <p><input class="btn btn-success" type="submit" value="Post it!"> <button type="button" class="btn btn-danger" value="cancel">Cancel</button></p>
+</form>
+
+{% endblock %}

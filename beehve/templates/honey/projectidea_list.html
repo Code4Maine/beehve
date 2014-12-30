@@ -1,0 +1,64 @@
+{% extends "dashboard_base.html" %}
+{% load avatar_tags %}
+{% load markdown_deux_tags %}
+{% load static %}
+
+{% block header_title %}Brigade Directory{% endblock %}
+
+{% block extra_js %}
+<!-- isotope for the box layout | added for the project_list template -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.0.0/isotope.pkgd.min.js"></script>
+
+<script>
+var $container = $('#project-container');
+// init
+$container.isotope({
+  // options
+  itemSelector: '.item',
+  layoutMode: 'fitRows'
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="content-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Project ideas</h3>
+                <p>Welcome to Code for Maine's idea tracker. Look for ideas folks are having to help out in the civic arean. If you have a
+                   great idea, be sure to add it here. You can vote for your favorite, or announce that it's been spun out into a project.</p>
+                <div class="right"><a href="{% url 'projectidea-list-json' %}">View as JSON</a></div>
+                <hr />
+                <div class="projects isotope" id="project-container">
+                    {% for project in object_list %}
+                    <div class="item well {% if forloop.counter == 1 %}green{% else %}yellow{%endif %}" style="border-top:5px solid {% if project.color%}{{project.color}}{% else %}#AAA{% endif %}">
+                        <div class="cover shadow"></div>
+                        <div class="well-content">
+                            <h4><a href="{{project.get_absolute_url }}">{{project.title}}</a> </h4>
+                            <p class="description">{{project.description|safe|truncatewords:"15"}}</p>
+                        </div>
+                        <div class="well-footer row-fluid">
+                            <div class="health box">
+                                <a href="#"><i>+ {% if project.user_votes.all %}{{project.user_votes.all|length}}{% else %}1{% endif %}</i></a>
+                            </div>
+                            <div class="favorite box">
+                                <a href="#">{{project.members.all|length}}&nbsp;<i class="fa fa-user"></i></a>
+                            </div>
+                            <div class'' style="float:right;">
+                                <div class="view box left-box right-box">
+                                    <a href="{{project.get_absolute_url}}">Report</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="">
+                    <a class="btn btn-primary" href="{% url 'projectidea-create' %}"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add a new idea</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

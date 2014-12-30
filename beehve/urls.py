@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.conf.urls import patterns, include, url
-from django.views.generic import TemplateView
 
 from django.contrib import admin
 admin.autodiscover()
@@ -10,11 +9,10 @@ urlpatterns = patterns('',
     (r'^accounts/', include('allauth.urls')),
     (r'^avatar/', include('avatar.urls')),
     (r'^select2/', include('select2.urls')),
-    (r'^', include('workers.urls')),
-    (r'^', include('honey.urls')),
-    url("^$", 
-        TemplateView.as_view(template_name='homepage.html'), 
-        name="homepage")
+    (r'^blog/', include('biblion.urls')),
+    (r'^dashboard/', include('honey.urls')),
+    (r'^dashboard/', include('workers.urls')),
+    (r'', include('homepage.urls')),
 )
 
 if settings.DEBUG:

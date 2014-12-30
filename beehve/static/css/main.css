@@ -1,4 +1,5 @@
-body { font-family:"Roboto"; }
+body { font-family:"Droid Sans"; }
+.well h5 { font-weight:bold; }
 .links { font-size:24pt; }
 .project-card .description {  }
 

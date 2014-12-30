@@ -25,8 +25,6 @@ class Common(Configuration):
     BASE_DIR = os.path.dirname(os.path.dirname(__file__))
     sys.path.insert(0, os.path.join(BASE_DIR, 'beehve/apps'))
 
-    USE_SOUTH = True
-
     # Quick-start development settings - unsuitable for production
     # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
@@ -42,8 +40,8 @@ class Common(Configuration):
     # Application definition
 
     INSTALLED_APPS = (
+        'suit',
         "django.contrib.admin",
-        "django.contrib.comments",
         "django.contrib.auth",
         "django.contrib.contenttypes",
         "django.contrib.redirects",
@@ -57,7 +55,6 @@ class Common(Configuration):
         'allauth.socialaccount',
         'allauth.socialaccount.providers.github',
         'allauth.socialaccount.providers.google',
-        'south',
         'django_extensions',
         'floppyforms',
         'avatar',
@@ -65,7 +62,10 @@ class Common(Configuration):
         'djangobower',
         'bootstrap3',
         'select2',
+        'djcelery',
+        'biblion',
 
+        'homepage',
         'honey',
         'workers',
     )
@@ -104,6 +104,7 @@ class Common(Configuration):
         'bootstrap-multiselect#0.9.5',
         'bootstrap-colorpicker',
         'underscore',
+        'isotope',
     )
 
 
@@ -119,6 +120,21 @@ class Common(Configuration):
     DATABASES = values.DatabaseURLValue('sqlite:///{0}'.format(
         os.path.join(BASE_DIR, 'db.sqlite3'),
         environ=True))
+
+    BROKER_URL = values.Value('redis://localhost:6379/0')
+    CELERY_RESULT_BACKEND=values.Value('djcelery.backends.database:DatabaseBackend')
+    CELERY_TIMEZONE = values.Value('UTC')
+    CELERY_ACCEPT_CONTENT = ['pickle', 'json', 'msgpack', 'yaml']
+
+    from datetime import timedelta
+
+    CELERYBEAT_SCHEDULE = {
+        'check-git-repos': {
+            'task': 'honey.tasks.check_git_repos',
+            'schedule': timedelta(seconds=60),
+            'args': ()
+        },
+    }
 
     NEVERCACHE_KEY = values.Value('klladsf-wefkjlwef-wekjlwef--wefjlkjfslkxvl')
 
@@ -218,6 +234,8 @@ class Dev(Common):
     SECRET_KEY = 'notasecretatall'
 
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+    HONEY_COMMITS_SINCE_DAYS = 260 
 
     #INSTALLED_APPS = Common.INSTALLED_APPS + ('debug_toolbar',)
 

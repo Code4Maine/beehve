@@ -30,7 +30,9 @@ install_requires = [
     'south==0.8.2',
     'django-localflavor==1.0.0',
     'django-select2-forms==1.1.18',
-    'PyGithub==1.25'
+    'gittle==0.4.0',
+    'django-celery==3.1.16',
+    'celery[redis]==3.1.16'
 ]
 
 

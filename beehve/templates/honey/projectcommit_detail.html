@@ -1,0 +1,25 @@
+{% extends "dashboard_base.html" %}
+{% load avatar_tags %}
+{% load markdown_deux_tags %}
+
+{% block header_title %}Buzzing About {{object.project}}{% endblock %}
+
+{% block content %}
+<div class="content-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>A commit</h3>
+                <h2>{{object}} </h2>
+                <span class="badge" style="background-color:{{object.project.color}};"><a href="{{object.project.get_absolute_url}}">{{object.project}}</a></span>
+                <p>{{object.message}}</p>
+                <h3>Diff</h3>
+                <pre>{{object.diff}}</pre>
+                <hr />
+                <p class="byline">{{object.modified}} by {% if object.user_author %}<a href="{% url 'worker-detail' object.user_author.username %}">{{object.author}}{% else %}{{object.author}}{% endif %}</a></p>
+            </div>
+        </div>
+        <p><a class="btn btn-default" href="{{object.project.get_absolute_url}}">Back to {{object.project}}</a></p>
+    </div>
+</div>
+{% endblock %}

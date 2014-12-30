@@ -1,0 +1,84 @@
+{% extends "dashboard_base.html" %}
+{% load avatar_tags %}
+{% load markdown_deux_tags %}
+{% load static %}
+
+{% block header_title %}Brigade Directory{% endblock %}
+
+{% block extra_js %}
+<!-- isotope for the box layout | added for the project_list template -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.0.0/isotope.pkgd.min.js"></script>
+
+<script>
+var $container = $('#project-container');
+// init
+$container.isotope({
+  // options
+  itemSelector: '.item',
+  layoutMode: 'fitRows'
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="content-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <p>This is Code for Maine's dashboard.</p>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Activity</h3>
+                        <ul class="timeline item" style="float:left;">
+                          {% for update in updates %}
+                          {% if forloop.counter <= 4 %}
+                          <li class="well update {% cycle 'timeline-inverted' '' %}">
+                          <div class="timeline-badge{% if update.summary %} primary"><i class="fa fa-git"></i>{% else %} success"><i class="fa fa-bullhorn">{% endif %}</i>
+                              </div>
+                              <div class="timeline-panel">
+                                  <div class="timeline-heading">
+                                      <h4 class="timeline-title"><a href="{{update.get_absolute_url}}">{% if update.title %}{{update.title}}{% endif %}{% if update.summary%}{{update.summary}}{% endif %}</a>
+                                      <span class="badge right" style="background-color:{{update.project.color}};"><a href="{{update.project.get_absolute_url}}">{{update.project}}</a></span></h4>
+                                      <hr />
+                                  </div>
+                                  <div class="timeline-body">
+                                      {% if update.description %}{{update.description|markdown}}{% endif %}
+                                      {% if update.message%}{{update.message}}{% endif %}
+                                      <hr />
+                                      <p class="byline">{{update.created}} by {% if update.author.username %}<a href="{% url 'worker-detail' update.author.username %}">{% endif %}{{update.author}}{% if update.author.username %}</a>{% endif %}</p>
+                                  </div>
+                              </div>
+                          </li>
+                          {% endif %}
+                          {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 thirds">
+                        <h3>Projects</h3>
+                        {% for project in projects %}
+                        {% include "honey/_project_box.html" %}
+                        {% endfor %}
+                    </div>
+                    <div class="col-md-4">
+                        <h3>Members</h3>
+                        {% for worker in workers %}
+                        <div class="well">
+                          {{ worker }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="col-md-4">
+                        <h3>Technologies</h3>
+                        {% for tech in tecnologies %}
+                        <div class="well">{{tech}}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

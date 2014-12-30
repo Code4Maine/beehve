@@ -1,0 +1,40 @@
+{% extends "homepage/base.html" %}
+{% load markdown_deux_tags %}
+
+{% block header_title %}Initiative{% endblock %}
+
+{% block header %}
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="intro-message">
+                        <h1>Major Initiatives</h1>
+                        <hr class="intro-divider">
+                        <p><i>The guide posts for our members, not the only way to hack!</i></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.intro-header -->
+{% endblock header %}
+
+{% block content %}
+<div class="content-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+                <h2>{{object}}</h2>
+                <p>{{object.description|safe}}</p>
+                <br/>
+                <p>Published on <em>{{object.published|date:"F d, Y"}}</em></p>
+            </div>
+        </div>
+        <hr />
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title> Code 4 Maine Dashboard</title>
+
+    <!-- Core CSS - Include with every page -->
+    <link href="/static/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Page-Level Plugin CSS - Dashboard -->
+    <link href="/static/morrisjs/morris.css" rel="stylesheet">
+    <link href="/static/css/timeline.css" rel="stylesheet">
+
+    <!-- SB Admin CSS - Include with every page -->
+    <link href="/static/css/sb-admin.css" rel="stylesheet">
+    <link href="/static/css/main.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Code 4 Maine Dashboard</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+                
+                <li class="new-menu">
+                    <ul>
+                        <li><a href="/accounts/signup/"><i class="fa fa-plus fa-fw"></i> Register a new account</a>
+                        <li class="divider"></li>
+                        <li><a href="/accounts/login/"><i class="fa fa-sign-in fa-fw"></i> Sign in</a>
+                        </li>
+                    </ul>
+                </li>
+                
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default navbar-static-side" role="navigation">
+                <div class="sidebar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li>
+                        <a href="/"><img width=200px; style="argin-bottom:20px; margin-left:12px;" src="/static/images/code4maine-logo-small.png"></a>
+                        </li >
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
+                        <li>
+                            <a href="/"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="/projects/"><i class="fa fa-star fa-fw"></i> Project directory</a>
+                        </li>
+                        <li>
+                            <a href="/workers/"><i class="fa fa-book fa-fw"></i> Worker directory</a>
+                        </li>
+                        <li>
+                            <a>Brigade Projects</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/projects/ideas-for-code-for-maine-events-and-activities/"><div class="badge" style="background-color:;">I</div> Ideas for Code for Maine Events and Activities</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/projects/code-for-maine-2014-2015-strategic-plan/"><div class="badge" style="background-color:;">C</div> Code for Maine 2014-2015 Strategic Plan</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/projects/invasive-species/"><div class="badge" style="background-color:#008000;">I</div> Invasive Species</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/projects/papermachine/"><div class="badge" style="background-color:#b97d3d;">P</div> PaperMachine</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/projects/open-transit/"><div class="badge" style="background-color:#9e27c1;">O</div> Open Transit</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/projects/hunger-in-maine/"><div class="badge" style="background-color:#4f58e2;">H</div> Hunger in Maine</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/projects/municipal-wifi-in-a-box/"><div class="badge" style="background-color:#c35a5a;">M</div> Municipal Wifi in a Box</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/projects/beehve/"><div class="badge" style="background-color:#beb542;">B</div> Beehve</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/projects/volunteerhubme/"><div class="badge" style="background-color:#6ece69;">V</div> VolunteerHub.me</a>
+                        </li>
+                        
+                        <li>
+                            <a href="#"><span class="badge">21</span> Technology<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                
+                                <li>
+                                <a href="/technology/django/"><span class="badge">2</span> Django</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/technology/zurb-foundation/"><span class="badge">1</span> ZURB Foundation</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/technology/jquery/"><span class="badge">2</span> jQuery</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/technology/linux/"><span class="badge">2</span> Linux</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/technology/nodejs/"><span class="badge">0</span> Node.js</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/technology/php/"><span class="badge">0</span> PHP</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/technology/mysql/"><span class="badge">0</span> MySQL</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/technology/mariadb/"><span class="badge">0</span> MariaDB</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/technology/ruby-on-rails/"><span class="badge">0</span> Ruby on Rails</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/technology/arduino-2/"><span class="badge">0</span> Arduino</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/technology/raspberry-pi/"><span class="badge">0</span> Raspberry Pi</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/technology/android/"><span class="badge">0</span> Android</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/technology/postgres/"><span class="badge">2</span> PostgreSQL</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/technology/markdown/"><span class="badge">0</span> Markdown</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/technology/bootstrap/"><span class="badge">0</span> Bootstrap</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/technology/socketio/"><span class="badge">0</span> Socket.IO</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/technology/bower/"><span class="badge">0</span> Bower</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/technology/mapping/"><span class="badge">0</span> Mapping</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/technology/mapbox/"><span class="badge">0</span> Mapbox</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/technology/html/"><span class="badge">0</span> HTML</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/technology/github-pages/"><span class="badge">0</span> Github Pages</a>
+                                </li>
+                                
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><span class="badge">16</span> Topics<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                
+                                <li>
+                                <a href="/topic/volunteering/"><span class="badge">1</span> Volunteering</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/topic/non-profits/"><span class="badge">3</span> Non-profits</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/topic/education/"><span class="badge">0</span> Education</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/topic/transportation/"><span class="badge">0</span> Transportation</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/topic/networking/"><span class="badge">2</span> Networking</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/topic/hardware/"><span class="badge">1</span> Hardware</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/topic/apps/"><span class="badge">0</span> Apps</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/topic/responsive/"><span class="badge">1</span> Responsive</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/topic/web/"><span class="badge">1</span> Web</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/topic/data/"><span class="badge">0</span> Data</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/topic/hunger/"><span class="badge">0</span> Hunger</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/topic/public-policy/"><span class="badge">0</span> Public Policy</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/topic/libraries/"><span class="badge">0</span> Libraries</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/topic/government/"><span class="badge">0</span> Government</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/topic/documents/"><span class="badge">0</span> Documents</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/topic/paper/"><span class="badge">0</span> Paper</a>
+                                </li>
+                                
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><span class="badge">2</span> Events<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                
+                                <li>
+                                <a href="/events/maine-civic-hack-day-2014/"><span class="badge">2</span> Maine Civic Hack Day 2014</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/events/maine-hacker-club-78/"><span class="badge">1</span> Maine Hacker Club - Tuesday Meetups</a>
+                                </li>
+                                
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><span class="badge">8</span> Workers <span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                
+                                <li>
+                                <a href="/workers/user/">wrexem</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/workers/wrexem/">wrexem</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/workers/also4maine/">also4maine</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/workers/Cribstone/">Cribstone</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/workers/captainjawitz/">captainjawitz</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/workers/garrettwilkin/">Garrett Wilkin</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/workers/powellc/">Colin Powell</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/workers/jacques/">Jacques Tardie</a>
+                                </li>
+                                
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><span class="badge">2</span> Events<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                
+                                <li>
+                                <a href="/events/maine-civic-hack-day-2014/">Maine Civic Hack Day 2014</a>
+                                </li>
+                                
+                                <li>
+                                <a href="/events/maine-hacker-club-78/">Maine Hacker Club - Tuesday Meetups</a>
+                                </li>
+                                
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                    </ul>
+                    <!-- /#side-menu -->
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper" >
+            <div class="row">
+                <div class="col-lg-12 header">
+                    <h1 class="age-header"><span class="">Dashboard</span>&nbsp;<span class="button">Projects</span>&nbsp;Workers</h1>
+                    <div class="project-add right"><a class="btn btn-primary"  href="/projects/add/"><i class="fa fa-plus"></i> Add a new project</a></div>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            
+    
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- /.panel -->
+                    <h2>That URL doesn't seem to exist!</h2>
+                    <p>Sorry, we couldn't find the page you were looking for. If you believe this is an error, please get in touch with a brigade member.</p>
+                    <p><i>Error 404</i></p>
+
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-8 -->
+                <div class="col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4><i class="fa fa-bell fa-fw"></i> Find something, and get to work!</h4>
+                            <br />
+                            <p>Browse the following list of technologies wer're using in our projects. If something is familiar to you, please jump in and see where you can help!</p>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="list-group">
+                                
+                                <a href="/technology/django/" class="list-group-item">
+                                    <span class="badge">2</span> Django
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/technology/jquery/" class="list-group-item">
+                                    <span class="badge">3</span> jQuery
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/technology/linux/" class="list-group-item">
+                                    <span class="badge">3</span> Linux
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/technology/postgres/" class="list-group-item">
+                                    <span class="badge">3</span> PostgreSQL
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/technology/zurb-foundation/" class="list-group-item">
+                                    <span class="badge">1</span> ZURB Foundation
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/technology/nodejs/" class="list-group-item">
+                                    <span class="badge">1</span> Node.js
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/technology/php/" class="list-group-item">
+                                    <span class="badge">0</span> PHP
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/technology/mysql/" class="list-group-item">
+                                    <span class="badge">0</span> MySQL
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/technology/mariadb/" class="list-group-item">
+                                    <span class="badge">0</span> MariaDB
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/technology/ruby-on-rails/" class="list-group-item">
+                                    <span class="badge">0</span> Ruby on Rails
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/technology/arduino-2/" class="list-group-item">
+                                    <span class="badge">1</span> Arduino
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/technology/raspberry-pi/" class="list-group-item">
+                                    <span class="badge">1</span> Raspberry Pi
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/technology/android/" class="list-group-item">
+                                    <span class="badge">1</span> Android
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/technology/markdown/" class="list-group-item">
+                                    <span class="badge">2</span> Markdown
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/technology/bootstrap/" class="list-group-item">
+                                    <span class="badge">1</span> Bootstrap
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/technology/socketio/" class="list-group-item">
+                                    <span class="badge">1</span> Socket.IO
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/technology/bower/" class="list-group-item">
+                                    <span class="badge">1</span> Bower
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/technology/mapping/" class="list-group-item">
+                                    <span class="badge">1</span> Mapping
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/technology/mapbox/" class="list-group-item">
+                                    <span class="badge">2</span> Mapbox
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/technology/html/" class="list-group-item">
+                                    <span class="badge">1</span> HTML
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/technology/github-pages/" class="list-group-item">
+                                    <span class="badge">1</span> Github Pages
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                            </div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4><i class="fa fa-calendar fa-fw"></i> Recent events
+</h4>
+                            <br />
+                            <p>Browse our projects by what events they were created at.</p>
+                        </div>
+                        <div class="panel-body">
+                                
+                                <a href="/events/maine-civic-hack-day-2014/" class="list-group-item">
+                                    <span class="badge">3</span> Maine Civic Hack Day 2014
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/events/maine-hacker-club-78/" class="list-group-item">
+                                    <span class="badge">3</span> Maine Hacker Club - Tuesday Meetups
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                    <div class="chat-panel panel panel-default">
+                        <div class="panel-heading">
+                            <h4><i class="fa fa-comments fa-fw"></i> Project topics</h4>
+                            <br />
+                            <p>Brows our projects by the topics they cover. Find something you're interested in and dig in!</p>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                                
+                                <a href="/topic/non-profits/" class="list-group-item">
+                                    <span class="badge">4</span> Non-profits
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/topic/networking/" class="list-group-item">
+                                    <span class="badge">4</span> Networking
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/topic/volunteering/" class="list-group-item">
+                                    <span class="badge">2</span> Volunteering
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/topic/hardware/" class="list-group-item">
+                                    <span class="badge">3</span> Hardware
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/topic/responsive/" class="list-group-item">
+                                    <span class="badge">1</span> Responsive
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/topic/web/" class="list-group-item">
+                                    <span class="badge">2</span> Web
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/topic/education/" class="list-group-item">
+                                    <span class="badge">3</span> Education
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/topic/transportation/" class="list-group-item">
+                                    <span class="badge">1</span> Transportation
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/topic/apps/" class="list-group-item">
+                                    <span class="badge">1</span> Apps
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/topic/data/" class="list-group-item">
+                                    <span class="badge">4</span> Data
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/topic/hunger/" class="list-group-item">
+                                    <span class="badge">1</span> Hunger
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/topic/public-policy/" class="list-group-item">
+                                    <span class="badge">2</span> Public Policy
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/topic/libraries/" class="list-group-item">
+                                    <span class="badge">1</span> Libraries
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/topic/government/" class="list-group-item">
+                                    <span class="badge">3</span> Government
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/topic/documents/" class="list-group-item">
+                                    <span class="badge">2</span> Documents
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                                <a href="/topic/paper/" class="list-group-item">
+                                    <span class="badge">1</span> Paper
+                                    <span class="pull-right text-muted small"><span>
+                                    </span>
+                                </a>
+                                
+                        </div>
+                    </div>
+                    <!-- /.panel .chat-panel -->
+                </div>
+                <!-- /.col-lg-4 -->
+            </div>
+            <!-- /.row -->
+
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Core Scripts - Include with every page -->
+    <script src="/static/jquery/dist/jquery.min.js"></script>
+    <script src="/static/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/static/js/jquery.metisMenu.js"></script>
+    <!-- SB Admin Scripts - Include with every page -->
+    <script src="/static/js/sb-admin.js"></script>
+
+    
+<!-- Page-Level Plugin Scripts - Dashboard -->
+<script src="/static/raphael/raphael-min.js"></script>
+<script src="/static/morrisjs/morris.js"></script>
+<script src="/static/js/dashboard-demo.js"></script>
+
+
+
+</body>
+
+</html>

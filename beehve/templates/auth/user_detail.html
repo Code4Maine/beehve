@@ -1,51 +1,59 @@
-{% extends "base.html" %}
+{% extends "dashboard_base.html" %}
 {% load markdown_deux_tags %}
 {% load avatar_tags %}
 
 {% block header_title %}Account{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
+<div class="content-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
                 <h2>Your Profile</h2>
-            </div>
-            <div class="panel-body">
                 <div class="row">
                     {% with object.worker as worker %}
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <div class="th" >{% avatar object 250 %}</div>
                         {% if user.is_authenticated %}
                         <ul class="social-btns">
-                            <li><a href="skype:{{worker.skype}}"><i class="fa fa-skype"></i> {{worker.skype}}</a></li>
-                            <li><a href="http://github.com/{{worker.github}}"><i class="fa fa-github"></i> {{worker.github}}</a></li>
-                            <li><a href="http://twitter.com/#/{{worker.twitter}}"><i class="fa fa-twitter"></i> {{worker.twitter}}</a></li>
-                            <li><a href="http://facebook.com/{{worker.facebook}}"><i class="fa fa-facebook"></i> {{worker.facebook}}</a></li>
-                            <li><a href="http://instagram.com/{{worker.instagram}}"><i class="fa fa-instagram"></i> {{worker.instagram}}</a></li>
-                            <li><a href="http://linkedin.com/{{worker.linkedin}}"><i class="fa fa-linkedin"></i> {{worker.linkedin}}</a></li>
+                            {% if worker.skype %}<li><a class="btn btn-default" href="skype:{{worker.skype}}"><i class="fa fa-skype"></i> {{worker.skype}}</a></li>{% endif %}
+                            {% if worker.github %}<li><a class="btn btn-default" href="http://github.com/{{worker.github}}"><i class="fa fa-github"></i> {{worker.github}}</a></li>{% endif %}
+                            {% if worker.twitter %}<li><a class="btn btn-default" href="http://twitter.com/#/{{worker.twitter}}"><i class="fa fa-twitter"></i> {{worker.twitter}}</a></li>{% endif %}
+                            {% if worker.facebook %}<li><a class="btn btn-default" href="http://facebook.com/{{worker.facebook}}"><i class="fa fa-facebook"></i> {{worker.facebook}}</a></li>{% endif %}
+                            {% if worker.instagram %}<li><a class="btn btn-default" href="http://instagram.com/{{worker.instagram}}"><i class="fa fa-instagram"></i> {{worker.instagram}}</a></li>{% endif %}
+                            {% if worker.linkedin %}<li><a class="btn btn-default" href="http://linkedin.com/{{worker.linkedin}}"><i class="fa fa-linkedin"></i> {{worker.linkedin}}</a></li>{% endif %}
                         </ul>
                         {% else %}
                         <p>Register or login to view worker contact information</p>
                         {% endif %}
                     </div>
                     <div class="col-md-6">
-                        <h2 style="font-size:24pt">{% if worker.name %}{{worker.name}} ({{worker.user.username}}){% else %}{{worker}}{% endif %}</h2>
+                        <h2 style="font-size:24pt">{% if worker.name %}{{worker.name}} ({{worker.user.username}}){% else %}{{worker}}{% endif %}<br/>{% if worker.website %}{{worker.website|urlize}}{% endif %}</h2>
                         <hr />
+                        {% if worker.position%}<h4>{{worker.position}}</h4>{% endif %}
+                        {% if worker.city %}<h4>Located in {{worker.city}}</h4>{% endif %}
                         <div class="why">
-                            {% if worker.why %}{{worker.why|markdown}}
-                            {% else %}<p>Update your profile and tell folks why you're a member of Code 4 Maine!</p>
+                            {% if worker.why %}<b>Why am I a member of Code for Maine?</b><br/>{{worker.why|markdown}}
+                            {% else %}<p>Update your profile and tell folks why you're a member of Code for Maine!</p>
                             {% endif %}
                         </div>
                         
-                        {% if worker.website %}<h4>My personal webiste is {{worker.website|urlize}}</h4>{% endif %}
-
-                        {% if worker.city %}<h4>They live in {{worker.city}}</h4>{% endif %}
-
+        
+        
                         <p><a href="{% url 'worker-update' %}" class="btn btn-primary">Update your profile</a></p>
                     </div>
                     {% endwith %}
-
+                </div>
+                {% if user.project_set.all %}
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3>Active in</h3>
+                        {% for project in user.project_set.all %}
+                        {{project}}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>

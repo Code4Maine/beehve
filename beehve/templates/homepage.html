@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load markdown_deux_tags %}
 {% load static %}
+{% load biblion_tags %}
 
 {% block full_width %}full_width{% endblock %}
 
@@ -13,135 +14,168 @@
 
 
 {% block content %}
-    
-            <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-8">
-                    <!-- /.panel -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-clock-o fa-fw"></i> Latest Project Buzz
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <ul class="timeline">
-                                {% for update in updates %}
-                                <li class="{% cycle 'timeline-inverted' '' %}">
-                                <div class="timeline-badge{% if update.summary %} primary"><i class="fa fa-git"></i>{% else %} success"><i class="fa fa-bullhorn">{% endif %}</i>
-                                    </div>
-                                    <div class="timeline-panel">
-                                        <div class="timeline-heading">
-                                            <h4 class="timeline-title"><a href="{{update.get_absolute_url}}">{% if update.title %}{{update.title}}{% endif %}{% if update.summary%}{{update.summary}}{% endif %}</a>
-                                            <span class="badge right" style="background-color:{{update.project.color}};"><a href="{{update.project.get_absolute_url}}">{{update.project}}</a></span></h4>
-                                            <hr />
-                                        </div>
-                                        <div class="timeline-body">
-                                            {% if update.description %}{{update.description|markdown}}{% endif %}
-                                            {% if update.message%}{{update.message}}{% endif %}
-                                            <hr />
-                                            <p class="byline">{{update.created}} by {% if update.author.username %}<a href="{% url 'worker-detail' update.author.username %}">{% endif %}{{update.author}}{% if update.author.username %}</a>{% endif %}</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                {% endfor %}
-                                <li>
-                                    <div class="timeline-badge info"><i class="fa fa-file-code-o"></i>
-                                    </div>
-                                    <div class="timeline-panel">
-                                        <div class="timeline-heading">
-                                            <h4 class="timeline-title">Timeline Event</h4>
-                                        </div>
-                                        <div class="timeline-body">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel justo eu mi scelerisque vulputate. Aliquam in metus eu lectus aliquet egestas.</p>
-                                            <hr>
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
-                                                    <i class="fa fa-cog"></i> 
-                                                    <span class="caret"></span>
-                                                </button>
-                                                <ul class="dropdown-menu" role="menu">
-                                                    <li><a href="#">Action</a>
-                                                    </li>
-                                                    <li><a href="#">Another action</a>
-                                                    </li>
-                                                    <li><a href="#">Something else here</a>
-                                                    </li>
-                                                    <li class="divider"></li>
-                                                    <li><a href="#">Separated link</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-8 -->
-                <div class="col-lg-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4><i class="fa fa-bell fa-fw"></i> Find something, and get to work!</h4>
-                            <br />
-                            <p>Browse the following list of technologies wer're using in our projects. If something is familiar to you, please jump in and see where you can help!</p>
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="list-group">
-                                {% for tech in technologies|dictsortreversed:"project_count" %}
-                                <a href="{{tech.get_absolute_url}}" class="list-group-item">
-                                    <span class="badge">{{tech.project_set.all|length}}</span> {{tech}}
-                                    <span class="pull-right text-muted small"><span>
-                                    </span>
-                                </a>
-                                {% endfor %}
-                            </div>
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4><i class="fa fa-calendar fa-fw"></i> Recent events</h4>
-                            <br />
-                            <p>Browse our projects by what events they were created at.</p>
-                        </div>
-                        <div class="panel-body">
-                                {% for event in events|dictsortreversed:"project_count" %}
-                                <a href="{{event.get_absolute_url}}" class="list-group-item">
-                                    <span class="badge">{{event.project_set.all|length}}</span> {{event}}
-                                    <span class="pull-right text-muted small"><span>
-                                    </span>
-                                </a>
-                                {% endfor %}
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                    <div class="chat-panel panel panel-default">
-                        <div class="panel-heading">
-                            <h4><i class="fa fa-comments fa-fw"></i> Project topics</h4>
-                            <br />
-                            <p>Brows our projects by the topics they cover. Find something you're interested in and dig in!</p>
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                                {% for topic in topics|dictsortreversed:"project_count" %}
-                                <a href="{{topic.get_absolute_url}}" class="list-group-item">
-                                    <span class="badge">{{topic.project_set.all|length}}</span> {{topic}}
-                                    <span class="pull-right text-muted small"><span>
-                                    </span>
-                                </a>
-                                {% endfor %}
-                        </div>
-                    </div>
-                    <!-- /.panel .chat-panel -->
-                </div>
-                <!-- /.col-lg-4 -->
-            </div>
-            <!-- /.row -->
+    <div class="content-section-a">
 
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h2 class="section-heading">What is Civic Innovation?</h2>
+                    <p class="lead"><em>Civic Innovation is a new idea, technology or methodology that challenges and improves upon existing processes and systems, thereby improving the lives of citizens or the function of the society that they live within.</em></p>
+                    <p>&mdash; Alex Howard in <a href="http://gov20.govfresh.com/defining-civic-innovation-definition-open-government/">A definition for civic innovation</a></p>
+                </div>
+                {% with object_list.0 as brigade %}
+                <div class="col-lg-7 col-lg-offset-1">
+                    <hr class="sectjon-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h2>Connect With Your Fellow Hackers</h2>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-3 big-icon">
+                            <p class="calendar"><a href="{{brigade.meetup}}"><i class="fa fa-calendar"></i></a></p>
+                            <p class="lower"><a href="{{brigade.meetup}}">Signup @ Meetup</a></p>
+                        </div>
+                        <div class="col-lg-3 big-icon">
+                            <p class="chat"><a href="{{brigade.chat}}"><i class="fa fa-comment" style="font-size:9em;"></i></a></p>
+                            <p class="lower"><a href="{{brigade.chat}}">Chat @ Skymob</a></p>
+                        </div>
+                        <div class="col-lg-3 big-icon">
+                            <p class="github"><a href="{{brigade.github}}"><i class="fa fa-github" ></i></a></p>
+                            <p class="lower"><a href="{{brigade.github}}">Code @ Github</a></p>
+                        </div>
+                </div>
+                {% endwith %}
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.content-section-a -->
+
+    <div class="content-section-b">
+
+        <div class="container">
+
+            {% if partners or initiatives %}
+            <div class="row">
+                <h2>Our Initiatives for 2015</h2>
+                <hr />
+                <div class="col-lg-4">
+                    {% with initiatives.0 as object %}
+                    <h3><em>{{object.area}} Initiative</em></h3>
+                    <h2 class="section-heading">{{object.title}}</h2>
+                    <p>{{object.description|truncatewords:"20"}} </p>
+                    <p><a href="{{object.get_absolute_url}}">Learn more</a></p>
+                    {% endwith %}
+                </div>
+                <div class="col-lg-4">
+                    <img class="img-responsive" src="{% static 'img/bangor-flag.gif' %}" style="border:1px solid #aaa;" alt="">
+                </div>
+                <div class="col-lg-4 ">
+                    {% with partners.0 as object %}
+                    <h3><em>{{object.partner_type}} Partner</em></h3>
+                    <h2 class="section-heading">{{object.title}}</h2>
+                    <p>{{object.description|truncatewords:"20"}} </p>
+                    <p><a href="{{object.get_absolute_url}}">Learn more</a></p>
+                    {% endwith %}
+                </div>
+            </div>
+            {% endif %}
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.content-section-b -->
+
+    <div class="content-section-c">
+
+        <div class="container">
+
+            <div class="row">
+                <h2>What's going on at Code for Maine?</h2>
+                <div class="col-lg-4">
+                    <h3 class="section-heading"><i class="fa fa-bullhorn"></i>&nbsp;&nbsp;Project Updates</h3>
+                        <ul class="timeline">
+                            {% for update in updates %}
+                            <li class="well update {% cycle 'timeline-inverted' '' %}" {% if forloop.counter > 2 %}style="display:none;"{% endif %}>
+                            <div class="timeline-badge{% if update.summary %} primary"><i class="fa fa-git"></i>{% else %} success"><i class="fa fa-bullhorn">{% endif %}</i>
+                                </div>
+                                <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                        <h4 class="timeline-title"><a href="{{update.get_absolute_url}}">{% if update.title %}{{update.title}}{% endif %}{% if update.summary%}{{update.summary}}{% endif %}</a>
+                                        <span class="badge right" style="background-color:{{update.project.color}};"><a href="{{update.project.get_absolute_url}}">{{update.project}}</a></span></h4>
+                                        <hr />
+                                    </div>
+                                    <div class="timeline-body">
+                                        {% if update.description %}{{update.description|markdown}}{% endif %}
+                                        {% if update.message%}{{update.message}}{% endif %}
+                                        <hr />
+                                        <p class="byline">{{update.created}} by {% if update.author.username %}<a href="{% url 'worker-detail' update.author.username %}">{% endif %}{{update.author}}{% if update.author.username %}</a>{% endif %}</p>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        <p><a class="btn btn-default" href="/dashboard/">See more updates</a></p>
+                </div>
+                <div class="col-lg-4">
+                    <h3 class="section-heading"><i class="fa fa-calendar"></i>&nbsp;&nbsp;Upcoming events</h3>
+                    <div class="well event-box">
+                        <h4>Next meetup: December 12 @ 6 p.m.</h4>
+                        <p>Come join us for our monthly meetup and hack session.</p>
+                        <p>Come join us for our monthly meetup and hack session.</p>
+                        <p><a class="btn btn-primary" href="http://www.meetup.com/Code-for-Maine/">RSVP @ Meetup.com &raquo;</a></p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <h3 class="section-heading"><i class="fa fa-building"></i>&nbsp;&nbsp;Municipal ME Blog</h3>
+                    {% latest_blog_posts as posts %}
+                    {% for post in posts %}
+                    <div class="well ">
+                        <h4>{{ post.title }}
+                        <h5><em>{{post.published|date:"M d, Y"}}</em></h5>
+                        <p>{{post.content_html|safe|truncatewords:"30"}}
+                        <p><a href="{{post.get_absolute_url}}">Continue reading &raquo;</a></p>
+                    </div>
+                    {% endfor%}
+                    <p><a class="btn btn-default" href="{% url 'blog' %}">Read more blog posts</a></p>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.content-section-a -->
+
+    <div class="banner">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <h2>Connect with Code for Maine:</h2>
+                </div>
+                <div class="col-lg-6">
+                    <ul class="list-inline banner-social-buttons">
+                        <li>
+                            <a href="https://twitter.com/CodeforMaine" class="btn btn-default btn-lg"><i class="fa fa-twitter"></i> <span class="network-name">Twitter</span></a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/code4maine/" class="btn btn-default btn-lg"><i class="fa fa-github"></i> <span class="network-name">Github</span></a>
+                        </li>
+                        <li>
+                            <a href="https://codeformaine.org/dashboard/" class="btn btn-default btn-lg"><i class="fa fa-checklist "></i> <span class="network-name">Dashboard</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
 {% endblock %}

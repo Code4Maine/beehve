@@ -14,6 +14,12 @@
   - name: Install upstart conf file.
     template: src=upstart.conf.j2 dest=/etc/init/{{deployment_name}}_{{mode}}.conf mode=0600
 
+  - name: Install Celery upstart conf file.
+    template: src=upstart-celery.conf.j2 dest=/etc/init/{{deployment_name}}_{{mode}}_celery.conf
+
+  - name: Install Celerybeat upstart conf file.
+    template: src=upstart-celerybeat.conf.j2 dest=/etc/init/{{deployment_name}}_{{mode}}_celerybeat.conf
+
   - name: Install NGINX site conf file.
     template: src=nginx.conf.j2 dest=/etc/nginx/sites-enabled/{{deployment_name}}
     register: nginx_sites
@@ -21,23 +27,6 @@
   - name: Install Gunicorn conf file.
     template: src=gunicorn.conf.j2 dest=/etc/gunicorn_{{deployment_name}}_{{mode}}.py
 
-  - name: set MAILTO in crontab
-      cron:
-        name: MAILTO
-        minute: MAILTO={{admin_email}}
-        hour: ""
-        day: ""
-        month: ""
-        weekday: ""
-        job: ""
-
-  - name: Setup git repo checking cronjob
-    cron: 
-        name: "Check repos for commits" 
-        minute: "*/5" 
-        job: "/bin/bash {{mode}}/crons/update_repos.sh > /dev/null" 
-        user: {{deployment_name}}
-  
   - name: Restart NGINX
     service: name=nginx state=restarted
     sudo_user: root

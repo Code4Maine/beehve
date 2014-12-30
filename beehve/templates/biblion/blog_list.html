@@ -1,0 +1,25 @@
+{% extends "biblion/base.html" %}
+{% load markdown_deux_tags %}
+
+{% block header_title %}Blog{% endblock %}
+
+{% block content %}
+<div class="content-main">
+    <div class="container">
+        <div class="row">
+            {% if posts%}
+            {% for post in posts%}
+            <div class="col-md-10">
+                <h3><a href="{{post.get_absolute_url}}">{{post}}</a></h3>
+                <p><em>{{post.published}}</em></p>
+                <p>{{post.teaser_html|safe}}</p>
+            </div>
+            {% if not forloop.last %}<hr />{% endif %}
+            {% endfor %}
+            {% else %}
+            <p>There are currently no blog posts published.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

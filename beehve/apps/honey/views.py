@@ -147,7 +147,7 @@ class ProjectJoinView(JsonView, views.LoginRequiredMixin):
             project.members.add(user)
             project.save()
             success = True
-            html = "<p class='leave-button' ><a href='{0}' class='btn btn-danger ajax' data-replace='.leave-button'><i class='fa fa-times'></i> Leave project</a></p>".format(reverse('project-leave', args=[project.slug]))
+            html = "<p class='right leave-button' ><a href='{0}' class='btn btn-danger ajax' data-replace='.leave-button'><i class='fa fa-times'></i> Leave project</a></p>".format(reverse('project-leave', args=[project.slug]))
             fragments['.member-thumbs'] = render_to_string('honey/_member_list.html', {'members': project.members.all()})
         return self.render_json_response(
             {'user': user.username, 'html': html, 'fragments': fragments})
@@ -168,7 +168,7 @@ class ProjectLeaveView(JsonView, views.LoginRequiredMixin):
         if user.is_authenticated() and user in project.members.all():
             project.members.remove(user)
             project.save()
-            html = "<p class='join-button' ><a href='{0}' class='btn btn-success ajax' data-replace='.join-button'><i class='fa fa-plus'></i> Join project</a></p>".format(reverse('project-join', args=[project.slug]))
+            html = "<p class='right join-button' ><a href='{0}' class='btn btn-success ajax' data-replace='.join-button'><i class='fa fa-plus'></i> Join project</a></p>".format(reverse('project-join', args=[project.slug]))
             success = True
             fragments['.member-thumbs'] = render_to_string('honey/_member_list.html', {'members': project.members.all()})
         return self.render_json_response(

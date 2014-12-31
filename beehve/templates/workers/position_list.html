@@ -2,7 +2,7 @@
 {% load markdown_deux_tags %}
 {% load avatar_tags %}
 
-{% block header_title %}Brigade Workers{% endblock %}
+{% block header_title %}Brigade Directory{% endblock %}
 
 {% block header %}
     <div class="intro-header">
@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="intro-message">
-                        <h1>Our Workers</h1>
+                        <h1>Worker Positions</h1>
                         <hr class="intro-divider">
                         <p><i>The folks who make this brigade work.</i></p>
                     </div>
@@ -29,14 +29,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-10">
-                <a class="btn btn-danger right" href="{% url 'worker-list-json' %}">JSON</a>&nbsp;<span class="badge right">{{object_list|length}} worker{{object_list|length|pluralize}}</span>                
-                {% for worker in object_list %}
-                <div class="row">
-                    <div class="col-md-10">
-                        <h3><span class="th" >{% avatar worker.user 115 %}</span> <a href="{{worker.get_absolute_url }}">{% if worker.name %}{{worker.name}} ({{worker.user.username}}){% else %}{{worker.user.username}}{% endif %}</a></h3>
-                        <p>{{worker.why|markdown}}</p>
-                    </div>
-                </div>
+                {% for position in object_list %}
+                <h3><a href="{{position.get_absolute_url }}">{{position}}{{ position.worker_set.all|pluralize }}</a></h3>
+                <p>{{position.worker_set.all.0}}</p>
+                <p>{{position.description|markdown}}</p>
                 {% if not forloop.last %}<hr />{% endif %}
                 {% endfor %}
             </div>

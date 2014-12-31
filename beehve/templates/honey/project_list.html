@@ -26,6 +26,7 @@ $container.isotope({
         <div class="row">
             <div class="col-md-12">
                 <h3>Active projects</h3>
+                <a class="btn btn-danger right" href="{% url 'project-list-json' %}">JSON</a>&nbsp;<span class="badge right">{{object_list|length}} project{{object_list|length|pluralize}}</span>                
                 <p>Welcome to Code for Maine's project tracker. Here you will be able to view, sort and sign up to work on a variety of projects.
                    Besides the various technologies being used on a project, you can also view a few important things on this page:</p>
                    <ul>
@@ -33,9 +34,7 @@ $container.isotope({
                      <li>Current status (<i class="fa fa-question"></i>)</li>
                      <li>Participants (<i class="fa fa-user"></i>)</li>
                    </ul>
-                <div class="right"><a href="{% url 'project-list-json' %}">View as JSON</a></div>
-                <hr />
-                        
+                <br />
                 <div class="projects isotope" id="project-container">
                     {% for project in object_list %}
                     <div class="item well {% if forloop.counter == 1 %}green{% else %}yellow{%endif %}" style="border-top:5px solid {% if project.color%}{{project.color}}{% else %}#AAA{% endif %}">

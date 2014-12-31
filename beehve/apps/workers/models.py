@@ -2,7 +2,23 @@ from django.conf import settings
 from django.db import models
 from localflavor.us.models import PhoneNumberField
 from django.utils.translation import ugettext_lazy as _
-from django_extensions.db.models import TimeStampedModel
+from django_extensions.db.models import TimeStampedModel, TitleSlugDescriptionModel
+from homepage.models import Brigade
+
+
+class Position(TitleSlugDescriptionModel, TimeStampedModel):
+    order = models.IntegerField(_('Order'), default=0)
+    brigade = models.ForeignKey(Brigade)
+
+    class Meta:
+        ordering = ('order',)
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('position-detail', None, {'slug': self.slug})
+
+    def __unicode__(self):
+        return u'{0} {1}'.format(self.brigade, self.title)
 
 
 class Worker(TimeStampedModel):
@@ -19,8 +35,7 @@ class Worker(TimeStampedModel):
     instagram = models.CharField(_('Instagram username'), max_length=100, blank=True, null=True)
     linkedin = models.CharField(_('LinkedIn username'), max_length=100, blank=True, null=True)
     email_notify = models.BooleanField(_('Email notifications on updates'), default=True)
-    background = models.CharField(_('Dashboard background color or URL'), 
-                                  max_length=255, blank=True, null=True)
+    position = models.ForeignKey(Position, blank=True, null=True)
     active = models.BooleanField(_('Is worker active?'), default=True)
 
 

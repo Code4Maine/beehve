@@ -9,6 +9,7 @@ import django_extensions.db.fields
 class Migration(migrations.Migration):
 
     dependencies = [
+        ('honey', '0001_initial'),
     ]
 
     operations = [
@@ -23,6 +24,7 @@ class Migration(migrations.Migration):
                 ('description', models.TextField(null=True, verbose_name='description', blank=True)),
                 ('phone', models.CharField(max_length=20, null=True, verbose_name='Phone', blank=True)),
                 ('meetup', models.CharField(max_length=255, null=True, verbose_name='Meetup link', blank=True)),
+                ('chat', models.CharField(max_length=255, null=True, verbose_name='Chat link', blank=True)),
                 ('github', models.CharField(max_length=255, null=True, verbose_name='Github link', blank=True)),
                 ('twitter', models.CharField(max_length=100, null=True, verbose_name='Twitter username', blank=True)),
                 ('facebook', models.CharField(max_length=100, null=True, verbose_name='Facebook username', blank=True)),
@@ -51,6 +53,7 @@ class Migration(migrations.Migration):
                 ('logo', models.ImageField(upload_to=b'homepage/initiatives', null=True, verbose_name='Logo', blank=True)),
                 ('active', models.BooleanField(default=True, verbose_name='Is initiative active?')),
                 ('brigade', models.ForeignKey(to='homepage.Brigade')),
+                ('projects', models.ManyToManyField(to='honey.Project', null=True, blank=True)),
             ],
             options={
                 'ordering': ('-modified', '-created'),
@@ -68,10 +71,12 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=255, verbose_name='title')),
                 ('slug', django_extensions.db.fields.AutoSlugField(allow_duplicates=b"'False'", separator=b'"u\'-\'"', blank=True, populate_from=b'"\'title\'"', editable=False, verbose_name='slug', overwrite=b"'False'")),
                 ('description', models.TextField(null=True, verbose_name='description', blank=True)),
+                ('partner_type', models.CharField(max_length=255, null=True, verbose_name='Type', blank=True)),
                 ('year', models.CharField(max_length=4, null=True, verbose_name='Year', blank=True)),
                 ('logo', models.ImageField(upload_to=b'homepage/partners', null=True, verbose_name='Logo', blank=True)),
                 ('active', models.BooleanField(default=True, verbose_name='Is partnership active?')),
                 ('brigade', models.ForeignKey(to='homepage.Brigade')),
+                ('projects', models.ManyToManyField(to='honey.Project', null=True, blank=True)),
             ],
             options={
                 'ordering': ('-modified', '-created'),

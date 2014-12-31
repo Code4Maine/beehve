@@ -3,7 +3,7 @@ from django.views.generic import DetailView, ListView, View
 from django.core import serializers
 from django.core.urlresolvers import reverse
 
-from .models import Worker
+from .models import Worker, Position
 from .forms import WorkerForm
 from braces import views
 
@@ -35,6 +35,16 @@ class WorkerDetailView(DetailView):
 class WorkerListView(ListView):
     model = Worker
     queryset = Worker.objects.filter(active=True)
+
+
+class PositionDetailView(DetailView):
+    model = Position
+    queryset = Position.objects.all()
+
+
+class PositionListView(ListView):
+    model = Position
+    queryset = Position.objects.all()
 
 
 class WorkerUpdateView(UpdateView):

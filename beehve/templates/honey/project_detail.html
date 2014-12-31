@@ -42,21 +42,29 @@ $('#modal').on('hidden.bs.modal', function () {
             <div class="col-md-4 columns members">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h5>Members</h5>
+                        <h5 style="display:inline; margin-bottom:80px;">Members</h5>
+                        {% if request.user.is_authenticated %}
+                        {% if request.user in project.members.all %}<p class="right leave-button" ><a href="{% url 'project-leave' project.slug %}" class="ajax btn btn-danger" data-replace=".leave-button"><i class="fa fa-times"></i> Leave project</a></p>{% endif %}
+                        {% if not request.user in project.members.all %}<p class="right join-button" ><a href="{% url 'project-join' project.slug %}" class="ajax btn btn-success" data-replace=".join-button"><i class="fa fa-plus"></i> Join project</a></p>{% endif %}
+                        {% endif %}
                     </div>
                     <div class="panel-body">
                         <div class="member-box">
                         {% with project.members.all as members %}
                         {% include 'honey/_member_list.html' %}
                         {% endwith %}
+                        <br />
                     </div>
+                        <br />
+                        <hr />
+                        <p>Public: <a href="{{object.public_url}}">{{object.public_url}}</a></p>
+                        {% if project.dev_url %}
+                        <p>Want to help? We use the following URL to manage development of this project</p>
+                        <p><a href="{{project.dev_url}}" class="">{{object.dev_url}}</a></p>
+                        {% endif %}
                         <hr />
                         {% if request.user.is_authenticated %}
-                        {% if request.user in project.members.all %}<p class="leave-button" ><a href="{% url 'project-leave' project.slug %}" class="ajax btn btn-danger" data-replace=".leave-button"><i class="fa fa-times"></i> Leave project</a></p>{% endif %}
-                        {% if not request.user in project.members.all %}<p class="join-button" ><a href="{% url 'project-join' project.slug %}" class="ajax btn btn-success" data-replace=".join-button"><i class="fa fa-plus"></i> Join project</a></p>{% endif %}
-                        {% if project.dev_url %}<a href="{{project.dev_url}}" class="btn btn-primary"><i class="fa fa-wrench"></i> Get involved!</a>{% endif %}
                         {% if user.is_authenticated %}<a href="{% url 'project-update' project.slug %}" class="btn btn-primary ">Edit project</a>{% endif %}
-                        {% if user.is_authenticated %}<a href="{% url 'buzz-create' object.slug %}" class="btn btn-primary" class="" data-toggle="modal" data-target="#modal" >Add more buzz</a>{% endif %}
                         {% endif %}
                     </div>
                 </div>

@@ -1,8 +1,5 @@
 [production]
-dash.code4maine.org
-
-[staging]
-staging-dash.code4maine.org
+www.codeformaine.org
 
 [default]
 11.0.0.101

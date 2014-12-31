@@ -30,7 +30,7 @@
         <div class="row">
             <div class="col-md-10">
                 {% for position in object_list %}
-                <h3><a href="{{position.get_absolute_url }}">{{position}}{{ position.worker_set.all|pluralize }}</a></h3>
+                <h3><a href="{{position.get_absolute_url }}">{{position.title}}{{ position.worker_set.all|pluralize }}</a></h3>
                 <p>{{position.worker_set.all.0}}</p>
                 <p>{{position.description|markdown}}</p>
                 {% if not forloop.last %}<hr />{% endif %}

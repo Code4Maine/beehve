@@ -7,7 +7,11 @@ from homepage.models import Brigade
 
 
 class Position(TitleSlugDescriptionModel, TimeStampedModel):
+    order = models.IntegerField(_('Order'), default=0)
     brigade = models.ForeignKey(Brigade)
+
+    class Meta:
+        ordering = ('order',)
 
     @models.permalink
     def get_absolute_url(self):

@@ -30,7 +30,7 @@
     - syncdb
 
 - name: Migrate Django database.
-  django_manage: command=migrate skip=true app_path=/home/{{ deployment_name }}/{{mode}}/ settings={{ deployment_name }}.settings  virtualenv=/home/{{deployment_name}}/.venv-{{ mode }}/
+  django_manage: command=migrate app_path=/home/{{ deployment_name }}/{{mode}}/ settings={{ deployment_name }}.settings  virtualenv=/home/{{deployment_name}}/.venv-{{ mode }}/
   sudo_user: "{{deployment_name}}"
   environment: env
   tags:

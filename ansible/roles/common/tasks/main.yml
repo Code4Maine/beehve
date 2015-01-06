@@ -57,3 +57,10 @@
 
   - name: Copy bash profile to user.
     template: src=bash_profile  dest=/home/{{deployment_name}}/.bash_profile mode=0700 owner={{deployment_name}}
+
+  - name: Copy the SSl cert
+    copy: src={{deployment_name}}.crt dest="/etc/ssl/certs/{{ deployment_name }}.crt" mode=0666
+
+  - name: Copy the SSl key [add to roles/common/files/]
+    copy: src={{deployment_name}}.key dest="/etc/ssl/private/{{ deployment_name }}.key" mode=0400
+    ignore_errors: yes

@@ -23,6 +23,8 @@
   - name: Install NGINX site conf file.
     template: src=nginx.conf.j2 dest=/etc/nginx/sites-enabled/{{deployment_name}}
     register: nginx_sites
+    tags:
+      - nginx
 
   - name: Install Gunicorn conf file.
     template: src=gunicorn.conf.j2 dest=/etc/gunicorn_{{deployment_name}}_{{mode}}.py

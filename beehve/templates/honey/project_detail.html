@@ -30,7 +30,7 @@ $('#modal').on('hidden.bs.modal', function () {
                 <hr />
                 <h4>Resources & Links</h4>
                 {% for link in project.link_set.all %}
-                <p><a href="{{link.url}}">{{link.title}}</a> <i>{{link.url}}</i></p>
+                <p><a href="{{link.url}}">{{link.title}}</a> <i class="small-link">{{link.url}}</i></p>
                 {% endfor %}
                 {% if user.is_authenticated %}{% if user in project.members.all %}<a href="{% url 'link-create' object.slug %}" class="btn btn-primary" class="" data-toggle="modal" data-target="#modal" >Add a link</a>{% endif %}{% endif %}
                 <hr />

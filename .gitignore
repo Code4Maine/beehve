@@ -72,3 +72,4 @@ staging-dash.code4maine.org
 node_modules
 celerybeat-schedule
 celerybeat.pid
+*.key

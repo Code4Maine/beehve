@@ -1,15 +1,12 @@
 ---
-server: dash.code4maine.org
-domainname: dash.code4maine.org
-mode: Dev
-deployment_name: beehve
-locale: en_US.UTF-8
-timezone: America/New_York
-project_repo: git@github.com:powellc/outline.git
+server: codeformaine.local
+domainname: codeformaine.local
 branch: master
+mode: Dev
+project_repo: git@github.com:powellc/beehve.git
 dbpass: lkj;zxlvjoasdjok3lkwjelfksjdlfkjlsdf
+secret_key: notasecret-vagrant
 port_number: 30000
 postgis: False
 bower: True
 sentry_key: None
-secret_key: kjlzxlkJLSKJLE>SDLjpjef-ojwelksjdfkzjxlfJDFKLDKJf

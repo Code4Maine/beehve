@@ -1,0 +1,10 @@
+---
+server: staging.codeformaine.org
+domainname: staging.codeformaine.org
+branch: develop
+mode: Stage
+admin_email: colin.powell@gmail.com
+dbpass: notasecret
+sentry_key: None
+secret_key: changeme
+deployment_name: beehve_staging

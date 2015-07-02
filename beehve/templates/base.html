@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="google-site-verification" content="zMwQJxNdc4_Ed6XNGbXgD79uR9pm1VxtI_nd3cS4DYA" />
 
     <title>{% block title %}Code for Maine{% endblock %}</title>
 
@@ -113,7 +114,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-4">
-                    <a href="{{brigade.meetup}}" class="btn btn-primary btn-lg join"><span class="network-name">Join our brigade</span></a>
+                    <a href="{% url 'account_signup' %}" class="btn btn-primary btn-lg join"><span class="network-name">Join our brigade</span></a>
                 </div>
             </div>
 

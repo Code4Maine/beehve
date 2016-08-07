@@ -13,8 +13,6 @@ for i in $databases; do  if [ "$i" != "postgres" ] && [ "$i" != "template0" ] &&
     bzip2 $backup_dir$i\_$backup_date.sql
     # upload an encrypted version to S3
     ln -fs $backup_dir$i\_$backup_date.sql.bz2 $nightly_dir$i-nightly.sql.bz2
-    python upload2s3.py $backup_dir$i\_$backup_date.sql.bz2
-    python upload2s3.py $nightly_dir$i-nightly.sql.bz2
   fi
 done
 find $backup_dir -type f -prune -mtime +$number_of_days -exec rm -f {} \;

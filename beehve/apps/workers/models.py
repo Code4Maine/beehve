@@ -18,7 +18,7 @@ class Position(TitleSlugDescriptionModel, TimeStampedModel):
         return ('position-detail', None, {'slug': self.slug})
 
     def __unicode__(self):
-        return u'{0} {1}'.format(self.brigade, self.title)
+        return '{0} {1}'.format(self.brigade, self.title)
 
 
 class Worker(TimeStampedModel):
@@ -45,6 +45,6 @@ class Worker(TimeStampedModel):
 
     def __unicode__(self):
         if self.name:
-            return u'{0}'.format(self.name)
+            return '{0}'.format(self.name)
         else:
-            return u'{0}'.format(self.user)
+            return '{0}'.format(self.user)

@@ -1,0 +1,4 @@
+---
+django_log_level: 'ERROR'
+fiveq_aws_access_key: 'none'
+fiveq_aws_secret_key: 'none'

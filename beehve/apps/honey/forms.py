@@ -1,6 +1,5 @@
 from django.core.urlresolvers import reverse
 import floppyforms as forms
-import select2.fields
 
 from .models import Project, Topic, Event, Technology, Buzz, Link, ProjectIdea
 

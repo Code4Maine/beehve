@@ -1,0 +1,154 @@
+
+  # To setup celery task queues:
+
+  # Setup user directory & permissions
+  - name: Ensure the project directory exists
+    file: state=directory path={{deployment_path}}/{{deployment_name}}
+
+  - name: Ensure the project user exists
+    user: home={{deployment_path}}/{{deployment_name}} name={{deployment_name}} shell=/bin/bash state=present
+
+  - name: Ensure the user's pip configuration directory is present 
+    file: state=directory path={{deployment_path}}/{{deployment_name}}/.pip
+
+  - name: Ensure user has up-to-date pip configuration file
+    template: src=pip.conf.j2  dest={{deployment_path}}/{{deployment_name}}/.pip/pip.conf
+
+  - name: Ensure project user owns project directory
+    file: group={{deployment_name}} owner={{deployment_name}} mode=755 state=directory path={{deployment_path}}/{{deployment_name}}
+  - name: Change permissions.
+    shell: chown -R {{deployment_name}}:{{deployment_name}} {{deployment_path}}/{{deployment_name}}
+
+  - name: Ensure the project log directory exists
+    file: state=directory path=/var/log/{{deployment_name}}/ mode=775 group={{deployment_name}}
+
+  - name: Ensure the project run directory exists
+    file: state=directory path=/var/run/{{deployment_name}}/ mode=775 group={{deployment_name}}
+
+  - name: Ensure the project public directories exist
+    file: state=directory path={{deployment_path}}/{{deployment_name}}/public/{{item}}
+    become_user: "{{deployment_name}}"
+    with_items:
+      - static
+      - media
+      - templates
+
+  - name: Ensure the project log directory exists
+    file: state=directory path={{deployment_path}}/{{deployment_name}}/public
+    become_user: "{{deployment_name}}"
+
+  - name: Ensure user has up-to-date bash profile
+    template: src=bash_profile.j2  dest={{deployment_path}}/{{deployment_name}}/.bash_profile
+    tags:
+      - deploy
+      - reconfigure
+
+  # Install specific app version from pypi.fiveq.com
+  - name: Ensure app is at targeted version
+    pip: 
+      name={{app_name}}
+      version={{app_version}}
+      virtualenv="{{deployment_path}}/{{deployment_name}}/venv"
+      virtualenv_python="python3"
+      virtualenv_site_packages="yes"
+    become_user: "{{deployment_name}}"
+    when: app_version is defined
+    tags:
+      - deploy
+
+  # Install app from pypi.fiveq.com
+  - name: Ensure app is at latest version
+    pip: 
+      name={{app_name}}
+      extra_args="--upgrade"
+      virtualenv="{{deployment_path}}/{{deployment_name}}/venv"
+      virtualenv_python="python3"
+      virtualenv_site_packages="yes"
+    become_user: "{{deployment_name}}"
+    when: app_version is not defined
+    tags:
+      - deploy
+
+  # Or create an empty database
+  - name: Create the database.
+    postgresql_db: db={{deployment_name}}
+    become_user: postgres
+    when: not postgis_required
+
+  - name: Create the PostGIS database.
+    postgresql_db: db={{deployment_name}} template=postgis_template
+    become_user: postgres
+    when: postgis_required and not database_exists
+  
+  # Grant access to postgres
+  - name: Ensure database user exists
+    postgresql_user: db={{deployment_name}} name={{deployment_name}} password={{database_pass}} priv=ALL state=present
+    become_user: postgres
+    tags:
+      - deploy
+
+  # Run migrations
+  - name: Ensure migrations are up to date
+    shell: source ~/.bash_profile && {{app_name}} migrate
+    become_user: "{{deployment_name}}"
+    args:
+      executable: /bin/bash
+    tags:
+      - deploy
+
+  - name: Ensure bower components are up to date
+    shell: source ~/.bash_profile && {{app_name}} bower install
+    become_user: "{{deployment_name}}"
+    when: bower_enabled
+    args:
+      executable: /bin/bash
+    tags:
+      - deploy
+
+  # Collect static files
+  - name: Ensure static files are collected
+    shell: source ~/.bash_profile && {{app_name}} collectstatic --no-input
+    become_user: "{{deployment_name}}"
+    args:
+      executable: /bin/bash
+    tags:
+      - deploy
+
+  # Install celery worker systemd script
+  - name: Ensure systemd script exists for the worker
+    template: src=systemd.worker.conf.j2 dest=/lib/systemd/system/{{deployment_name}}_worker.service mode=0644
+    register: systemd_updated 
+    tags:
+      - reconfigure
+
+  # Install celery beat systemd script
+  - name: Ensure systemd script exists for the worker beat
+    template: src=systemd.beat.conf.j2 dest=/lib/systemd/system/{{deployment_name}}_beat.service mode=0644
+    when: celerybeat_enabled
+    register: systemd_updated 
+    tags:
+      - reconfigure
+
+  # Reload systemctl
+  - name: Ensure systemd config files are updated
+    shell: systemctl daemon-reload
+    become_user: root
+    tags:
+      - reconfigure
+    when: systemd_updated
+
+  # Start the celery worker
+  - name: Ensure the celery worker has been restarted
+    service: name={{deployment_name}}_worker state=restarted
+    tags:
+      - deploy
+      - restart
+      - reconfigure
+
+  # Start the beat worker
+  - name: Ensure celery beat has been restarted
+    service: name={{deployment_name}}_beat state=restarted
+    tags:
+      - deploy
+      - restart
+    when: celerybeat_enabled

@@ -1,5 +1,2 @@
-[production]
-104.131.81.143
-
-[default]
-11.0.0.101
+[prod]
+www.wheresyourtrash.com

@@ -1,0 +1,28 @@
+[Unit]
+Description={{ service_name }} Worker
+After=network.target
+
+[Service]
+Type=idle
+PIDFile=/var/run/{{deployment_name}}/worker.pid
+User={{ deployment_name }}
+Environment=DJANGO_CONFIGURATION={{ django_state }}
+Environment=DJANGO_SECRET_KEY="{{ django_secret_key }}"
+Environment=DJANGO_PUBLIC_ROOT={{deployment_path}}/{{deployment_name}}/public
+Environment=DATABASE_URL={{ django_database }}
+Environment=DJANGO_AWS_ACCESS_KEY_ID={{ aws_access_key }}
+Environment=DJANGO_AWS_SECRET_ACCESS_KEY={{ aws_secret_key }}
+Environment=DJANGO_LOG_LEVEL={{ django_log_level }}
+Environment=DJANGO_DSN_VALUE={{ django_sentry_code }}
+Environment=DJANGO_EMAIL_HOST={{ email_host }}
+Environment=DJANGO_EMAIL_HOST_USER={{ email_host_user }}
+Environment=DJANGO_EMAIL_HOST_PASSWORD={{ email_host_password }}
+Environment=DJANGO_EMAIL_PORT={{ email_host_port}}
+Environment=DJANGO_EMAIL_USE_TLS=True
+
+ExecStart={{deployment_path}}/{{deployment_name}}/venv/bin/celery -A {{ app_name }} worker --logfile /var/log/{{deployment_name}}/worker.log --pid /var/run/{{deployment_name}}/worker.pid
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+
+[Install]
+WantedBy=multi-user.target

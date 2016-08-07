@@ -30,7 +30,7 @@ class Initiative(TimeStampedModel, TitleSlugDescriptionModel):
         help_text='Examples: State-wide, Pilsen Neighborhood, etc.')
     year = models.CharField(_('Year'), max_length=4, blank=True, null=True)
     logo = models.ImageField(_('Logo'), upload_to='homepage/initiatives', blank=True, null=True)
-    projects = models.ManyToManyField(Project, blank=True, null=True)
+    projects = models.ManyToManyField(Project)
     active = models.BooleanField(_('Is initiative active?'), default=True)
 
     @models.permalink
@@ -46,7 +46,7 @@ class Partner(TimeStampedModel, TitleSlugDescriptionModel):
     partner_type = models.CharField(_('Type'), max_length=255, blank=True, null=True)
     year = models.CharField(_('Year'), max_length=4, blank=True, null=True)
     logo = models.ImageField(_('Logo'), upload_to='homepage/partners', blank=True, null=True)
-    projects = models.ManyToManyField(Project, blank=True, null=True)
+    projects = models.ManyToManyField(Project)
 
     from honey.models import Project
     active = models.BooleanField(_('Is partnership active?'), default=True)

@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+
 from datetime import datetime, timedelta
 import pytz
 from django.core.management.base import BaseCommand, CommandError
@@ -16,7 +16,7 @@ def check_git_repos():
     projects = Project.objects.all()
 
     for project in projects:
-        print 'Checking {0} for new commits'.format(project)
+        print('Checking {0} for new commits'.format(project))
         if project.git_url:
             repo_path = '/tmp/' + project.slug
             try:
@@ -53,7 +53,7 @@ def check_git_repos():
                             time=time,
                             diff=repo.diff(commit['sha'], prev_commit).next()['diff']
                         )
-                        print pcommit, ' added.'
+                        print(pcommit, ' added.')
                         new_commits.append(pcommit)
                     except:
                         pass

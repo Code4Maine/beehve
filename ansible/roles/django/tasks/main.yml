@@ -1,35 +1,152 @@
 ---
-  - name: Create the SSH directory.
-    sudo_user: "{{ deployment_name }}"
-    file: state=directory path=/home/{{deployment_name}}/.ssh/
+  # Installing hte django app is just:
 
-  - name: Upload SSH known hosts.
-    sudo_user: "{{ deployment_name }}"
-    copy: src=known_hosts dest="/home/{{ deployment_name }}/.ssh/known_hosts" mode=0600
+  # Setup user directory & permissions
+  - name: Ensure the project directory exists
+    file: state=directory path={{deployment_path}}/{{deployment_name}}
 
-  - name: Upload SSH key.
-    sudo_user: "{{ deployment_name }}"
-    copy: src=key dest="/home/{{deployment_name}}/.ssh/id_rsa" mode=0600
+  - name: Ensure the project user exists
+    user: home={{deployment_path}}/{{deployment_name}} name={{deployment_name}} shell=/bin/bash state=present
 
-  - name: Install upstart conf file.
-    template: src=upstart.conf.j2 dest=/etc/init/{{deployment_name}}_{{mode}}.conf mode=0600
+  - name: Ensure the user's pip configuration directory is present 
+    file: state=directory path={{deployment_path}}/{{deployment_name}}/.pip
 
-  - name: Install Celery upstart conf file.
-    template: src=upstart-celery.conf.j2 dest=/etc/init/{{deployment_name}}_{{mode}}_celery.conf
+  - name: Ensure user has up-to-date pip configuration file
+    template: src=pip.conf.j2  dest={{deployment_path}}/{{deployment_name}}/.pip/pip.conf
 
-  - name: Install Celerybeat upstart conf file.
-    template: src=upstart-celerybeat.conf.j2 dest=/etc/init/{{deployment_name}}_{{mode}}_celerybeat.conf
+  - name: Ensure project user owns project directory
+    file: group={{deployment_name}} owner={{deployment_name}} mode=755 state=directory path={{deployment_path}}/{{deployment_name}}
+  - name: Change permissions.
+    shell: chown -R {{deployment_name}}:{{deployment_name}} {{deployment_path}}/{{deployment_name}}
 
-  - name: Install NGINX site conf file.
-    template: src=nginx.conf.j2 dest=/etc/nginx/sites-enabled/{{deployment_name}}
-    register: nginx_sites
+  - name: Ensure the project log directory exists
+    file: state=directory path=/var/log/{{deployment_name}}/ mode=775 group={{deployment_name}}
+
+  - name: Ensure the project run directory exists
+    file: state=directory path=/var/run/{{deployment_name}}/ mode=775 group={{deployment_name}}
+
+  - name: Ensure the project public directories exist
+    file: state=directory path={{deployment_path}}/{{deployment_name}}/public/{{item}}
+    become_user: "{{deployment_name}}"
+    with_items:
+      - static
+      - media
+      - templates
+
+  - name: Ensure the project log directory exists
+    file: state=directory path={{deployment_path}}/{{deployment_name}}/public
+    become_user: "{{deployment_name}}"
+
+  - name: Ensure user has up-to-date bash profile
+    template: src=bash_profile.j2  dest={{deployment_path}}/{{deployment_name}}/.bash_profile
     tags:
-      - nginx
+      - deploy
+      - reconfigure
 
-  - name: Install Gunicorn conf file.
-    template: src=gunicorn.conf.j2 dest=/etc/gunicorn_{{deployment_name}}_{{mode}}.py
+  # Install specific app version from pypi.fiveq.com
+  - name: Ensure app is at targeted version
+    pip: 
+      name={{app_name}}
+      version={{app_version}}
+      virtualenv="{{deployment_path}}/{{deployment_name}}/venv"
+      virtualenv_python="python3"
+      virtualenv_site_packages="yes"
+    become_user: "{{deployment_name}}"
+    when: app_version is defined
+    tags:
+      - deploy
 
-  - name: Restart NGINX
+  # Install app from pypi.fiveq.com
+  - name: Ensure app is at latest version
+    pip: 
+      name={{app_name}}
+      extra_args="--upgrade"
+      virtualenv="{{deployment_path}}/{{deployment_name}}/venv"
+      virtualenv_python="python3"
+      virtualenv_site_packages="yes"
+    become_user: "{{deployment_name}}"
+    when: app_version is not defined
+    tags:
+      - deploy
+
+  # Or create an empty database
+  - name: Create the database.
+    postgresql_db: db={{deployment_name}}
+    become_user: postgres
+    when: not postgis_required
+
+  - name: Create the PostGIS database.
+    postgresql_db: db={{deployment_name}} template=postgis_template
+    become_user: postgres
+    when: postgis_required and not database_exists
+  
+  # Grant access to postgres
+  - name: Ensure database user exists
+    postgresql_user: db={{deployment_name}} name={{deployment_name}} password={{database_pass}} priv=ALL state=present
+    become_user: postgres
+
+  # Run migrations
+  - name: Ensure migrations are up to date
+    shell: source ~/.bash_profile && {{app_name}} migrate
+    become_user: "{{deployment_name}}"
+    args:
+      executable: /bin/bash
+    tags:
+      - deploy
+
+  - name: Ensure bower components are up to date
+    shell: source ~/.bash_profile && {{app_name}} bower install
+    become_user: "{{deployment_name}}"
+    when: bower_enabled
+    args:
+      executable: /bin/bash
+    tags:
+      - deploy
+
+  # Collect static files
+  - name: Ensure static files are collected
+    shell: source ~/.bash_profile && {{app_name}} collectstatic --no-input
+    become_user: "{{deployment_name}}"
+    args:
+      executable: /bin/bash
+    tags:
+      - deploy
+      - reconfigure
+
+  # Install Nginx configuration for app and restart
+  - name: Ensure NGINX application configuration is up to date
+    template: src=nginx.conf.j2 dest=/etc/nginx/sites-enabled/{{subdomain}}.{{domain_name}}.conf
+    register: nginx_status
+    tags:
+      - reconfigure
+
+  - name: Ensure NGINX has been restarted
     service: name=nginx state=restarted
-    sudo_user: root
-    when: nginx_sites.changed
+    become_user: root
+    when: nginx_status.changed
+    tags:
+      - reconfigure
+
+  # Install application systemd script
+  - name: Ensure systemd script exists for application
+    template: src=systemd.service.j2 dest=/lib/systemd/system/{{deployment_name}}.service mode=0600
+    register: systemd_updated 
+    tags:
+      - reconfigure
+
+
+  # Reload systemctl
+  - name: Ensure systemd config files are updated
+    shell: systemctl daemon-reload
+    become_user: root
+    when: systemd_updated
+    tags:
+      - reconfigure
+
+  # Start app
+  - name: Ensure the application has been restarted
+    service: name={{deployment_name}} state=restarted
+    tags:
+      - deploy
+      - restart
+      - reconfigure

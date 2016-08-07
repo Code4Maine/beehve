@@ -1,7 +1,0 @@
----
-- hosts: all
-  gather_facts: True
-  user: root
-  sudo: True
-  tasks:
-    - include: roles/django/tasks/deploy.yml

@@ -1,40 +1,51 @@
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 import sys
+import os
 
 version = __import__('beehve').__version__
 
-install_requires = [
-    'setuptools',
-    'south==0.8.2',
-    'Django==1.6.4',
-    'django-configurations==0.8',
-    'dj-database-url==0.3.0',
-    'pylibmc==1.3.0',
-    'boto==2.9.5',
-    'django-storages==1.1.8',
-    'Pillow==2.0.0',
-    'django-cache-url==0.8.0',
-    'werkzeug==0.9.4',
-    'gunicorn==0.17.4',
-    'easy-thumbnails==1.2',
-    'django-debug-toolbar==1.1',
-    'django-extensions==1.3.4',
-    'django-braces==1.4.0',
-    'django-allauth==0.16.1',
-    'django-floppyforms==1.1.1',
-    'django-zurb-foundation==5.1.1',
-    'django-custom-user==0.4',
-    'django-markdown-deux==1.0.4',
-    'django-avatar==2.0',
-    'south==0.8.2',
-    'django-localflavor==1.0.0',
-    'django-select2-forms==1.1.18',
-    'gittle==0.4.0',
-    'django-celery==3.1.16',
-    'celery[redis]==3.1.16'
-]
 
+def strip_comments(l):
+    return l.split('#', 1)[0].strip()
+
+
+def _pip_requirement(req):
+    if req.startswith('-r '):
+        _, path = req.split()
+        return reqs(*path.split('/'))
+    return [req]
+
+
+def _reqs(*f):
+    return [
+        _pip_requirement(r) for r in (
+            strip_comments(l) for l in open(
+                os.path.join(os.getcwd(), 'requirements', *f)).readlines()
+        ) if r]
+
+
+def reqs(*f):
+    return [req for subreq in _reqs(*f) for req in subreq]
+
+install_requires = [
+]
+install_requires = reqs('default.txt')
+
+
+# -*- Extras -*- 
+extra = {}
+
+def extras(*p):
+    return reqs('extras', *p)
+
+features = set([
+    'postgres', 
+])
+extras_require = dict((x, extras(x + '.txt')) for x in features)
+extra['extras_require'] = extras_require
+
+# -*- %%% -*-
 
 class Tox(TestCommand):
     def finalize_options(self):
@@ -82,4 +93,5 @@ setup(
             'beehve = beehve.manage_beehve:main',
         ],
     },
+    **extra
 )

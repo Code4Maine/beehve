@@ -16,7 +16,7 @@ class JsonView(views.CsrfExemptMixin,
 
 class WorkerListJSONView(JsonView, ListView):
     model = Worker
-    json_dumps_kwargs = {u"indent": 2}
+    json_dumps_kwargs = {"indent": 2}
     queryset = Worker.objects.filter(active=True)
 
     def get(self, request, *args, **kwargs):

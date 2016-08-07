@@ -6,6 +6,7 @@ from .models import Partner, Initiative, Brigade
 class BrigadeForm(forms.ModelForm):
     class Meta:
         model = Brigade
+        exclude = []
 
 
 class PartnerForm(forms.ModelForm):

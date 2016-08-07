@@ -1,9 +1,9 @@
 user www-data;
-worker_processes 2;
+worker_processes {{nginx_workers}};
 pid /var/run/nginx.pid;
 
 events {
-	worker_connections 768;
+	worker_connections {{nginx_worker_connections}};
 	# multi_accept on;
 }
 

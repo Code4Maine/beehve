@@ -59,7 +59,7 @@ class JsonView(views.CsrfExemptMixin,
 
 class PartnerListJSONView(JsonView, ListView):
     model = Partner
-    json_dumps_kwargs = {u"indent": 2}
+    json_dumps_kwargs = {"indent": 2}
     queryset = Partner.objects.filter(active=True)
 
     def get(self, request, *args, **kwargs):
@@ -90,7 +90,7 @@ class PartnerUpdateView(UpdateView):
 
 class InitiativeListJSONView(JsonView, ListView):
     model = Initiative
-    json_dumps_kwargs = {u"indent": 2}
+    json_dumps_kwargs = {"indent": 2}
     queryset = Initiative.objects.filter(active=True)
 
     def get(self, request, *args, **kwargs):

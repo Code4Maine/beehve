@@ -1,11 +1,9 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from honey import views as honey_views
 
 
 # custom views
-urlpatterns = patterns(
-    '',
-
+urlpatterns = [
     (r'^', include('honey.project_urls')),
     (r'^', include('honey.idea_urls')),
 
@@ -48,4 +46,4 @@ urlpatterns = patterns(
     url(r'^$',
         view=honey_views.DashboardView.as_view(),
         name="dashboard",),
-)
+]

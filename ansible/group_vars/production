@@ -1,9 +1,0 @@
----
-server: www.codeformaine.org
-domainname: www.codeformaine.org
-branch: master
-mode: Prod
-admin_email: colin.powell@gmail.com
-dbpass: notasecret
-sentry_key: None
-secret_key: changeme

@@ -1,13 +1,4 @@
----
-deployment_name: beehve
-locale: en_US.UTF-8
-port_number: 45009
-timezone: America/New_York
-project_repo: http://github.com/code4maine/beehve.git
-postgis: False
-bower: True
-system_pkgs:
-  - ruby1.9.1-full
+common_packages:
   - vim
   - git
   - mercurial
@@ -16,18 +7,18 @@ system_pkgs:
   - memcached
   - libmemcached-dev
   - build-essential
-  - postfix
-  - python-pip
-  - python-virtualenv
-  - python-pyinotify
-  - build-essential
   - libxml2-dev
   - libxslt1-dev
+  - python3-dev
+  - python3-lxml
   - libjpeg-dev
-  - python-dev
-env:
-  DJANGO_CONFIGURATION: "{{mode}}"
-  DATABASE_URL: 'postgres://{{deployment_name}}:{{dbpass}}@localhost/{{deployment_name}}_{{mode}}'
-  DJANGO_SETTINGS_MODULE: "{{deployment_name}}.settings"
-  DJANGO_SECRET_KEY: "{{secret_key}}"
-  DJANGO_DSN_VALUE: "{{sentry_key}}"
+  - postfix
+  - virtualenv
+  - redis-server
+locale: en_US.UTF-8
+timezone: America/New_York
+postgis_required: false
+django_log_level: ERROR
+nginx_cache_size: 2g
+nginx_workers: 2
+nginx_worker_connections: 1024

@@ -31,8 +31,6 @@ class Common(Configuration):
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = False
 
-    TEMPLATE_DEBUG = False
-
     ALLOWED_HOSTS = []
 
     AUTH_PROFILE_MODULE = 'workers.Worker'
@@ -40,7 +38,6 @@ class Common(Configuration):
     # Application definition
 
     INSTALLED_APPS = (
-        'suit',
         "django.contrib.admin",
         "django.contrib.auth",
         "django.contrib.contenttypes",
@@ -61,22 +58,35 @@ class Common(Configuration):
         'markdown_deux',
         'djangobower',
         'bootstrap3',
-        'select2',
         'djcelery',
-        'biblion',
 
         'homepage',
         'honey',
         'workers',
     )
 
-    TEMPLATE_CONTEXT_PROCESSORS = Configuration.TEMPLATE_CONTEXT_PROCESSORS + \
-        ("django.core.context_processors.request",
-         "django.core.context_processors.tz",
-         "honey.context_processors.menu_preloader",
-         "allauth.account.context_processors.account",
-         "allauth.socialaccount.context_processors.socialaccount",)
-
+    TEMPLATES = [
+        {
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'DIRS': [ os.path.join(BASE_DIR, "wheresyourtrash/templates") ],
+            'APP_DIRS': True,
+            'OPTIONS': {
+                'context_processors': [
+                    # Insert your TEMPLATE_CONTEXT_PROCESSORS here or use this
+                    # list if you haven't customized them:
+                    'django.contrib.auth.context_processors.auth',
+                    'django.template.context_processors.debug',
+                    'django.template.context_processors.i18n',
+                    'honey.context_processors.menu_preloader',
+                    'django.template.context_processors.media',
+                    'django.template.context_processors.static',
+                    'django.template.context_processors.tz',
+                    'django.core.context_processors.request',
+                    'django.contrib.messages.context_processors.messages',
+                ],
+            },
+        },
+    ]
     MIDDLEWARE_CLASSES = (
         "django.contrib.sessions.middleware.SessionMiddleware",
         "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -167,8 +177,6 @@ class Common(Configuration):
 
     MEDIA_ROOT = os.path.join(BASE_DIR, 'public/media')
 
-    TEMPLATE_DIRS = (os.path.join(BASE_DIR, "beehve/templates"),)
-
     STATIC_URL = '/static/'
 
     STATIC_ROOT = os.path.join(BASE_DIR, 'public/static')
@@ -225,11 +233,7 @@ class Dev(Common):
     """
     The in-development settings and the default configuration.
     """
-    DEBUG = TEMPLATE_DEBUG = True
-
-    DATABASES = values.DatabaseURLValue('sqlite:///{0}'.format(
-        os.path.join(Common.BASE_DIR, 'db.sqlite3'),
-        environ=True))
+    DEBUG = True
 
     SECRET_KEY = 'notasecretatall'
 
@@ -244,7 +248,7 @@ class Dev(Common):
 
 
 class Stage(Common):
-    DEBUG = TEMPLATE_DEBUG = True
+    DEBUG = True
 
     SECRET_KEY = values.SecretValue()
 
@@ -259,7 +263,7 @@ class Prod(Common):
     """
     The in-production settings.
     """
-    DEBUG = TEMPLATE_DEBUG = False
+    DEBUG = False
 
     SECRET_KEY = values.SecretValue()
 

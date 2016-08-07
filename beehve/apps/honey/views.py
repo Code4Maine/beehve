@@ -123,7 +123,7 @@ class ProjectDetailView(JsonView, DetailView):
 
 class ProjectListJSONView(JsonView, ListView):
     model = Project
-    json_dumps_kwargs = {u"indent": 2}
+    json_dumps_kwargs = {"indent": 2}
 
     def get(self, request, *args, **kwargs):
         context = serializers.serialize('json',
@@ -276,7 +276,7 @@ class ProjectIdeaDetailView(JsonView, DetailView):
 
 class ProjectIdeaListJSONView(JsonView, ListView):
     model = ProjectIdea
-    json_dumps_kwargs = {u"indent": 2}
+    json_dumps_kwargs = {"indent": 2}
 
     def get(self, request, *args, **kwargs):
         context = serializers.serialize('json',

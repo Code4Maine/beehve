@@ -11,12 +11,6 @@
   - name: Enable UFW
     action: shell echo 'y' | ufw enable
 
-  - name: Set locale
-    command: /usr/sbin/update-locale LANG={{locale}} LC_ALL={{locale}}
-
-  - name: Set localtime
-    command: /bin/cp /usr/share/zoneinfo/{{timezone}} /etc/localtime
-
   - name: Set timezone
     template: src=timezone.conf dest=/etc/timezone
     register: tzdata
@@ -25,42 +19,15 @@
     command: dpkg-reconfigure -f noninteractive tzdata
     when: tzdata.changed
 
-  - name: Update package cache and install system packages.
+  - name: Set hosts
+    template: src=hosts.conf dest=/etc/hosts
+
+  - name: Ensure we have a hostname configured
+    template: src=hostname.conf dest=/etc/hostname
+
+  - name: Ensure the configured hostname is acceptable
+    shell: hostname {{ app_name }}
+
+  - name: Ensure the common packages are all installed
     apt: pkg={{item}} state=installed update-cache=yes
-    with_items: 
-      - vim
-      - git
-      - mercurial
-      - subversion
-      - fail2ban
-      - memcached
-      - libmemcached-dev
-      - build-essential
-      - postfix
-      - python-pip
-      - python-virtualenv
-      - python-pyinotify
-      - build-essential
-      - libxml2-dev
-      - libxslt1-dev
-      - libjpeg-dev
-      - python-dev
-
-  - name: Create ssl group.
-    group: name=ssl state=present
-
-  - name: Create user.
-    user: home=/home/{{deployment_name}} name={{deployment_name}} shell=/bin/bash state=present groups=ssl
-
-  - name: Create the project logs directory.
-    file: state=directory path=/home/{{deployment_name}}/logs/
-
-  - name: Copy bash profile to user.
-    template: src=bash_profile  dest=/home/{{deployment_name}}/.bash_profile mode=0700 owner={{deployment_name}}
-
-  - name: Copy the SSl cert
-    copy: src={{deployment_name}}.crt dest="/etc/ssl/certs/{{ deployment_name }}.crt" mode=0666
-
-  - name: Copy the SSl key [add to roles/common/files/]
-    copy: src={{deployment_name}}.key dest="/etc/ssl/private/{{ deployment_name }}.key" mode=0400
-    ignore_errors: yes
+    with_items: "{{common_packages}}"

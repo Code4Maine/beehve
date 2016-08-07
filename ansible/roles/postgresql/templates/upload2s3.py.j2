@@ -7,8 +7,8 @@ import boto
 
 if __name__ == "__main__":
     print "Connecting to S3 ... "
-    accessKey = '{{ s3_access_key }}' 
-    secretKey = '{{ s3_secret_key }}'
+    accessKey = '{{ fiveq_aws_access_key }}' 
+    secretKey = '{{ fiveq_aws_secret_key }}'
     bucketName = "fiveq-db-backups"
     s3conn = S3Connection(accessKey,secretKey)
     bucket = s3conn.get_bucket(bucketName)

@@ -7,10 +7,10 @@ from celery import Celery
 from django.conf import settings
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'beehve.settings')
-os.environ.setdefault('DJANGO_CONFIGURATION', 'Dev')
+os.environ.setdefault("DJANGO_CONFIGURATION", "Dev")
 
-from configurations import importer
-importer.install()
+import configurations
+configurations.setup()
 
 app = Celery('beehve')
 app.config_from_object('django.conf:settings')

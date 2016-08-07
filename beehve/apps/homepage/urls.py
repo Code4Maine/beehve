@@ -1,9 +1,8 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from homepage import views as homepage_views
 
 
-# custom views
-urlpatterns = patterns(
+urlpatterns = [
     '',
     url(r'^initiatives.json',
         view=homepage_views.InitiativeListJSONView.as_view(),
@@ -32,4 +31,4 @@ urlpatterns = patterns(
     url("^$", 
         view=homepage_views.HomepageView.as_view(), 
         name="homepage"),
-)
+]

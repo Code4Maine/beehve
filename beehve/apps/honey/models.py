@@ -14,7 +14,7 @@ class BasicItem(TimeStampedModel, TitleSlugDescriptionModel):
         abstract = True
 
     def __unicode__(self):
-        return u'{0}'.format(self.title)
+        return '{0}'.format(self.title)
 
     def save(self, *args, **kwargs):
         super(BasicItem, self).save(*args, **kwargs)
@@ -65,8 +65,7 @@ class ProjectIdea(TimeStampedModel):
     title = models.CharField(_('Title'), max_length=255)
     description = models.TextField(_('Description'))
     slug = ShortUUIDField()
-    user_votes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True,
-            null=True, related_name='user_votes')
+    user_votes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='user_votes')
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True,
             null=True, related_name="created_by")
     started_date = models.DateTimeField(blank=True, null=True)
@@ -79,7 +78,7 @@ class ProjectIdea(TimeStampedModel):
         ordering = ['-created']
 
     def __unicode__(self):
-        return u'{0}'.format(self.title)
+        return '{0}'.format(self.title)
 
     @models.permalink
     def get_absolute_url(self):
@@ -104,10 +103,10 @@ class Project(TimeStampedModel, TitleSlugDescriptionModel):
     public_url = models.CharField(max_length=255, blank=True, null=True)
     dev_url = models.CharField(max_length=255, blank=True, null=True)
     git_url = models.CharField(max_length=255, blank=True, null=True)
-    topics = models.ManyToManyField(Topic, blank=True, null=True)
-    events = models.ManyToManyField(Event, blank=True, null=True)
-    technologies = models.ManyToManyField(Technology, blank=True, null=True)
-    members = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, null=True)
+    topics = models.ManyToManyField(Topic)
+    events = models.ManyToManyField(Event)
+    technologies = models.ManyToManyField(Technology)
+    members = models.ManyToManyField(settings.AUTH_USER_MODEL)
     founder = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, 
         related_name="founder")
     status = models.CharField(
@@ -122,7 +121,7 @@ class Project(TimeStampedModel, TitleSlugDescriptionModel):
         ordering = ['-created']
 
     def __unicode__(self):
-        return u'{0}'.format(self.title)
+        return '{0}'.format(self.title)
 
     @models.permalink
     def get_absolute_url(self):
@@ -150,7 +149,7 @@ class Link(TimeStampedModel, TitleSlugDescriptionModel):
     url = models.CharField(max_length=255)
 
     def __unicode__(self):
-        return u'{0} ({1})'.format(self.title, self.url)
+        return '{0} ({1})'.format(self.title, self.url)
 
 
 class ProjectCommit(TimeStampedModel):
@@ -168,7 +167,7 @@ class ProjectCommit(TimeStampedModel):
         ordering = ['-created']
 
     def __unicode__(self):
-        return u'Commit {0} in {1}'.format(self.chash[:15], self.project)
+        return 'Commit {0} in {1}'.format(self.chash[:15], self.project)
 
     @property
     def author(self):
@@ -187,7 +186,7 @@ class Buzz(TimeStampedModel, TitleSlugDescriptionModel):
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
     
     def __unicode__(self):
-        return u'{0}'.format(self.title)
+        return '{0}'.format(self.title)
 
     @models.permalink
     def get_absolute_url(self):

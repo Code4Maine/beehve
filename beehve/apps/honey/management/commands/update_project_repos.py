@@ -16,7 +16,7 @@ class Command(BaseCommand):
         projects = Project.objects.all()
 
         for project in projects:
-            print 'Checking {0} for new commits'.format(project)
+            print('Checking {0} for new commits'.format(project))
             if project.git_url:
                 repo_path = '/tmp/' + project.slug
                 try:
@@ -53,7 +53,7 @@ class Command(BaseCommand):
                                 time=time,
                                 diff=repo.diff(commit['sha'], prev_commit).next()['diff']
                             )
-                            print pcommit, ' added.'
+                            print(pcommit, ' added.')
                             new_commits.append(pcommit)
                         except:
                             pass

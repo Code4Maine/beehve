@@ -3,7 +3,6 @@ from homepage import views as homepage_views
 
 
 urlpatterns = [
-    '',
     url(r'^initiatives.json',
         view=homepage_views.InitiativeListJSONView.as_view(),
         name="iniative-list-json"),

@@ -68,7 +68,7 @@ class Common(Configuration):
     TEMPLATES = [
         {
             'BACKEND': 'django.template.backends.django.DjangoTemplates',
-            'DIRS': [ os.path.join(BASE_DIR, "wheresyourtrash/templates") ],
+            'DIRS': [ os.path.join(BASE_DIR, "beehve/templates") ],
             'APP_DIRS': True,
             'OPTIONS': {
                 'context_processors': [
@@ -81,7 +81,6 @@ class Common(Configuration):
                     'django.template.context_processors.media',
                     'django.template.context_processors.static',
                     'django.template.context_processors.tz',
-                    'django.core.context_processors.request',
                     'django.contrib.messages.context_processors.messages',
                 ],
             },

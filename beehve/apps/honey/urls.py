@@ -4,9 +4,8 @@ from honey import views as honey_views
 
 # custom views
 urlpatterns = [
-    (r'^', include('honey.project_urls')),
-    (r'^', include('honey.idea_urls')),
-
+    url(r'^', include('honey.project_urls')),
+    url(r'^', include('honey.idea_urls')),
     url(r'^events/add/',
         view=honey_views.EventCreateView.as_view(),
         name="event-create"),

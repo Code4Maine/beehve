@@ -8,7 +8,6 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^avatar/', include('avatar.urls')),
-    #url(r'^select2/', include('select2.urls')),
     url(r'^dashboard/', include('honey.urls')),
     url(r'^dashboard/', include('workers.urls')),
     url(r'', include('homepage.urls')),

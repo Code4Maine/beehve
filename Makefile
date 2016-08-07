@@ -36,7 +36,7 @@ reset:
 	rm -rf .ansible-venv
 
 run:
-	venv/bin/python manage.py runserver_plus 0.0.0.0:35001
+	venv/bin/python manage.py runserver_plus
 
 tag-release:
 	sed -i "/__version__/c\__version__ = '$(v)'" beehve/__init__.py

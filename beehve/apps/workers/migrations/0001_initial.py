@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('created', django_extensions.db.fields.CreationDateTimeField(default=django.utils.timezone.now, verbose_name='created', editable=False, blank=True)),
                 ('modified', django_extensions.db.fields.ModificationDateTimeField(default=django.utils.timezone.now, verbose_name='modified', editable=False, blank=True)),
                 ('title', models.CharField(max_length=255, verbose_name='title')),
-                ('slug', django_extensions.db.fields.AutoSlugField(allow_duplicates=b"'False'", separator=b'"u\'-\'"', blank=True, populate_from=b'"\'title\'"', editable=False, verbose_name='slug', overwrite=b"'False'")),
+                ('slug', django_extensions.db.fields.AutoSlugField(allow_duplicates=False, separator=b'"u\'-\'"', blank=True, populate_from=b'"\'title\'"', editable=False, verbose_name='slug', overwrite=False)),
                 ('description', models.TextField(null=True, verbose_name='description', blank=True)),
                 ('brigade', models.ForeignKey(to='homepage.Brigade')),
             ],

@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load markdown_deux_tags %}
 {% load static %}
-{% load biblion_tags %}
 
 {% block full_width %}full_width{% endblock %}
 
@@ -132,7 +131,6 @@
                 </div>
                 <div class="col-lg-4">
                     <h3 class="section-heading"><i class="fa fa-building"></i>&nbsp;&nbsp;Municipal ME Blog</h3>
-                    {% latest_blog_posts as posts %}
                     {% for post in posts %}
                     <div class="well ">
                         <h4>{{ post.title }}
@@ -141,7 +139,7 @@
                         <p><a href="{{post.get_absolute_url}}">Continue reading &raquo;</a></p>
                     </div>
                     {% endfor%}
-                    <p><a class="btn btn-default" href="{% url 'blog' %}">Read more blog posts</a></p>
+                    <p><a class="btn btn-default" href="">Read more blog posts</a></p>
                 </div>
             </div>
 

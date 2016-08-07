@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load avatar_tags %}
+{% load markdown_deux_tags %}
+
+{% block header_title %}Project Directory{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2>Built for {{object}} </h2>
+                <span class="badge">{{object.project_count}} project{{object.project_count|pluralize}}</span>
+            </div>
+            <div class="panel-body">
+                {% for project in object.project_set.all %}
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3><a href="{{project.get_absolute_url }}">{{project.title}}</a> <a href="{{project.get_absolute_url}}" class="btn btn-primary">Learn more <i class="fa fa-arrow-right"></i></a></h3>
+                        <p><b>Built with</b> {% for tech in project.technologies.all %}<a class="badge" href="{{tech.get_absolute_url}}">{{tech}}</a> {% endfor %}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Members</h5>
+                        {% for member in project.members.all %}
+                        <span class="th" >{% avatar member 65 %}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% if not forloop.last %}<hr />{% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

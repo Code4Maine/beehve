@@ -76,3 +76,4 @@ celerybeat.pid
 www-new.codeformaine.org
 www.codeformaine.org
 .ansible-venv
+*.bak

@@ -1,4 +1,11 @@
 include README.md
+include *.md
+include *.py
+include LICENSE
+include Makefile
+include tox.ini
+recursive-include requirements *
+recursive-include components *.md
 recursive-include beehve/static *
 recursive-include beehve/templates *
 recursive-include beehve/apps *

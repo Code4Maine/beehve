@@ -28,8 +28,7 @@ def _reqs(*f):
 def reqs(*f):
     return [req for subreq in _reqs(*f) for req in subreq]
 
-install_requires = [
-]
+install_requires = []
 install_requires = reqs('default.txt')
 
 

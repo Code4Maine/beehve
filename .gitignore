@@ -1,8 +1,7 @@
 # Created by http://www.gitignore.io
 
 ### Django ###
-*.log
-*.pot
+*.log *.pot
 *.pyc
 local_settings.py
 
@@ -74,3 +73,6 @@ celerybeat-schedule
 celerybeat.pid
 *.key
 .env
+www-new.codeformaine.org
+www.codeformaine.org
+.ansible-venv

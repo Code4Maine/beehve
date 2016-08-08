@@ -172,25 +172,27 @@ class Common(Configuration):
 
     CACHE_MIDDLEWARE_KEY_PREFIX = PROJECT_DIRNAME
 
-    MEDIA_URL = "/media/"
-
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'public/media')
-
+    PUBLIC_ROOT = values.Value(os.path.join(BASE_DIR, 'public'))
+    STATIC_ROOT = os.path.join(PUBLIC_ROOT.setup('PUBLIC_ROOT'), 'static')
     STATIC_URL = '/static/'
 
-    STATIC_ROOT = os.path.join(BASE_DIR, 'public/static')
+    MEDIA_ROOT = os.path.join(PUBLIC_ROOT.setup('PUBLIC_ROOT'), 'media')
+    MEDIA_URL = "/media/"
+
+    AWS_ACCESS_KEY_ID = values.Value()
+    AWS_SECRET_ACCESS_KEY = values.Value()
+    AWS_STORAGE_BUCKET_NAME = values.Value('beehve-media')
+
+    AWS_HEADERS = {'ExpiresDefault': 'access plus 30 days',
+                   'Cache-Control': 'max-age=86400', }
+
+    if AWS_ACCESS_KEY_ID.setup('AWS_ACCESS_KEY_ID'):
+        MEDIA_URL = 'https://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
+        DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
     STATICFILES_DIRS = (
         os.path.join(BASE_DIR, "beehve/static"),
     )
-
-    #DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-
-    AWS_ACCESS_KEY_ID = values.Value()
-    AWS_SECRET_ACCESS_KEY = values.Value()
-    AWS_STORAGE_BUCKET_NAME = 'example.com'
-    AWS_HEADERS = {'ExpiresDefault': 'access plus 30 days',
-                   'Cache-Control': 'max-age=86400', }
 
     # Account activations automatically expire after this period
     ACCOUNT_ACTIVATION_DAYS = 14

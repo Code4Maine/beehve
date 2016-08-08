@@ -203,7 +203,7 @@ class Common(Configuration):
                          '/accounts/signup/']
 
     LOGIN_URL = '/accounts/login/'
-    LOGIN_REDIRECT_URL = '/'
+    LOGIN_REDIRECT_URL = '/dashboard/'
     LOGOUT_URL = '/accounts/logout/'
 
     # A sample logging configuration. The only tangible logging

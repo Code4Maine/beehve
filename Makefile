@@ -1,6 +1,6 @@
 install:
 	virtualenv -p python3 venv
-	venv/bin/python setup.py install
+	venv/bin/pip install -e .
 	venv/bin/python manage.py migrate --noinput
 	$(MAKE) deploy_deps
 
@@ -10,12 +10,9 @@ deploy_deps:
 
 deps:
 	sudo apt-get install libtiff5-dev libjpeg8-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk libxslt-dev libxml2-dev redis-server
-	npm install bower
-	
 
 deps_mac:
 	brew install libtiff libjpeg webp little-cms2 redis-server
-	npm install bower
 
 deps_freebsd:
 	sudo pkg install jpeg tiff webp lcms2 freetype2 redis

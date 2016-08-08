@@ -17,7 +17,7 @@ class Position(TitleSlugDescriptionModel, TimeStampedModel):
     def get_absolute_url(self):
         return ('position-detail', None, {'slug': self.slug})
 
-    def __unicode__(self):
+    def __str__(self):
         return '{0} {1}'.format(self.brigade, self.title)
 
 
@@ -43,7 +43,7 @@ class Worker(TimeStampedModel):
     def get_absolute_url(self):
         return ('worker-detail', None, {'slug': self.user.username})
 
-    def __unicode__(self):
+    def __str__(self):
         if self.name:
             return '{0}'.format(self.name)
         else:

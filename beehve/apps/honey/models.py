@@ -13,7 +13,7 @@ class BasicItem(TimeStampedModel, TitleSlugDescriptionModel):
     class Meta:
         abstract = True
 
-    def __unicode__(self):
+    def __str__(self):
         return '{0}'.format(self.title)
 
     def save(self, *args, **kwargs):
@@ -77,7 +77,7 @@ class ProjectIdea(TimeStampedModel):
     class Meta:
         ordering = ['-created']
 
-    def __unicode__(self):
+    def __str__(self):
         return '{0}'.format(self.title)
 
     @models.permalink
@@ -116,11 +116,12 @@ class Project(TimeStampedModel, TitleSlugDescriptionModel):
     color = models.CharField(_('Color'), max_length=100, blank=True, null=True)
     screenshot = models.ImageField(_('Screenshot'), blank=True, null=True,
                                    upload_to='screenshots')
+    featured = models.BooleanField(_('Featured'), default=False)
 
     class Meta:
         ordering = ['-created']
 
-    def __unicode__(self):
+    def __str__(self):
         return '{0}'.format(self.title)
 
     @models.permalink
@@ -148,7 +149,7 @@ class Link(TimeStampedModel, TitleSlugDescriptionModel):
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
     url = models.CharField(max_length=255)
 
-    def __unicode__(self):
+    def __str__(self):
         return '{0} ({1})'.format(self.title, self.url)
 
 
@@ -166,7 +167,7 @@ class ProjectCommit(TimeStampedModel):
         unique_together = ('project', 'chash')
         ordering = ['-created']
 
-    def __unicode__(self):
+    def __str__(self):
         return 'Commit {0} in {1}'.format(self.chash[:15], self.project)
 
     @property
@@ -185,7 +186,7 @@ class Buzz(TimeStampedModel, TitleSlugDescriptionModel):
     project = models.ForeignKey(Project)
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
     
-    def __unicode__(self):
+    def __str__(self):
         return '{0}'.format(self.title)
 
     @models.permalink

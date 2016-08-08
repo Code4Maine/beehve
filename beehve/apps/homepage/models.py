@@ -21,7 +21,7 @@ class Brigade(TimeStampedModel, TitleSlugDescriptionModel):
     active = models.BooleanField(_('Is brigade active?'), default=True)
 
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
 class Initiative(TimeStampedModel, TitleSlugDescriptionModel):
@@ -37,7 +37,7 @@ class Initiative(TimeStampedModel, TitleSlugDescriptionModel):
     def get_absolute_url(self):
         return ('initiative-detail', None, {'slug': self.slug})
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
 
@@ -55,5 +55,5 @@ class Partner(TimeStampedModel, TitleSlugDescriptionModel):
     def get_absolute_url(self):
         return ('partner-detail', None, {'slug': self.slug})
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title

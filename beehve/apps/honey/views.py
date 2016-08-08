@@ -38,6 +38,7 @@ class DashboardView(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(DashboardView, self).get_context_data(*args, **kwargs)
+        context['featured_project'] = Project.objects.filter(featured=True).first()
         context['technologies'] = Technology.objects.all()
         context['topics'] = Topic.objects.all()
         context['events'] = Event.objects.all()

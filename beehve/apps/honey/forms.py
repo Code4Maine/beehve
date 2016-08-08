@@ -1,5 +1,5 @@
 from django.core.urlresolvers import reverse
-import floppyforms as forms
+import floppyforms.__future__ as forms
 
 from .models import Project, Topic, Event, Technology, Buzz, Link, ProjectIdea
 

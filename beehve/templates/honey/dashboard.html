@@ -26,11 +26,9 @@ $container.isotope({
         <div class="row">
             <div class="col-md-12">
                 <div class="row">
-                    {% for update in updates %}
-                    {% if forloop.counter <= 1 %}
                     <div class="col-md-8">
                           <div class="well widget update {% cycle 'timeline-inverted' '' %}">
-                            <h4>Recent Activity</h4>
+                            <h4>Featured Project</h4>
                               <div class="timeline-badge{% if update.summary %} primary"><i class="fa fa-git"></i>{% else %} success"><i class="fa fa-bullhorn"></i>{% endif %}
                                   <span class="timeline-title"><a href="{{update.get_absolute_url}}">{% if update.title %}{{update.title}}{% endif %}{% if update.summary%}{{update.summary}}{% endif %}</a></span>
                                   <div class="timeline-description">
@@ -41,9 +39,7 @@ $container.isotope({
                               </div>
                           </div>
                     </div>
-                    {% endif %}
-                    {% endfor %}
-                    <div class="col-md-4 thirds">
+                    <div class="col-md-4">
                         <div class="well widget help-projects">
                             <h4>Projects that need your help</h4>
                             <p>{{ projects.count }}</p>
